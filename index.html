@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Сброс и базовые стили */
+        /* Все стили остаются такими же, как в предыдущей версии */
         * {
             margin: 0;
             padding: 0;
@@ -30,7 +30,6 @@
             color: #fff;
         }
 
-        /* Динамический фон с партиклами */
         body::before {
             content: '';
             position: fixed;
@@ -46,7 +45,6 @@
             z-index: 0;
         }
 
-        /* Анимированные партиклы */
         .particle {
             position: fixed;
             font-size: 24px;
@@ -66,7 +64,6 @@
             100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Основной контейнер */
         .minecraft-panel {
             max-width: 1400px;
             width: 100%;
@@ -86,7 +83,6 @@
             100% { box-shadow: inset 0 0 0 2px #6f5f4a, 15px 15px 0 rgba(0, 0, 0, 0.6), 0 0 60px rgba(100, 255, 100, 0.9); }
         }
 
-        /* Шапка */
         .header {
             background: #3a5c3a;
             border: 4px solid #1f3f1f;
@@ -126,7 +122,6 @@
             margin-top: 15px;
         }
 
-        /* Навигация */
         .nav-bar {
             display: flex;
             flex-wrap: wrap;
@@ -190,7 +185,6 @@
             box-shadow: inset -3px -3px 0 #7f7f2f, inset 3px 3px 0 #ffff9f;
         }
 
-        /* Секция участников */
         .members-section {
             margin: 40px 0;
             background: #4f6f3f;
@@ -225,7 +219,6 @@
             color: #ffffaf;
         }
 
-        /* Элитная секция (первые 4) */
         .elite-section {
             margin-bottom: 40px;
             background: #3a5f3a;
@@ -264,7 +257,6 @@
             }
         }
 
-        /* Основная сетка участников */
         .members-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -290,7 +282,6 @@
             }
         }
 
-        /* Карточка участника - улучшенные эффекты */
         .member-card {
             background: #3f5f3f;
             border: 3px solid #1f3f1f;
@@ -306,7 +297,6 @@
             cursor: pointer;
         }
 
-        /* Эффект свечения при наведении */
         .member-card::before {
             content: '';
             position: absolute;
@@ -459,7 +449,6 @@
             box-shadow: 0 0 15px #ff9f4f;
         }
 
-        /* Пустые анкеты */
         .member-card.empty {
             background: #2f4f2f;
             border: 3px dashed #7f9f6f;
@@ -482,7 +471,6 @@
             background: #3f6f3f;
         }
 
-        /* Особые карточки */
         .member-card.special {
             background: #4f3f1f;
             border: 4px solid #ffaa00;
@@ -513,7 +501,23 @@
             font-size: 10px;
         }
 
-        /* Информация о Natural Legacy */
+        .member-card.cop {
+            background: #4f5f3f;
+            border: 4px solid #c0c0c0;
+            box-shadow: 0 0 20px rgba(192, 192, 192, 0.5);
+        }
+
+        .member-card.cop .member-avatar {
+            border-color: #c0c0c0;
+        }
+
+        .member-card.cop .member-rank {
+            background: #8f8f8f;
+            border-color: #c0c0c0;
+            color: #ffffaa;
+            font-size: 9px;
+        }
+
         .legacy-info {
             background: #2f4f6f;
             border: 4px solid #1f3f5f;
@@ -530,7 +534,6 @@
             transform: scale(1.01);
         }
 
-        /* Лидерборд */
         .leaderboard {
             background: #2f4f4f;
             border: 4px solid #ffd700;
@@ -615,7 +618,6 @@
             color: #cfefcf;
         }
 
-        /* Футер */
         .footer {
             background: #2f2f2f;
             border: 4px solid #1f1f1f;
@@ -652,7 +654,6 @@
             margin: 10px 0;
         }
 
-        /* Эффект тыка */
         .click-effect {
             animation: clickPop 0.2s ease-out;
         }
@@ -663,7 +664,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Кнопка наверх */
         .scroll-top {
             position: fixed;
             bottom: 20px;
@@ -699,7 +699,6 @@
             transform: scale(0.95);
         }
 
-        /* Разделитель */
         .section-divider {
             height: 4px;
             background: linear-gradient(90deg, transparent, #ffd700, #ff8c00, #ffd700, transparent);
@@ -707,7 +706,6 @@
             width: 100%;
         }
 
-        /* Модальное окно */
         .modal {
             display: none;
             position: fixed;
@@ -828,6 +826,197 @@
             font-size: 14px;
             color: #ffffaa;
         }
+
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            min-width: 300px;
+            max-width: 600px;
+            min-height: 200px;
+            max-height: 400px;
+            background: #4f6f3f;
+            border: 4px solid #2f4f2f;
+            box-shadow: inset 0 0 0 3px #7faf7f, 10px 10px 0 #1f3f1f;
+            padding: 15px;
+            z-index: 2000;
+            cursor: move;
+            user-select: none;
+            font-family: 'Press Start 2P', cursive;
+            transition: box-shadow 0.2s;
+            resize: both;
+            overflow: auto;
+        }
+
+        .music-player.closed {
+            display: none;
+        }
+
+        .music-player:hover {
+            box-shadow: inset 0 0 0 3px #9fcf9f, 10px 10px 0 #1f3f1f, 0 0 30px #7fbf7f;
+        }
+
+        .player-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 4px dashed #ffd700;
+            color: #ffff9f;
+            font-size: 12px;
+            text-shadow: 2px 2px 0 #3f6f3f;
+            cursor: move;
+        }
+
+        .player-header i {
+            color: #ffd700;
+            font-size: 16px;
+        }
+
+        .close-player-btn {
+            margin-left: auto;
+            background: #9f4f4f;
+            border: 3px solid #6f2f2f;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
+        }
+
+        .close-player-btn:hover {
+            background: #bf6f6f;
+            transform: scale(1.1);
+        }
+
+        .track-info {
+            background: #1f3f1f;
+            border: 2px solid #7f9f6f;
+            padding: 10px;
+            margin-bottom: 15px;
+            color: #cfefcf;
+            font-size: 8px;
+            line-height: 1.5;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+        }
+
+        .player-btn {
+            background: #9f9f9f;
+            border: 4px solid #6f6f6f;
+            color: #1f1f1f;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: inset -3px -3px 0 #4f4f4f, inset 3px 3px 0 #efefef, 3px 3px 0 #1f1f1f;
+            transition: all 0.1s;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .player-btn:hover {
+            background: #bfbfbf;
+            transform: translate(1px, 1px);
+            box-shadow: inset -2px -2px 0 #6f6f6f, inset 2px 2px 0 #ffffff, 2px 2px 0 #1f1f1f;
+        }
+
+        .player-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: inset -1px -1px 0 #6f6f6f, inset 1px 1px 0 #ffffff, 1px 1px 0 #1f1f1f;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #2f4f2f;
+            border: 2px solid #6f9f6f;
+            padding: 8px;
+        }
+
+        .volume-control span {
+            color: #ffff9f;
+            font-size: 14px;
+        }
+
+        .volume-control input[type=range] {
+            flex: 1;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #1f3f1f;
+            border: 2px solid #6f9f6f;
+        }
+
+        .volume-control input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #9fbf7f;
+            border: 2px solid #3f6f3f;
+            box-shadow: inset -2px -2px 0 #1f3f1f, inset 2px 2px 0 #cfefcf;
+            cursor: pointer;
+        }
+
+        .toggle-player-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #5f7f5f;
+            border: 4px solid #2f4f2f;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #9fbf9f, 5px 5px 0 #1f1f1f;
+            transition: 0.2s;
+            z-index: 2500;
+            color: #ffff9f;
+        }
+
+        .toggle-player-btn:hover {
+            background: #7f9f7f;
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
+        }
+
+        .toggle-player-btn:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 600px) {
+            .music-player {
+                min-width: 250px;
+                max-width: 400px;
+            }
+            .player-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+            .toggle-player-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -842,6 +1031,9 @@
     <div class="particle" style="top: 40%; left: 45%;">💎</div>
     <div class="particle" style="top: 15%; left: 15%;">🦝</div>
     <div class="particle" style="top: 75%; left: 75%;">🐾</div>
+
+    <!-- Кнопка включения плеера (постоянная) -->
+    <div class="toggle-player-btn" id="togglePlayerBtn" title="Включить радио">🎵</div>
 
     <div class="minecraft-panel">
         <!-- Шапка -->
@@ -865,7 +1057,7 @@
                     <i class="fas fa-users"></i> УЧАСТНИКИ ИМПЕРИИ
                 </div>
                 <div class="members-count">
-                    <i class="fas fa-paw"></i> Нас 38
+                    <i class="fas fa-paw"></i> Нас 37
                 </div>
             </div>
             
@@ -879,8 +1071,8 @@
                     <i class="fas fa-crown" style="color: gold;"></i> ОСНОВАТЕЛИ И ГЛАВЫ <i class="fas fa-crown" style="color: gold;"></i>
                 </div>
                 <div class="elite-grid">
-                    <!-- 1. Император Enotiiik (особый) -->
-                    <div class="member-card imperator" onclick="openEnotModal()">
+                    <!-- 1. Император Enotiiik -->
+                    <div class="member-card imperator" onclick="openModal('enot')">
                         <div class="member-avatar">👑</div>
                         <div class="member-name">Enotiiik</div>
                         <div class="member-mc">⛏️ Enotiiik</div>
@@ -906,13 +1098,13 @@
                         <div class="member-rank">ЗАМ. ГЛ. СТРОИТЕЛЯ • PVE/PVP</div>
                     </div>
 
-                    <!-- 4. Cop41k -->
-                    <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <!-- 4. Cop41k (особый, как у Енота) -->
+                    <div class="member-card cop" onclick="openModal('cop')">
                         <div class="member-avatar">🛡️</div>
                         <div class="member-name">Cop41k</div>
                         <div class="member-mc">⛏️ Cop41k</div>
                         <div class="member-tg"><i class="fab fa-telegram"></i> @Svyat0sh1</div>
-                        <div class="member-rank">ПОМОЩНИК ЕНОТА • PVE</div>
+                        <div class="member-rank">ПРИБЛИЖЕННЫЙ К ИМПЕРАТОРУ</div>
                     </div>
                 </div>
             </div>
@@ -962,6 +1154,60 @@
                     <div class="member-rank">PVP/PVE • КРУТОЙ ФАРМИЛА</div>
                 </div>
 
+                <!-- GenerusRu -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">⚔️</div>
+                    <div class="member-name">GenerusRu</div>
+                    <div class="member-mc">⛏️ GenerusRu</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @generus1</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
+                <!-- Pizzaxxs -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">🍕</div>
+                    <div class="member-name">444bad</div>
+                    <div class="member-mc">⛏️ 444bad</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @Pizzaxxs</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
+                <!-- lol22113334 -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">🎮</div>
+                    <div class="member-name">lol22113334</div>
+                    <div class="member-mc">⛏️ lol22113334</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> нет тега</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
+                <!-- Golden__Samurai -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">⚔️</div>
+                    <div class="member-name">Golden__Samurai</div>
+                    <div class="member-mc">⛏️ Golden__Samurai</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @GoldeN21126</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
+                <!-- DimasikPovelitel -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">👑</div>
+                    <div class="member-name">DimasikPovelitel</div>
+                    <div class="member-mc">⛏️ DimasikPovelitel</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @Davvun</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
+                <!-- antohakiller (новый) -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">🔪</div>
+                    <div class="member-name">antohakiller</div>
+                    <div class="member-mc">⛏️ antohakiller</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @wxtat</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
                 <!-- 5. Пустая анкета -->
                 <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
                     <div class="member-avatar">❓</div>
@@ -979,65 +1225,11 @@
                     <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
                     <div class="member-rank">— свободно —</div>
                 </div>
-
-                <!-- 7. Пустая анкета -->
-                <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">❓</div>
-                    <div class="member-name">???</div>
-                    <div class="member-mc">⛏️ ???</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
-                    <div class="member-rank">— свободно —</div>
-                </div>
-
-                <!-- 8. Пустая анкета -->
-                <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">❓</div>
-                    <div class="member-name">???</div>
-                    <div class="member-mc">⛏️ ???</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
-                    <div class="member-rank">— свободно —</div>
-                </div>
-
-                <!-- 9. Пустая анкета -->
-                <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">❓</div>
-                    <div class="member-name">???</div>
-                    <div class="member-mc">⛏️ ???</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
-                    <div class="member-rank">— свободно —</div>
-                </div>
-
-                <!-- 10. Пустая анкета -->
-                <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">❓</div>
-                    <div class="member-name">???</div>
-                    <div class="member-mc">⛏️ ???</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
-                    <div class="member-rank">— свободно —</div>
-                </div>
-
-                <!-- 11. Пустая анкета -->
-                <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">❓</div>
-                    <div class="member-name">???</div>
-                    <div class="member-mc">⛏️ ???</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
-                    <div class="member-rank">— свободно —</div>
-                </div>
-
-                <!-- 12. Пустая анкета -->
-                <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">❓</div>
-                    <div class="member-name">???</div>
-                    <div class="member-mc">⛏️ ???</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
-                    <div class="member-rank">— свободно —</div>
-                </div>
             </div>
 
             <div style="text-align: center; margin-top: 30px;">
                 <span class="nav-btn" style="display: inline-block; font-size: 10px; cursor: default; opacity: 0.8;">
-                    <i class="fas fa-users"></i> Всего 38 участников (8 показаны)
+                    <i class="fas fa-users"></i> Всего 37 участников (13 показаны)
                 </span>
             </div>
         </div>
@@ -1101,19 +1293,37 @@
         <div class="footer">
             <p>© 2026 Империя Енотск на Natural Legacy</p>
             <div class="footer-year">
-                <i class="fas fa-paw"></i> НАС 38 <i class="fas fa-paw"></i>
+                <i class="fas fa-paw"></i> НАС 37 <i class="fas fa-paw"></i>
             </div>
             <p style="margin-top: 15px;">🦝 Все права у енотов 🦝</p>
         </div>
+    </div>
 
-        <!-- Кнопка наверх -->
-        <div class="scroll-top" id="scrollTop">⬆️</div>
+    <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР (перетаскиваемый, растягиваемый) -->
+    <div class="music-player closed" id="musicPlayer">
+        <div class="player-header" id="playerHeader">
+            <i class="fas fa-headphones-alt"></i> РАДИО ЕНОТСК
+            <div class="close-player-btn" id="closePlayerBtn" title="Закрыть">✖</div>
+        </div>
+        <div class="track-info" id="trackInfo">
+            Гимн Енотска
+        </div>
+        <div class="player-buttons">
+            <button class="player-btn" id="prevBtn" title="Предыдущий">⏮️</button>
+            <button class="player-btn" id="playPauseBtn" title="Играть/Пауза">▶️</button>
+            <button class="player-btn" id="nextBtn" title="Следующий">⏭️</button>
+            <button class="player-btn" id="repeatBtn" title="Повтор">🔁</button>
+        </div>
+        <div class="volume-control">
+            <span>🔊</span>
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5">
+        </div>
     </div>
 
     <!-- Модальное окно для Енота -->
     <div class="modal" id="enotModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeModal()">✖</div>
+            <div class="modal-close" onclick="closeModal('enot')">✖</div>
             <div class="modal-header">
                 <div class="modal-avatar">👑</div>
                 <div class="modal-title">Enotiiik</div>
@@ -1137,7 +1347,7 @@
                 </div>
                 <div class="modal-info-row">
                     <div class="modal-info-label">В империи:</div>
-                    <div class="modal-info-value">С основания (2025)</div>
+                    <div class="modal-info-value">С основания (2024)</div>
                 </div>
                 <div class="modal-rank">
                     👑 ПРАВИТЕЛЬ ИМПЕРИИ ЕНОТСК 👑
@@ -1148,6 +1358,48 @@
             </div>
         </div>
     </div>
+
+    <!-- Модальное окно для Копчика (с 2026 годом) -->
+    <div class="modal" id="copModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('cop')">✖</div>
+            <div class="modal-header">
+                <div class="modal-avatar">🛡️</div>
+                <div class="modal-title">Cop41k</div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-info-row">
+                    <div class="modal-info-label">Статус:</div>
+                    <div class="modal-info-value">Приближенный к Императору</div>
+                </div>
+                <div class="modal-info-row">
+                    <div class="modal-info-label">Тип:</div>
+                    <div class="modal-info-value">PVE • Помощник</div>
+                </div>
+                <div class="modal-info-row">
+                    <div class="modal-info-label">Minecraft ник:</div>
+                    <div class="modal-info-value">Cop41k</div>
+                </div>
+                <div class="modal-info-row">
+                    <div class="modal-info-label">Telegram:</div>
+                    <div class="modal-info-value">@Svyat0sh1</div>
+                </div>
+                <div class="modal-info-row">
+                    <div class="modal-info-label">В империи:</div>
+                    <div class="modal-info-value">С 2026</div>
+                </div>
+                <div class="modal-rank">
+                    🤝 ПРАВАЯ РУКА ИМПЕРАТОРА 🤝
+                </div>
+                <p style="margin-top: 20px; font-size: 10px; color: #afefaf; text-align: center;">
+                    "Верность и честь превыше всего"
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка наверх -->
+    <div class="scroll-top" id="scrollTop">⬆️</div>
 
     <script>
         (function() {
@@ -1201,34 +1453,204 @@
                 });
             });
 
-            console.log('Империя Енотск | Нас 38 | Natural Legacy | Модальное окно добавлено');
+            // Эффект тыка для всех карточек (кроме особых)
+            document.querySelectorAll('.member-card:not(.imperator):not(.cop)').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    this.classList.add('click-effect');
+                    setTimeout(() => this.classList.remove('click-effect'), 200);
+                });
+            });
+
+            // ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР =====
+            const player = document.getElementById('musicPlayer');
+            const toggleBtn = document.getElementById('togglePlayerBtn');
+            const closeBtn = document.getElementById('closePlayerBtn');
+            const trackInfo = document.getElementById('trackInfo');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const repeatBtn = document.getElementById('repeatBtn');
+            const volumeSlider = document.getElementById('volumeSlider');
+
+            const tracks = [
+                { 
+                    name: '🎵 ГИМН ЕНОТСКА', 
+                    src: 'https://www.dropbox.com/scl/fi/95q19mjwtqhh40sq1kaus/a2b7b629-86df-4765-9c10-761c7f7bf9c1.mp3?rlkey=bblsiay54zqj40jyob1bsj5ey&st=tfh4rds1&dl=1' 
+                },
+                { name: 'The Witcher 3 - Tavern Music', src: '' },
+                { name: 'Skyrim - Night Ambience', src: '' },
+                { name: 'Crawlers, Spiders and Wights', src: '' },
+                { name: 'Home Resonance', src: '' }
+            ];
+
+            let currentTrackIndex = 0;
+            let isPlaying = false;
+            let repeat = false;
+            let audio = null;
+
+            function initAudio() {
+                if (audio) {
+                    audio.pause();
+                }
+                audio = new Audio();
+                audio.volume = volumeSlider.value;
+
+                audio.addEventListener('ended', () => {
+                    if (repeat) {
+                        audio.play();
+                    } else {
+                        nextTrack();
+                    }
+                });
+
+                audio.addEventListener('error', (e) => {
+                    console.error('Ошибка загрузки аудио:', e);
+                    trackInfo.textContent = '⚠️ Ошибка загрузки трека';
+                });
+            }
+
+            initAudio();
+
+            function updateTrackInfo() {
+                trackInfo.textContent = tracks[currentTrackIndex].name;
+                if (tracks[currentTrackIndex].src) {
+                    audio.src = tracks[currentTrackIndex].src;
+                    audio.load();
+                    if (isPlaying) {
+                        audio.play().catch(e => console.log('Автовоспроизведение заблокировано браузером'));
+                    }
+                } else {
+                    audio.src = '';
+                    trackInfo.textContent = tracks[currentTrackIndex].name + ' (нет ссылки)';
+                }
+            }
+
+            function playTrack(index) {
+                if (index < 0) index = tracks.length - 1;
+                if (index >= tracks.length) index = 0;
+                currentTrackIndex = index;
+                updateTrackInfo();
+            }
+
+            function nextTrack() {
+                playTrack(currentTrackIndex + 1);
+            }
+
+            function prevTrack() {
+                playTrack(currentTrackIndex - 1);
+            }
+
+            playPauseBtn.addEventListener('click', () => {
+                isPlaying = !isPlaying;
+                playPauseBtn.textContent = isPlaying ? '⏸️' : '▶️';
+                
+                if (isPlaying) {
+                    if (audio.src) {
+                        audio.play().catch(e => {
+                            console.log('Ошибка воспроизведения:', e);
+                            isPlaying = false;
+                            playPauseBtn.textContent = '▶️';
+                        });
+                    }
+                } else {
+                    audio.pause();
+                }
+            });
+
+            prevBtn.addEventListener('click', prevTrack);
+            nextBtn.addEventListener('click', nextTrack);
+
+            repeatBtn.addEventListener('click', () => {
+                repeat = !repeat;
+                repeatBtn.style.opacity = repeat ? '1' : '0.5';
+                if (audio) {
+                    audio.loop = repeat;
+                }
+            });
+
+            volumeSlider.addEventListener('input', (e) => {
+                const vol = e.target.value;
+                if (audio) {
+                    audio.volume = vol;
+                }
+            });
+
+            toggleBtn.addEventListener('click', () => {
+                player.classList.remove('closed');
+            });
+
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                player.classList.add('closed');
+                if (isPlaying) {
+                    isPlaying = false;
+                    playPauseBtn.textContent = '▶️';
+                    audio.pause();
+                }
+            });
+
+            // Перетаскивание плеера
+            let isDragging = false;
+            let offsetX, offsetY;
+            const header = document.getElementById('playerHeader');
+
+            header.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('close-player-btn')) return;
+                isDragging = true;
+                offsetX = e.clientX - player.offsetLeft;
+                offsetY = e.clientY - player.offsetTop;
+                player.style.cursor = 'grabbing';
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                let left = e.clientX - offsetX;
+                let top = e.clientY - offsetY;
+                left = Math.max(0, Math.min(window.innerWidth - player.offsetWidth, left));
+                top = Math.max(0, Math.min(window.innerHeight - player.offsetHeight, top));
+                player.style.left = left + 'px';
+                player.style.right = 'auto';
+                player.style.bottom = 'auto';
+                player.style.top = top + 'px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                player.style.cursor = 'move';
+            });
+
+            updateTrackInfo();
         })();
 
-        // Функции для модального окна
-        function openEnotModal() {
-            document.getElementById('enotModal').classList.add('active');
-            document.body.style.overflow = 'hidden'; // запрет скролла
-        }
-
-        function closeModal() {
-            document.getElementById('enotModal').classList.remove('active');
-            document.body.style.overflow = ''; // возвращаем скролл
-        }
-
-        // Закрытие по клику вне модального окна
-        window.addEventListener('click', function(event) {
-            const modal = document.getElementById('enotModal');
-            if (event.target === modal) {
-                closeModal();
+        // Функции для модальных окон
+        function openModal(type) {
+            if (type === 'enot') {
+                document.getElementById('enotModal').classList.add('active');
+            } else if (type === 'cop') {
+                document.getElementById('copModal').classList.add('active');
             }
-        });
+            document.body.style.overflow = 'hidden';
+        }
 
-        // Эффект тыка для всех карточек (кроме Енота, у него своё)
-        document.querySelectorAll('.member-card:not(.imperator)').forEach(card => {
-            card.addEventListener('click', function(e) {
-                this.classList.add('click-effect');
-                setTimeout(() => this.classList.remove('click-effect'), 200);
-            });
+        function closeModal(type) {
+            if (type === 'enot') {
+                document.getElementById('enotModal').classList.remove('active');
+            } else if (type === 'cop') {
+                document.getElementById('copModal').classList.remove('active');
+            }
+            document.body.style.overflow = '';
+        }
+
+        window.addEventListener('click', function(event) {
+            const enotModal = document.getElementById('enotModal');
+            const copModal = document.getElementById('copModal');
+            if (event.target === enotModal) {
+                closeModal('enot');
+            }
+            if (event.target === copModal) {
+                closeModal('cop');
+            }
         });
     </script>
 </body>

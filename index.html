@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Империя Енотск | Natural Legacy</title>
     <!-- Шрифты и иконки -->
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -15,6 +15,7 @@
             box-sizing: border-box;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -23,7 +24,7 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px;
             position: relative;
             overflow-x: hidden;
@@ -78,6 +79,14 @@
             animation: panelGlow 4s infinite alternate;
         }
 
+        @media (max-width: 768px) {
+            .minecraft-panel {
+                padding: 15px;
+                border-width: 4px;
+                box-shadow: inset 0 0 0 2px #4f3f2a, 10px 10px 0 rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 0, 0.3);
+            }
+        }
+
         @keyframes panelGlow {
             0% { box-shadow: inset 0 0 0 2px #4f3f2a, 15px 15px 0 rgba(0, 0, 0, 0.6), 0 0 20px rgba(80, 200, 80, 0.3); }
             100% { box-shadow: inset 0 0 0 2px #6f5f4a, 15px 15px 0 rgba(0, 0, 0, 0.6), 0 0 60px rgba(100, 255, 100, 0.9); }
@@ -93,6 +102,9 @@
             position: relative;
             overflow: hidden;
             transition: 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .header:hover {
@@ -101,25 +113,86 @@
         }
 
         .header h1 {
-            font-size: 32px;
+            font-size: clamp(20px, 5vw, 32px);
             color: #ffffa0;
             text-shadow: 5px 5px 0 #3f5f3f, -2px -2px 0 #1f3f1f;
             letter-spacing: 3px;
             animation: textFlicker 3s infinite;
+            line-height: 1.4;
+            margin-bottom: 15px;
         }
 
-        @keyframes textFlicker {
-            0%, 100% { opacity: 1; text-shadow: 5px 5px 0 #3f5f3f, -2px -2px 0 #1f3f1f; }
-            95% { opacity: 1; }
-            96% { opacity: 0.9; text-shadow: 5px 5px 0 #5f7f5f; }
-            97% { opacity: 1; text-shadow: 5px 5px 0 #2f4f2f; }
+        .user-info {
+            background: #1f3f1f;
+            border: 3px solid #9fbf7f;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .header p {
-            font-size: 16px;
-            color: #f0e0a0;
-            text-shadow: 4px 4px 0 #2f4f2f;
-            margin-top: 15px;
+        .user-info span {
+            color: #ffff9f;
+            font-size: 12px;
+        }
+
+        .user-info button {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            background: #9f4f4f;
+            border: 3px solid #6f2f2f;
+            color: white;
+            padding: 8px 15px;
+            cursor: pointer;
+            box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
+        }
+
+        .user-info button:hover {
+            background: #bf6f6f;
+        }
+
+        .auth-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 3000;
+        }
+
+        .auth-button {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            background: #5f7f5f;
+            border: 4px solid #2f4f2f;
+            color: #ffff9f;
+            padding: 12px 20px;
+            cursor: pointer;
+            box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #9fbf9f, 5px 5px 0 #1f1f1f;
+            transition: 0.2s;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .auth-button:hover {
+            background: #7f9f7f;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
+        }
+
+        @media (max-width: 768px) {
+            .auth-buttons {
+                top: 10px;
+                right: 10px;
+                flex-direction: column;
+            }
+            .auth-button {
+                padding: 8px 15px;
+                font-size: 10px;
+                min-width: 100px;
+            }
         }
 
         .nav-bar {
@@ -136,7 +209,7 @@
 
         .nav-btn {
             font-family: 'Press Start 2P', cursive;
-            font-size: 12px;
+            font-size: clamp(10px, 2vw, 12px);
             background: #9f9f9f;
             border: 4px solid #6f6f6f;
             color: #1f1f1f;
@@ -145,27 +218,10 @@
             text-transform: uppercase;
             box-shadow: inset -3px -3px 0 #4f4f4f, inset 3px 3px 0 #efefef, 4px 4px 0 #1f1f1f;
             cursor: pointer;
-            transition: all 0.1s cubic-bezier(0.2, 1, 0.3, 1);
+            transition: all 0.1s;
             position: relative;
             overflow: hidden;
-        }
-
-        .nav-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s;
-        }
-
-        .nav-btn:hover::before {
-            width: 300px;
-            height: 300px;
+            flex: 0 1 auto;
         }
 
         .nav-btn:hover {
@@ -174,15 +230,149 @@
             transform: translate(2px, 2px) scale(1.02);
         }
 
-        .nav-btn:active {
-            transform: translate(4px, 4px);
-            box-shadow: inset -1px -1px 0 #6f6f6f, inset 1px 1px 0 #ffffff, 1px 1px 0 #1f1f1f;
-        }
-
         .nav-btn.active {
             background: #cfcf6f;
             border-color: #9f9f2f;
             box-shadow: inset -3px -3px 0 #7f7f2f, inset 3px 3px 0 #ffff9f;
+        }
+
+        .auth-modal {
+            display: none;
+            position: fixed;
+            z-index: 4000;
+            background: #4f6f3f;
+            border: 6px solid #2f4f2f;
+            box-shadow: inset 0 0 0 3px #7faf7f, 15px 15px 0 #1f3f1f, 0 0 50px #ffd700;
+            padding: 25px;
+            width: 350px;
+            cursor: move;
+            user-select: none;
+            backdrop-filter: blur(5px);
+        }
+
+        .auth-modal.active {
+            display: block;
+        }
+
+        .auth-modal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 4px dashed #ffd700;
+            color: #ffff9f;
+            font-size: 16px;
+            text-shadow: 2px 2px 0 #3f6f3f;
+            cursor: move;
+        }
+
+        .auth-modal-header i {
+            color: #ffd700;
+            font-size: 20px;
+        }
+
+        .auth-modal-close {
+            margin-left: auto;
+            background: #9f4f4f;
+            border: 3px solid #6f2f2f;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
+        }
+
+        .auth-modal-close:hover {
+            background: #bf6f6f;
+            transform: scale(1.1);
+        }
+
+        .auth-modal-content {
+            cursor: default;
+        }
+
+        .error-message {
+            background: #9f4f4f;
+            border: 3px solid #6f2f2f;
+            color: white;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 10px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background: #4f9f4f;
+            border: 3px solid #2f6f2f;
+            color: white;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 10px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #cfefcf;
+            font-size: 10px;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background: #1f3f1f;
+            border: 3px solid #7f9f6f;
+            color: white;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 10px;
+            box-shadow: inset -2px -2px 0 #0f2f0f, inset 2px 2px 0 #9fbf9f;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #ffd700;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: #9f9f9f;
+            border: 4px solid #6f6f6f;
+            color: #1f1f1f;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: inset -3px -3px 0 #4f4f4f, inset 3px 3px 0 #efefef, 4px 4px 0 #1f1f1f;
+            transition: 0.1s;
+            margin-top: 10px;
+        }
+
+        .auth-btn:hover {
+            background: #bfbfbf;
+            transform: translate(2px, 2px);
+            box-shadow: inset -2px -2px 0 #6f6f6f, inset 2px 2px 0 #ffffff, 2px 2px 0 #1f1f1f;
         }
 
         .members-section {
@@ -200,10 +390,11 @@
             align-items: center;
             flex-wrap: wrap;
             margin-bottom: 20px;
+            gap: 15px;
         }
 
         .members-title {
-            font-size: 24px;
+            font-size: clamp(18px, 5vw, 24px);
             color: #ffff9f;
             text-shadow: 4px 4px 0 #3f6f3f;
             display: flex;
@@ -215,7 +406,7 @@
             background: #1f3f1f;
             padding: 10px 20px;
             border: 3px solid #9fbf7f;
-            font-size: 16px;
+            font-size: clamp(14px, 4vw, 16px);
             color: #ffffaf;
         }
 
@@ -228,7 +419,7 @@
         }
 
         .elite-title {
-            font-size: 18px;
+            font-size: clamp(16px, 4vw, 18px);
             color: #ffd700;
             text-shadow: 3px 3px 0 #5f4f1f;
             margin-bottom: 20px;
@@ -291,7 +482,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
-            transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.5);
+            transition: all 0.2s;
             position: relative;
             overflow: hidden;
             cursor: pointer;
@@ -334,11 +525,6 @@
             box-shadow: 0 0 30px #ffd700;
         }
 
-        .member-card:active {
-            transform: translate(2px, 2px) scale(0.98);
-            box-shadow: 3px 3px 0 #0f2f0f;
-        }
-
         .member-avatar {
             width: 80px;
             height: 80px;
@@ -350,52 +536,35 @@
             font-size: 48px;
             margin-bottom: 15px;
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #afcf8f;
-            transition: all 0.3s cubic-bezier(0.2, 1, 0.3, 2);
+            transition: all 0.3s;
         }
 
         .member-name {
-            font-size: 14px;
+            font-size: clamp(12px, 3vw, 14px);
             color: #ffff9f;
             text-shadow: 2px 2px 0 #2f4f2f;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             word-break: break-word;
-            transition: 0.2s;
+        }
+
+        .member-username {
+            font-size: 10px;
+            color: #cfefcf;
+            margin-bottom: 10px;
         }
 
         .member-mc {
-            font-size: 11px;
+            font-size: clamp(9px, 2.5vw, 11px);
             background: #1f2f1f;
             padding: 8px 12px;
             border: 2px solid #9fbf7f;
             color: #cfefcf;
             width: 100%;
             margin: 5px 0;
-            transition: 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .member-mc::before {
-            content: '⛏️';
-            position: absolute;
-            left: -20px;
-            opacity: 0;
-            transition: 0.2s;
-        }
-
-        .member-card:hover .member-mc::before {
-            left: 5px;
-            opacity: 1;
-        }
-
-        .member-card:hover .member-mc {
-            padding-left: 30px;
-            background: #2f4f2f;
-            border-color: #cfef9f;
         }
 
         .member-tg {
-            font-size: 11px;
+            font-size: clamp(9px, 2.5vw, 11px);
             background: #2f4f8f;
             padding: 8px 12px;
             border: 2px solid #7fafef;
@@ -405,83 +574,15 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: 0.2s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .member-tg::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
-            transform: rotate(45deg);
-            transition: 0.5s;
-            opacity: 0;
-        }
-
-        .member-card:hover .member-tg::after {
-            opacity: 1;
-            animation: tgShine 1.5s infinite;
-        }
-
-        @keyframes tgShine {
-            0% { transform: rotate(45deg) translateX(-100%); }
-            100% { transform: rotate(45deg) translateX(100%); }
         }
 
         .member-rank {
-            font-size: 9px;
+            font-size: clamp(8px, 2vw, 9px);
             padding: 6px 12px;
             background: #c77d2f;
             border: 2px solid #9f5f1f;
             margin-top: 10px;
-            transition: 0.2s;
-            position: relative;
-        }
-
-        .member-card:hover .member-rank {
-            background: #e99f4f;
-            transform: scale(1.05);
-            box-shadow: 0 0 15px #ff9f4f;
-        }
-
-        .member-card.empty {
-            background: #2f4f2f;
-            border: 3px dashed #7f9f6f;
-            opacity: 0.8;
-        }
-
-        .member-card.empty .member-avatar {
-            background: #1f3f1f;
-            border-color: #5f7f5f;
-            color: #8faf8f;
-        }
-
-        .member-card.empty .member-name {
-            color: #afcfaf;
-            text-shadow: 2px 2px 0 #1f3f1f;
-        }
-
-        .member-card.empty:hover {
-            opacity: 1;
-            background: #3f6f3f;
-        }
-
-        .member-card.special {
-            background: #4f3f1f;
-            border: 4px solid #ffaa00;
-            box-shadow: 0 0 20px rgba(255, 170, 0, 0.5);
-        }
-
-        .member-card.special .member-rank {
-            background: #aa6f2f;
-            border-color: #ffaa00;
-            color: #ffffaa;
-            font-weight: bold;
+            width: 100%;
         }
 
         .member-card.imperator {
@@ -498,7 +599,6 @@
             background: #b8860b;
             border-color: gold;
             color: #ffffaa;
-            font-size: 10px;
         }
 
         .member-card.cop {
@@ -515,7 +615,149 @@
             background: #8f8f8f;
             border-color: #c0c0c0;
             color: #ffffaa;
-            font-size: 9px;
+        }
+
+        .member-card.kiwe {
+            background: #4f3f5f;
+            border: 4px solid #b8860b;
+            box-shadow: 0 0 20px #b8860b;
+        }
+
+        .member-card.kiwe .member-avatar {
+            border-color: #b8860b;
+        }
+
+        .member-card.kiwe .member-rank {
+            background: #8b5a2b;
+            border-color: #b8860b;
+            color: #ffffaa;
+        }
+
+        .admin-panel {
+            background: #2f4f4f;
+            border: 4px solid #ffd700;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: inset 0 0 0 3px #ffec9f, 10px 10px 0 #1f3f1f;
+            display: none;
+        }
+
+        .admin-panel.show {
+            display: block;
+        }
+
+        .admin-title {
+            font-size: 20px;
+            color: #ffd700;
+            text-shadow: 4px 4px 0 #5f4f1f;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 4px dashed #ffd700;
+            padding-bottom: 10px;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .admin-tab {
+            background: #1f3f3f;
+            border: 3px solid #ffd700;
+            color: #ffff9f;
+            padding: 10px 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .admin-tab:hover {
+            background: #2f5f5f;
+            transform: scale(1.05);
+        }
+
+        .admin-tab.active {
+            background: #5f4f2f;
+            border-color: gold;
+            color: gold;
+        }
+
+        .admin-tab-content {
+            display: none;
+        }
+
+        .admin-tab-content.active {
+            display: block;
+        }
+
+        .users-table {
+            width: 100%;
+            background: #1f3f3f;
+            border: 3px solid #ffd700;
+            border-collapse: collapse;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 15px;
+            text-align: left;
+            border: 2px solid #7f9f6f;
+            color: #cfefcf;
+            font-size: 12px;
+        }
+
+        .users-table th {
+            background: #2f5f5f;
+            color: #ffff9f;
+            font-size: 14px;
+        }
+
+        .users-table tr:hover {
+            background: #2f4f4f;
+        }
+
+        .users-table .banned {
+            background: #5f2f2f;
+            opacity: 0.7;
+        }
+
+        .users-table .banned td {
+            color: #ff9f9f;
+        }
+
+        .admin-btn {
+            background: #9f9f9f;
+            border: 3px solid #6f6f6f;
+            color: #1f1f1f;
+            padding: 5px 10px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 8px;
+            cursor: pointer;
+            margin: 2px;
+            box-shadow: inset -2px -2px 0 #4f4f4f, inset 2px 2px 0 #efefef;
+        }
+
+        .admin-btn:hover {
+            background: #bfbfbf;
+        }
+
+        .admin-btn.ban {
+            background: #9f4f4f;
+            border-color: #6f2f2f;
+        }
+
+        .admin-btn.unban {
+            background: #4f9f4f;
+            border-color: #2f6f2f;
+        }
+
+        .admin-btn.edit {
+            background: #4f9f9f;
+            border-color: #2f6f6f;
         }
 
         .legacy-info {
@@ -534,145 +776,13 @@
             transform: scale(1.01);
         }
 
-        .leaderboard {
-            background: #2f4f4f;
-            border: 4px solid #ffd700;
-            padding: 20px;
-            margin: 30px 0;
-            box-shadow: inset 0 0 0 3px #ffec9f, 10px 10px 0 #1f3f1f;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .leaderboard::before {
-            content: '🏆';
-            position: absolute;
-            font-size: 80px;
-            right: 10px;
-            bottom: -10px;
-            opacity: 0.2;
-            transform: rotate(15deg);
-        }
-
-        .leaderboard-title {
-            font-size: 20px;
-            color: #ffd700;
-            text-shadow: 4px 4px 0 #5f4f1f;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 4px dashed #ffd700;
-            padding-bottom: 10px;
-        }
-
-        .tournament-results {
-            background: #4f3f2f;
-            border: 4px solid #ffd700;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: inset 0 0 0 3px #ffec9f, 8px 8px 0 #1f3f1f;
-        }
-
-        .tournament-title {
-            font-size: 16px;
-            color: #ffd700;
-            text-shadow: 3px 3px 0 #5f4f1f;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .tournament-list {
-            list-style: none;
-        }
-
-        .tournament-list li {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 10px;
-            margin: 5px 0;
-            background: #2f4f2f;
-            border: 2px solid #9fbf7f;
-            font-size: 12px;
-        }
-
-        .tournament-list li:first-child {
-            background: #5f4f2f;
-            border-color: gold;
-        }
-
-        .tournament-list li:first-child .place {
-            color: gold;
-        }
-
-        .place {
-            font-size: 16px;
-            min-width: 40px;
-            color: #ffff9f;
-        }
-
-        .leaderboard-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        @media (max-width: 900px) {
-            .leaderboard-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 500px) {
-            .leaderboard-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .leaderboard-item {
-            background: #1f3f3f;
-            border: 3px solid #ffd700;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: 0.3s;
-        }
-
-        .leaderboard-item:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 0 30px #ffd700;
-            background: #2f5f5f;
-        }
-
-        .leaderboard-icon {
-            font-size: 40px;
-            background: #0f2f2f;
-            padding: 10px;
-            border: 3px solid #ffd700;
-        }
-
-        .leaderboard-content h3 {
-            font-size: 12px;
-            color: #ffff9f;
-            margin-bottom: 5px;
-        }
-
-        .leaderboard-content p {
-            font-size: 10px;
-            color: #cfefcf;
-        }
-
         .footer {
             background: #2f2f2f;
             border: 4px solid #1f1f1f;
             padding: 25px;
             text-align: center;
             margin-top: 30px;
-            font-size: 12px;
+            font-size: clamp(10px, 3vw, 12px);
             color: #afafaf;
             box-shadow: inset 0 0 0 3px #5f5f5f;
             position: relative;
@@ -690,26 +800,11 @@
             animation: footerPulse 5s infinite;
         }
 
-        @keyframes footerPulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
         .footer-year {
-            font-size: 18px;
+            font-size: clamp(16px, 5vw, 18px);
             color: #ffff7f;
             text-shadow: 3px 3px 0 #3f3f00;
             margin: 10px 0;
-        }
-
-        .click-effect {
-            animation: clickPop 0.2s ease-out;
-        }
-
-        @keyframes clickPop {
-            0% { transform: scale(1); }
-            50% { transform: scale(0.95); box-shadow: 0 0 50px red; }
-            100% { transform: scale(1); }
         }
 
         .scroll-top {
@@ -726,10 +821,10 @@
             font-size: 30px;
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #9fbf9f, 5px 5px 0 #1f1f1f;
-            transition: 0.2s;
             z-index: 100;
             opacity: 0;
             visibility: hidden;
+            transition: 0.2s;
         }
 
         .scroll-top.visible {
@@ -741,10 +836,6 @@
             background: #7f9f7f;
             transform: scale(1.1) translateY(-5px);
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
-        }
-
-        .scroll-top:active {
-            transform: scale(0.95);
         }
 
         .section-divider {
@@ -761,11 +852,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 5000;
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(5px);
+            padding: 20px;
         }
 
         .modal.active {
@@ -780,12 +872,7 @@
             width: 90%;
             box-shadow: inset 0 0 0 3px #9fbf9f, 15px 15px 0 #1f3f1f, 0 0 50px #ffd700;
             position: relative;
-            animation: modalAppear 0.3s cubic-bezier(0.2, 1, 0.3, 1);
-        }
-
-        @keyframes modalAppear {
-            0% { transform: scale(0.5) translateY(-50px); opacity: 0; }
-            100% { transform: scale(1) translateY(0); opacity: 1; }
+            animation: modalAppear 0.3s;
         }
 
         .modal-close {
@@ -802,16 +889,6 @@
             font-size: 20px;
             cursor: pointer;
             box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
-            transition: 0.1s;
-        }
-
-        .modal-close:hover {
-            background: #bf6f6f;
-            transform: scale(1.1);
-        }
-
-        .modal-close:active {
-            transform: scale(0.95);
         }
 
         .modal-header {
@@ -824,19 +901,18 @@
         }
 
         .modal-avatar {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             background: #2f4f2f;
             border: 4px solid #ffd700;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 64px;
-            box-shadow: inset -4px -4px 0 #1f3f1f, inset 4px 4px 0 #afcf8f;
+            font-size: 48px;
         }
 
         .modal-title {
-            font-size: 24px;
+            font-size: clamp(20px, 6vw, 24px);
             color: #ffff9f;
             text-shadow: 4px 4px 0 #3f6f3f;
         }
@@ -853,10 +929,11 @@
             background: #2f4f2f;
             border: 2px solid #7f9f6f;
             padding: 10px;
+            gap: 10px;
         }
 
         .modal-info-label {
-            width: 120px;
+            min-width: 120px;
             color: #ffff9f;
         }
 
@@ -879,10 +956,7 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            min-width: 300px;
-            max-width: 600px;
-            min-height: 200px;
-            max-height: 400px;
+            width: 340px;
             background: #4f6f3f;
             border: 4px solid #2f4f2f;
             box-shadow: inset 0 0 0 3px #7faf7f, 10px 10px 0 #1f3f1f;
@@ -904,6 +978,17 @@
             box-shadow: inset 0 0 0 3px #9fcf9f, 10px 10px 0 #1f3f1f, 0 0 30px #7fbf7f;
         }
 
+        @media (max-width: 768px) {
+            .music-player {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                width: auto;
+                max-width: 100%;
+                cursor: default;
+            }
+        }
+
         .player-header {
             display: flex;
             align-items: center;
@@ -919,7 +1004,6 @@
 
         .player-header i {
             color: #ffd700;
-            font-size: 16px;
         }
 
         .close-player-btn {
@@ -936,11 +1020,6 @@
             box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
         }
 
-        .close-player-btn:hover {
-            background: #bf6f6f;
-            transform: scale(1.1);
-        }
-
         .track-info {
             background: #1f3f1f;
             border: 2px solid #7f9f6f;
@@ -948,7 +1027,6 @@
             margin-bottom: 15px;
             color: #cfefcf;
             font-size: 8px;
-            line-height: 1.5;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
@@ -959,6 +1037,7 @@
             display: flex;
             justify-content: space-around;
             margin-bottom: 15px;
+            gap: 5px;
         }
 
         .player-btn {
@@ -973,7 +1052,6 @@
             justify-content: center;
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #4f4f4f, inset 3px 3px 0 #efefef, 3px 3px 0 #1f1f1f;
-            transition: all 0.1s;
             font-family: 'Press Start 2P', cursive;
         }
 
@@ -981,11 +1059,6 @@
             background: #bfbfbf;
             transform: translate(1px, 1px);
             box-shadow: inset -2px -2px 0 #6f6f6f, inset 2px 2px 0 #ffffff, 2px 2px 0 #1f1f1f;
-        }
-
-        .player-btn:active {
-            transform: translate(3px, 3px);
-            box-shadow: inset -1px -1px 0 #6f6f6f, inset 1px 1px 0 #ffffff, 1px 1px 0 #1f1f1f;
         }
 
         .volume-control {
@@ -1012,8 +1085,8 @@
 
         .volume-control input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 16px;
+            height: 16px;
             background: #9fbf7f;
             border: 2px solid #3f6f3f;
             box-shadow: inset -2px -2px 0 #1f3f1f, inset 2px 2px 0 #cfefcf;
@@ -1034,7 +1107,6 @@
             font-size: 24px;
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #9fbf9f, 5px 5px 0 #1f1f1f;
-            transition: 0.2s;
             z-index: 2500;
             color: #ffff9f;
         }
@@ -1045,24 +1117,13 @@
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
         }
 
-        .toggle-player-btn:active {
-            transform: scale(0.95);
-        }
-
-        @media (max-width: 600px) {
-            .music-player {
-                min-width: 250px;
-                max-width: 400px;
-            }
-            .player-btn {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
+        @media (max-width: 768px) {
             .toggle-player-btn {
                 width: 50px;
                 height: 50px;
                 font-size: 20px;
+                top: 10px;
+                left: 10px;
             }
         }
     </style>
@@ -1080,259 +1141,208 @@
     <div class="particle" style="top: 15%; left: 15%;">🦝</div>
     <div class="particle" style="top: 75%; left: 75%;">🐾</div>
 
-    <!-- Кнопка включения плеера (постоянная) -->
+    <!-- Кнопка включения плеера -->
     <div class="toggle-player-btn" id="togglePlayerBtn" title="Включить радио">🎵</div>
+
+    <!-- Кнопки авторизации -->
+    <div class="auth-buttons" id="authButtons">
+        <button class="auth-button" onclick="openAuthModal('login')">ВХОД</button>
+        <button class="auth-button" onclick="openAuthModal('register')">РЕГИСТРАЦИЯ</button>
+    </div>
+
+    <!-- Модальное окно входа -->
+    <div class="auth-modal" id="loginModal">
+        <div class="auth-modal-header" id="loginModalHeader">
+            <i class="fas fa-key"></i> ВХОД
+            <div class="auth-modal-close" onclick="closeAuthModal('login')">✖</div>
+        </div>
+        <div class="auth-modal-content">
+            <div class="error-message" id="loginErrorMessage"></div>
+            <div class="form-group">
+                <label>Логин</label>
+                <input type="text" id="loginUsername" placeholder="Введите логин">
+            </div>
+            <div class="form-group">
+                <label>Пароль</label>
+                <input type="password" id="loginPassword" placeholder="Введите пароль">
+            </div>
+            <button class="auth-btn" onclick="login()">ВОЙТИ</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div class="auth-modal" id="registerModal">
+        <div class="auth-modal-header" id="registerModalHeader">
+            <i class="fas fa-user-plus"></i> РЕГИСТРАЦИЯ
+            <div class="auth-modal-close" onclick="closeAuthModal('register')">✖</div>
+        </div>
+        <div class="auth-modal-content">
+            <div class="error-message" id="registerErrorMessage"></div>
+            <div class="success-message" id="registerSuccessMessage"></div>
+            <div class="form-group">
+                <label>Логин</label>
+                <input type="text" id="regUsername" placeholder="Придумайте логин">
+            </div>
+            <div class="form-group">
+                <label>Пароль (мин. 6 символов)</label>
+                <input type="password" id="regPassword" placeholder="Придумайте пароль">
+            </div>
+            <div class="form-group">
+                <label>Подтверждение</label>
+                <input type="password" id="regConfirm" placeholder="Повторите пароль">
+            </div>
+            <div class="form-group">
+                <label>Minecraft ник</label>
+                <input type="text" id="regMinecraft" placeholder="Ваш ник в Minecraft">
+            </div>
+            <div class="form-group">
+                <label>Telegram (опционально)</label>
+                <input type="text" id="regTelegram" placeholder="@username">
+            </div>
+            <button class="auth-btn" onclick="register()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+        </div>
+    </div>
 
     <div class="minecraft-panel">
         <!-- Шапка -->
         <div class="header">
             <h1>✦ ИМПЕРИЯ ЕНОТСК ✦</h1>
-            <p>⚡ НА СЕРВЕРЕ NATURAL LEGACY ⚡</p>
+            <div class="user-info" id="userInfo">
+                <span id="userGreeting">Вы не авторизованы</span>
+                <button onclick="logout()" id="logoutBtn" style="display: none;">Выйти</button>
+            </div>
         </div>
 
         <!-- Навигация -->
         <div class="nav-bar">
             <a href="#main" class="nav-btn">Главная</a>
             <a href="#members" class="nav-btn active">Участники</a>
-            <a href="#leaderboard" class="nav-btn">Лидерборд</a>
+            <a href="#admin" class="nav-btn" id="adminNavBtn" style="display: none;">Админ</a>
             <a href="#about" class="nav-btn">О нас</a>
+        </div>
+
+        <!-- Админ панель -->
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-title">
+                <i class="fas fa-crown" style="color: gold;"></i> АДМИН ПАНЕЛЬ
+            </div>
+            
+            <div class="admin-tabs">
+                <div class="admin-tab active" onclick="switchAdminTab('users')">Пользователи</div>
+                <div class="admin-tab" onclick="switchAdminTab('members')">Участники империи</div>
+                <div class="admin-tab" onclick="switchAdminTab('oldMembers')">Старые анкеты</div>
+                <div class="admin-tab" onclick="switchAdminTab('banned')">Забаненные</div>
+            </div>
+
+            <!-- Вкладка с пользователями -->
+            <div class="admin-tab-content active" id="adminUsersTab">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Логин</th>
+                            <th>Minecraft ник</th>
+                            <th>Telegram</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- Данные будут вставляться через JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Вкладка с участниками империи -->
+            <div class="admin-tab-content" id="adminMembersTab">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Логин</th>
+                            <th>Minecraft ник</th>
+                            <th>Telegram</th>
+                            <th>Ранг</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="membersTableBody">
+                        <!-- Данные будут вставляться через JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Вкладка со старыми анкетами -->
+            <div class="admin-tab-content" id="adminOldMembersTab">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>Имя</th>
+                            <th>Minecraft ник</th>
+                            <th>Telegram</th>
+                            <th>Ранг</th>
+                            <th>Аватар</th>
+                            <th>Тип</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="oldMembersTableBody">
+                        <!-- Данные будут вставляться через JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Вкладка с забаненными -->
+            <div class="admin-tab-content" id="adminBannedTab">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Логин</th>
+                            <th>Minecraft ник</th>
+                            <th>Telegram</th>
+                            <th>Причина</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bannedTableBody">
+                        <!-- Данные будут вставляться через JavaScript -->
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Секция УЧАСТНИКИ -->
         <div class="members-section" id="members">
             <div class="members-header">
                 <div class="members-title">
-                    <i class="fas fa-users"></i> УЧАСТНИКИ ИМПЕРИИ
+                    <i class="fas fa-users"></i> УЧАСТНИКИ
                 </div>
-                <div class="members-count">
-                    <i class="fas fa-paw"></i> Нас 37
+                <div class="members-count" id="membersCount">
+                    <i class="fas fa-paw"></i> Нас 13
                 </div>
             </div>
-            
-            <p style="text-align: center; font-size: 10px; margin: 10px 0 20px; color: #cfefcf;">
-                Telegram и Minecraft ники • Полный состав
-            </p>
 
-            <!-- Элитная секция (первые 4) -->
+            <!-- Элитная секция -->
             <div class="elite-section">
                 <div class="elite-title">
-                    <i class="fas fa-crown" style="color: gold;"></i> ОСНОВАТЕЛИ И ГЛАВЫ <i class="fas fa-crown" style="color: gold;"></i>
+                    <i class="fas fa-crown" style="color: gold;"></i> ОСНОВАТЕЛИ И ГЛАВЫ
                 </div>
-                <div class="elite-grid">
-                    <!-- 1. Император Enotiiik -->
-                    <div class="member-card imperator" onclick="openModal('enot')">
-                        <div class="member-avatar">👑</div>
-                        <div class="member-name">Enotiiik</div>
-                        <div class="member-mc">⛏️ Enotiiik</div>
-                        <div class="member-tg"><i class="fab fa-telegram"></i> @en0t_st</div>
-                        <div class="member-rank">ИМПЕРАТОР • PVE</div>
-                    </div>
-
-                    <!-- 2. Zovchik -->
-                    <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                        <div class="member-avatar">🏗️</div>
-                        <div class="member-name">Zovchik</div>
-                        <div class="member-mc">⛏️ Zovchik</div>
-                        <div class="member-tg"><i class="fab fa-telegram"></i> @Astolfo_mp3</div>
-                        <div class="member-rank">ГЛ. СТРОИТЕЛЬ • PVE/PVP</div>
-                    </div>
-
-                    <!-- 3. Kiweeeeeeeeee -->
-                    <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                        <div class="member-avatar">🌟</div>
-                        <div class="member-name">Kiweeeeeeeeee</div>
-                        <div class="member-mc">⛏️ Kiweeeeeeeeee</div>
-                        <div class="member-tg"><i class="fab fa-telegram"></i> @Kiweeeeeeeeee</div>
-                        <div class="member-rank">ЗАМ. ГЛ. СТРОИТЕЛЯ • PVE/PVP</div>
-                    </div>
-
-                    <!-- 4. Cop41k (особый, как у Енота) -->
-                    <div class="member-card cop" onclick="openModal('cop')">
-                        <div class="member-avatar">🛡️</div>
-                        <div class="member-name">Cop41k</div>
-                        <div class="member-mc">⛏️ Cop41k</div>
-                        <div class="member-tg"><i class="fab fa-telegram"></i> @Svyat0sh1</div>
-                        <div class="member-rank">ПРИБЛИЖЕННЫЙ К ИМПЕРАТОРУ/PVE</div>
-                    </div>
+                <div class="elite-grid" id="eliteGrid">
+                    <!-- Данные будут вставляться через JavaScript -->
                 </div>
             </div>
 
             <!-- Разделитель -->
             <div class="section-divider"></div>
 
-            <!-- Основной состав (остальные участники) -->
+            <!-- Основной состав -->
             <h3 style="color: #ffff9f; margin: 20px 0; font-size: 16px; text-align: center;">
-                <i class="fas fa-star"></i> ОСНОВНОЙ СОСТАВ <i class="fas fa-star"></i>
+                ОСНОВНОЙ СОСТАВ
             </h3>
 
-            <div class="members-grid">
-                <!-- GenerusRu -->
-                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">⚔️</div>
-                    <div class="member-name">GenerusRu</div>
-                    <div class="member-mc">⛏️ GenerusRu</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @generus1</div>
-                    <div class="member-rank">PVE</div>
-                </div>
-
-                <!-- Zov_Egor -->
-                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">⚔️</div>
-                    <div class="member-name">Zov_Egor</div>
-                    <div class="member-mc">⛏️ Zov_Egor</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @egori1410</div>
-                    <div class="member-rank">PVE</div>
-                </div>
-
-                <!-- Pizzaxxs (444bad) -->
-                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">🍕</div>
-                    <div class="member-name">444bad</div>
-                    <div class="member-mc">⛏️ 444bad</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @Pizzaxxs</div>
-                    <div class="member-rank">PVE • PVP</div>
-                </div>
-
-                <!-- DimasikPovelitel -->
-                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">👑</div>
-                    <div class="member-name">DimasikPovelitel</div>
-                    <div class="member-mc">⛏️ DimasikPovelitel</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @Davvun</div>
-                    <div class="member-rank">PVE</div>
-                </div>
-
-                <!-- antohakiller -->
-                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">🔪</div>
-                    <div class="member-name">antohakiller</div>
-                    <div class="member-mc">⛏️ antohakiller</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @wxtat</div>
-                    <div class="member-rank">PVP</div>
-                </div>
-
-                <!-- Miss_grase -->
-                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">🌾</div>
-                    <div class="member-name">Miss_grase</div>
-                    <div class="member-mc">⛏️ Miss_grase</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @Miss_graseXD</div>
-                    <div class="member-rank">ФЕРМЕРША • PVE</div>
-                </div>
-
-                <!-- gghorter_end (Иван меганайт) -->
-                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">⚔️</div>
-                    <div class="member-name">gghorter_end</div>
-                    <div class="member-mc">⛏️ gghorter_end</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @gghorter_end</div>
-                    <div class="member-rank">PVE • ИВАН МЕГАНАЙТ</div>
-                </div>
-
-                <!-- prods -->
-                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">⚙️</div>
-                    <div class="member-name">prods</div>
-                    <div class="member-mc">⛏️ prods</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @prods52</div>
-                    <div class="member-rank">PVE</div>
-                </div>
-
-                <!-- Egor656565 (Весёлый егор) -->
-                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">🎉</div>
-                    <div class="member-name">Egor656565</div>
-                    <div class="member-mc">⛏️ Egor656565</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @Egor4ik12656</div>
-                    <div class="member-rank">PVE • ВЕСЁЛЫЙ ЕГОР</div>
-                </div>
-
-                <!-- 5. Пустая анкета -->
-        <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">☠️</div>
-                    <div class="member-name">Arcecite</div>
-                    <div class="member-mc">⛏️ Arcecite</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> Нету тега</div>
-                    <div class="member-rank">PVP</div>
-                </div>
-
-                <!-- 6. Пустая анкета -->
-                <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">❓</div>
-                    <div class="member-name">???</div>
-                    <div class="member-mc">⛏️ ???</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
-                    <div class="member-rank">— свободно —</div>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 30px;">
-                <span class="nav-btn" style="display: inline-block; font-size: 10px; cursor: default; opacity: 0.8;">
-                    <i class="fas fa-users"></i> Всего 37 участников (10 показаны)
-                </span>
-            </div>
-        </div>
-
-        <!-- Лидерборд с результатами турнира -->
-        <div class="leaderboard" id="leaderboard">
-            <div class="leaderboard-title">
-                <i class="fas fa-trophy" style="color: gold;"></i> ЛИДЕРБОРД ДОСТИЖЕНИЙ <i class="fas fa-trophy" style="color: gold;"></i>
-            </div>
-            
-            <!-- Результаты последнего турнира -->
-            <div class="tournament-results">
-                <div class="tournament-title">
-                    <i class="fas fa-sword"></i> ПОСЛЕДНИЙ ТУРНИР
-                </div>
-                <ul class="tournament-list">
-                    <li>
-                        <span class="place">🥇 1 место</span>
-                        <span>Zovchik</span>
-                    </li>
-                    <li>
-                        <span class="place">🥈 2 место</span>
-                        <span>Kiweeeeeeeeee</span>
-                    </li>
-                    <li>
-                        <span class="place">🥉 3 место</span>
-                        <span>Arcecite</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="leaderboard-grid">
-                <div class="leaderboard-item">
-                    <div class="leaderboard-icon">⚔️</div>
-                    <div class="leaderboard-content">
-                        <h3>Лучший PVP-шер</h3>
-                        <p>Zovchik 🏆</p>
-                        <p style="font-size: 8px;">Непобедимый воин арены</p>
-                    </div>
-                </div>
-                <div class="leaderboard-item">
-                    <div class="leaderboard-icon">🌾</div>
-                    <div class="leaderboard-content">
-                        <h3>Самый лучший фармила</h3>
-                        <p>Arcecite 🌟</p>
-                        <p style="font-size: 8px;">Собрал тонны ресурсов</p>
-                    </div>
-                </div>
-                <div class="leaderboard-item">
-                    <div class="leaderboard-icon">🏗️</div>
-                    <div class="leaderboard-content">
-                        <h3>Лучший строитель</h3>
-                        <p>Zovchik 🏆</p>
-                        <p style="font-size: 8px;">Шедевры архитектуры</p>
-                    </div>
-                </div>
-                <div class="leaderboard-item">
-                    <div class="leaderboard-icon">⛓️</div>
-                    <div class="leaderboard-content">
-                        <h3>Лучший убийца новичков</h3>
-                        <p>Kiweeeeeeeee👑</p>
-                        <p style="font-size: 8px;">Держит весь сервер в страхе</p>
-                    </div>
-                </div>
+            <div class="members-grid" id="membersGrid">
+                <!-- Данные будут вставляться через JavaScript -->
             </div>
         </div>
 
@@ -1341,39 +1351,36 @@
             <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
                 <div style="font-size: 48px;">🌍</div>
                 <div>
-                    <h2 style="font-size: 18px; color: #cfefcf; text-shadow: 3px 3px 0 #1f4f7f;">Natural Legacy — наш дом</h2>
-                    <p style="font-size: 10px; margin-top: 10px; max-width: 600px;">
-                        Империя Енотск базируется на сервере Natural Legacy (версии 1.21.10). 
-                        Здесь мы строим, воюем и развиваемся. Присоединяйся к нам!
+                    <h2 style="font-size: 18px; color: #cfefcf;">Natural Legacy</h2>
+                    <p style="font-size: 10px; margin-top: 10px;">
+                        Империя Енотск на Natural Legacy (1.20+)
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- Футер с 2026 и количеством -->
+        <!-- Футер -->
         <div class="footer">
-            <p>© 2026 Империя Енотск на Natural Legacy</p>
+            <p>© 2026 Империя Енотск</p>
             <div class="footer-year">
-                <i class="fas fa-paw"></i> НАС 37 <i class="fas fa-paw"></i>
+                <i class="fas fa-paw"></i> НАС 13 <i class="fas fa-paw"></i>
             </div>
             <p style="margin-top: 15px;">🦝 Все права у енотов 🦝</p>
         </div>
     </div>
 
-    <!-- МУЗЫКАЛЬНЫЙ ПЛЕЕР -->
+    <!-- Музыкальный плеер -->
     <div class="music-player closed" id="musicPlayer">
         <div class="player-header" id="playerHeader">
             <i class="fas fa-headphones-alt"></i> РАДИО ЕНОТСК
-            <div class="close-player-btn" id="closePlayerBtn" title="Закрыть">✖</div>
+            <div class="close-player-btn" id="closePlayerBtn">✖</div>
         </div>
-        <div class="track-info" id="trackInfo">
-            Гимн Енотска
-        </div>
+        <div class="track-info" id="trackInfo">Гимн Енотска</div>
         <div class="player-buttons">
-            <button class="player-btn" id="prevBtn" title="Предыдущий">⏮️</button>
-            <button class="player-btn" id="playPauseBtn" title="Играть/Пауза">▶️</button>
-            <button class="player-btn" id="nextBtn" title="Следующий">⏭️</button>
-            <button class="player-btn" id="repeatBtn" title="Повтор">🔁</button>
+            <button class="player-btn" id="prevBtn">⏮️</button>
+            <button class="player-btn" id="playPauseBtn">▶️</button>
+            <button class="player-btn" id="nextBtn">⏭️</button>
+            <button class="player-btn" id="repeatBtn">🔁</button>
         </div>
         <div class="volume-control">
             <span>🔊</span>
@@ -1381,80 +1388,54 @@
         </div>
     </div>
 
-    <!-- Модальное окно для Енота -->
-    <div class="modal" id="enotModal">
+    <!-- Модальное окно для профилей -->
+    <div class="modal" id="profileModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeModal('enot')">✖</div>
+            <div class="modal-close" onclick="closeProfileModal()">✖</div>
             <div class="modal-header">
-                <div class="modal-avatar">👑</div>
-                <div class="modal-title">Enotiiik</div>
+                <div class="modal-avatar" id="modalAvatar">👤</div>
+                <div class="modal-title" id="modalName">Имя</div>
             </div>
-            <div class="modal-body">
-                <div class="modal-info-row">
-                    <div class="modal-info-label">Статус:</div>
-                    <div class="modal-info-value">Император</div>
-                </div>
-                <div class="modal-info-row">
-                    <div class="modal-info-label">Тип:</div>
-                    <div class="modal-info-value">PVE • Лидер</div>
-                </div>
-                <div class="modal-info-row">
-                    <div class="modal-info-label">Minecraft ник:</div>
-                    <div class="modal-info-value">Enotiiik</div>
-                </div>
-                <div class="modal-info-row">
-                    <div class="modal-info-label">Telegram:</div>
-                    <div class="modal-info-value">@en0t_st</div>
-                </div>
-                <div class="modal-info-row">
-                    <div class="modal-info-label">В империи:</div>
-                    <div class="modal-info-value">С основания (2025)</div>
-                </div>
-                <div class="modal-rank">
-                    👑 ПРАВИТЕЛЬ ИМПЕРИИ ЕНОТСК 👑
-                </div>
-                <p style="margin-top: 20px; font-size: 10px; color: #afefaf; text-align: center;">
-                    "Енот управляет, енот заботится, енот побеждает"
-                </p>
+            <div class="modal-body" id="modalBody">
+                <!-- Данные будут вставляться через JavaScript -->
             </div>
         </div>
     </div>
 
-    <!-- Модальное окно для Копчика -->
-    <div class="modal" id="copModal">
+    <!-- Модальное окно редактирования -->
+    <div class="modal" id="editModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeModal('cop')">✖</div>
+            <div class="modal-close" onclick="closeEditModal()">✖</div>
             <div class="modal-header">
-                <div class="modal-avatar">🛡️</div>
-                <div class="modal-title">Cop41k</div>
+                <div class="modal-avatar">✏️</div>
+                <div class="modal-title">Редактирование</div>
             </div>
             <div class="modal-body">
-                <div class="modal-info-row">
-                    <div class="modal-info-label">Статус:</div>
-                    <div class="modal-info-value">Приближенный к Императору, политик</div>
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" id="editName" placeholder="Имя">
                 </div>
-                <div class="modal-info-row">
-                    <div class="modal-info-label">Тип:</div>
-                    <div class="modal-info-value">PVE • Помощник</div>
+                <div class="form-group">
+                    <label>Minecraft ник</label>
+                    <input type="text" id="editMinecraft" placeholder="Minecraft ник">
                 </div>
-                <div class="modal-info-row">
-                    <div class="modal-info-label">Minecraft ник:</div>
-                    <div class="modal-info-value">Cop41k</div>
+                <div class="form-group">
+                    <label>Telegram</label>
+                    <input type="text" id="editTelegram" placeholder="@username">
                 </div>
-                <div class="modal-info-row">
-                    <div class="modal-info-label">Telegram:</div>
-                    <div class="modal-info-value">@Svyat0sh1</div>
+                <div class="form-group">
+                    <label>Ранг</label>
+                    <input type="text" id="editRank" placeholder="Ранг">
                 </div>
-                <div class="modal-info-row">
-                    <div class="modal-info-label">В империи:</div>
-                    <div class="modal-info-value">С 2026</div>
+                <div class="form-group">
+                    <label>Аватар</label>
+                    <input type="text" id="editAvatar" placeholder="Эмодзи аватара">
                 </div>
-                <div class="modal-rank">
-                    🤝 ПРАВАЯ РУКА ИМПЕРАТОРА 🤝
+                <div class="form-group">
+                    <label>Тип (imperator/cop/kiwe/normal)</label>
+                    <input type="text" id="editType" placeholder="Тип карточки">
                 </div>
-                <p style="margin-top: 20px; font-size: 10px; color: #afefaf; text-align: center;">
-                    "Верность и честь превыше всего"
-                </p>
+                <button class="auth-btn" onclick="saveOldMemberEdit()">СОХРАНИТЬ</button>
             </div>
         </div>
     </div>
@@ -1463,194 +1444,874 @@
     <div class="scroll-top" id="scrollTop">⬆️</div>
 
     <script>
-        (function() {
-            // Плавный скролл
-            const navBtns = document.querySelectorAll('.nav-btn');
-            navBtns.forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const href = btn.getAttribute('href');
-                    if (href && href.startsWith('#')) {
-                        const target = document.querySelector(href);
-                        if (target) {
-                            target.scrollIntoView({ behavior: 'smooth' });
-                        }
-                    }
-                });
-            });
-
-            // Кнопка наверх
-            const scrollTopBtn = document.getElementById('scrollTop');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    scrollTopBtn.classList.add('visible');
-                } else {
-                    scrollTopBtn.classList.remove('visible');
-                }
-            });
-
-            scrollTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            // Подсветка активного меню
-            const sections = document.querySelectorAll('div[id]');
-            window.addEventListener('scroll', () => {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-                    if (scrollY >= sectionTop - 200) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navBtns.forEach(btn => {
-                    btn.classList.remove('active');
-                    const href = btn.getAttribute('href');
-                    if (href === `#${current}`) {
-                        btn.classList.add('active');
-                    }
-                });
-            });
-
-            // Эффект тыка для всех карточек (кроме особых)
-            document.querySelectorAll('.member-card:not(.imperator):not(.cop)').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    this.classList.add('click-effect');
-                    setTimeout(() => this.classList.remove('click-effect'), 200);
-                });
-            });
-
-            // ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР =====
-            const player = document.getElementById('musicPlayer');
-            const toggleBtn = document.getElementById('togglePlayerBtn');
-            const closeBtn = document.getElementById('closePlayerBtn');
-            const trackInfo = document.getElementById('trackInfo');
-            const playPauseBtn = document.getElementById('playPauseBtn');
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const repeatBtn = document.getElementById('repeatBtn');
-            const volumeSlider = document.getElementById('volumeSlider');
-
-            const tracks = [
-                { 
-                    name: '🎵 ГИМН ЕНОТСКА', 
-                    src: 'https://www.dropbox.com/scl/fi/95q19mjwtqhh40sq1kaus/a2b7b629-86df-4765-9c10-761c7f7bf9c1.mp3?rlkey=bblsiay54zqj40jyob1bsj5ey&st=tfh4rds1&dl=1' 
-                },
-                { name: 'The Witcher 3 - Tavern Music', src: '' },
-                { name: 'Skyrim - Night Ambience', src: '' },
-                { name: 'Crawlers, Spiders and Wights', src: '' },
-                { name: 'Home Resonance', src: '' }
-            ];
-
-            let currentTrackIndex = 0;
-            let isPlaying = false;
-            let repeat = false;
-            let audio = null;
-
-            function initAudio() {
-                if (audio) {
-                    audio.pause();
-                }
-                audio = new Audio();
-                audio.volume = volumeSlider.value;
-
-                audio.addEventListener('ended', () => {
-                    if (repeat) {
-                        audio.play();
-                    } else {
-                        nextTrack();
-                    }
-                });
-
-                audio.addEventListener('error', (e) => {
-                    console.error('Ошибка загрузки аудио:', e);
-                    trackInfo.textContent = '⚠️ Ошибка загрузки трека';
-                });
+        // ========== СИСТЕМА ЗАЩИТЫ ==========
+        class SecuritySystem {
+            constructor() {
+                this.loginAttempts = new Map();
+                this.blockedIPs = new Set();
+                this.MAX_ATTEMPTS = 5;
+                this.BLOCK_TIME = 15 * 60 * 1000;
             }
 
-            initAudio();
-
-            function updateTrackInfo() {
-                trackInfo.textContent = tracks[currentTrackIndex].name;
-                if (tracks[currentTrackIndex].src) {
-                    audio.src = tracks[currentTrackIndex].src;
-                    audio.load();
-                    if (isPlaying) {
-                        audio.play().catch(e => console.log('Автовоспроизведение заблокировано браузером'));
-                    }
-                } else {
-                    audio.src = '';
-                    trackInfo.textContent = tracks[currentTrackIndex].name + ' (нет ссылки)';
-                }
-            }
-
-            function playTrack(index) {
-                if (index < 0) index = tracks.length - 1;
-                if (index >= tracks.length) index = 0;
-                currentTrackIndex = index;
-                updateTrackInfo();
-            }
-
-            function nextTrack() {
-                playTrack(currentTrackIndex + 1);
-            }
-
-            function prevTrack() {
-                playTrack(currentTrackIndex - 1);
-            }
-
-            playPauseBtn.addEventListener('click', () => {
-                isPlaying = !isPlaying;
-                playPauseBtn.textContent = isPlaying ? '⏸️' : '▶️';
+            checkBruteforce(username) {
+                const attempts = this.loginAttempts.get(username) || { count: 0, timestamp: Date.now() };
                 
-                if (isPlaying) {
-                    if (audio.src) {
-                        audio.play().catch(e => {
-                            console.log('Ошибка воспроизведения:', e);
-                            isPlaying = false;
-                            playPauseBtn.textContent = '▶️';
-                        });
+                if (this.blockedIPs.has(username)) {
+                    return false;
+                }
+
+                if (attempts.count >= this.MAX_ATTEMPTS) {
+                    if (Date.now() - attempts.timestamp < this.BLOCK_TIME) {
+                        this.blockedIPs.add(username);
+                        return false;
+                    } else {
+                        this.loginAttempts.delete(username);
+                        this.blockedIPs.delete(username);
+                    }
+                }
+                return true;
+            }
+
+            registerFailedAttempt(username) {
+                const attempts = this.loginAttempts.get(username) || { count: 0, timestamp: Date.now() };
+                attempts.count++;
+                attempts.timestamp = Date.now();
+                this.loginAttempts.set(username, attempts);
+            }
+
+            resetAttempts(username) {
+                this.loginAttempts.delete(username);
+                this.blockedIPs.delete(username);
+            }
+
+            hashPassword(password) {
+                let hash = 0;
+                for (let i = 0; i < password.length; i++) {
+                    const char = password.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+                return Math.abs(hash).toString(16);
+            }
+        }
+
+        // ========== СТАРЫЕ АНКЕТЫ ==========
+        class OldMembersManager {
+            constructor() {
+                this.eliteMembers = [
+                    { id: 'e1', name: 'Enotiiik', mc: 'Enotiiik', tg: '@en0t_st', rank: 'ИМПЕРАТОР', avatar: '👑', type: 'imperator' },
+                    { id: 'e2', name: 'Zovchik', mc: 'Zovchik', tg: '@Astolfo_mp3', rank: 'ГЛ. СТРОИТЕЛЬ', avatar: '🏗️', type: 'normal' },
+                    { id: 'e3', name: 'Kiweeeeeeeeee', mc: 'Kiweeeeeeeeee', tg: '@Kiweeeeeeeeee', rank: 'ВОИН ИМПЕРИИ', avatar: '🌟', type: 'kiwe' },
+                    { id: 'e4', name: 'Cop41k', mc: 'Cop41k', tg: '@Svyat0sh1', rank: 'ПРИБЛИЖЕННЫЙ', avatar: '🛡️', type: 'cop' }
+                ];
+
+                this.regularMembers = [
+                    { id: 'r1', name: 'GenerusRu', mc: 'GenerusRu', tg: '@generus1', rank: 'PVE', avatar: '⚔️', type: 'normal' },
+                    { id: 'r2', name: 'Zov_Egor', mc: 'Zov_Egor', tg: '@egori1410', rank: 'PVE', avatar: '⚔️', type: 'normal' },
+                    { id: 'r3', name: 'Pizzaxxs', mc: '444bad', tg: '@Pizzaxxs', rank: 'PVE', avatar: '🍕', type: 'normal' },
+                    { id: 'r4', name: 'DimasikPovelitel', mc: 'DimasikPovelitel', tg: '@Davvun', rank: 'PVE', avatar: '👑', type: 'normal' },
+                    { id: 'r5', name: 'antohakiller', mc: 'antohakiller', tg: '@wxtat', rank: 'PVE', avatar: '🔪', type: 'normal' },
+                    { id: 'r6', name: 'Miss_grase', mc: 'Miss_grase', tg: '@Miss_graseXD', rank: 'ФЕРМЕРША', avatar: '🌾', type: 'normal' },
+                    { id: 'r7', name: 'gghorter_end', mc: 'gghorter_end', tg: '@gghorter_end', rank: 'ИВАН МЕГАНАЙТ', avatar: '⚔️', type: 'normal' },
+                    { id: 'r8', name: 'prods', mc: 'prods', tg: '@prods52', rank: 'PVE', avatar: '⚙️', type: 'normal' },
+                    { id: 'r9', name: 'Egor656565', mc: 'Egor656565', tg: '@Egor4ik12656', rank: 'ВЕСЁЛЫЙ ЕГОР', avatar: '🎉', type: 'normal' }
+                ];
+
+                this.currentEditId = null;
+            }
+
+            getAll() {
+                return [...this.eliteMembers, ...this.regularMembers];
+            }
+
+            getById(id) {
+                return this.getAll().find(m => m.id === id);
+            }
+
+            update(id, data) {
+                const member = this.getById(id);
+                if (member) {
+                    if (this.eliteMembers.includes(member)) {
+                        const index = this.eliteMembers.findIndex(m => m.id === id);
+                        this.eliteMembers[index] = { ...this.eliteMembers[index], ...data };
+                    } else {
+                        const index = this.regularMembers.findIndex(m => m.id === id);
+                        this.regularMembers[index] = { ...this.regularMembers[index], ...data };
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+            updateAdminTable() {
+                const tbody = document.getElementById('oldMembersTableBody');
+                if (!tbody) return;
+
+                tbody.innerHTML = '';
+
+                this.getAll().forEach(member => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${member.name}</td>
+                        <td>${member.mc}</td>
+                        <td>${member.tg}</td>
+                        <td>${member.rank}</td>
+                        <td>${member.avatar}</td>
+                        <td>${member.type || 'normal'}</td>
+                        <td>
+                            <button class="admin-btn edit" onclick="editOldMember('${member.id}')">✏️ Ред.</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            edit(id) {
+                const member = this.getById(id);
+                if (member) {
+                    this.currentEditId = id;
+                    document.getElementById('editName').value = member.name || '';
+                    document.getElementById('editMinecraft').value = member.mc || '';
+                    document.getElementById('editTelegram').value = member.tg || '';
+                    document.getElementById('editRank').value = member.rank || '';
+                    document.getElementById('editAvatar').value = member.avatar || '';
+                    document.getElementById('editType').value = member.type || 'normal';
+                    document.getElementById('editModal').classList.add('active');
+                }
+            }
+
+            saveEdit() {
+                if (this.currentEditId) {
+                    const data = {
+                        name: document.getElementById('editName').value,
+                        mc: document.getElementById('editMinecraft').value,
+                        tg: document.getElementById('editTelegram').value,
+                        rank: document.getElementById('editRank').value,
+                        avatar: document.getElementById('editAvatar').value,
+                        type: document.getElementById('editType').value
+                    };
+                    
+                    if (this.update(this.currentEditId, data)) {
+                        this.updateAdminTable();
+                        updateMembersList();
+                        closeEditModal();
+                    }
+                }
+            }
+        }
+
+        // ========== УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ ==========
+        class UserManager {
+            constructor() {
+                this.security = new SecuritySystem();
+                this.users = this.loadUsers();
+                this.currentUser = null;
+                this.currentEditId = null;
+                this.updateUI();
+            }
+
+            loadUsers() {
+                const saved = localStorage.getItem('enotsk_users');
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+                
+                const defaultUsers = [
+                    {
+                        id: 1,
+                        username: 'Zovchik',
+                        password: this.security.hashPassword('Admin'),
+                        minecraft: 'Zovchik',
+                        telegram: '@Astolfo_mp3',
+                        role: 'admin',
+                        rank: 'ГЛ. СТРОИТЕЛЬ',
+                        avatar: '🏗️',
+                        inEmpire: true,
+                        banned: false,
+                        banReason: '',
+                        registered: new Date().toISOString()
+                    }
+                ];
+                localStorage.setItem('enotsk_users', JSON.stringify(defaultUsers));
+                return defaultUsers;
+            }
+
+            saveUsers() {
+                localStorage.setItem('enotsk_users', JSON.stringify(this.users));
+            }
+
+            register(username, password, minecraft, telegram) {
+                if (this.users.find(u => u.username === username)) {
+                    return { success: false, message: 'Пользователь уже существует' };
+                }
+
+                if (password.length < 6) {
+                    return { success: false, message: 'Пароль должен быть минимум 6 символов' };
+                }
+
+                const newUser = {
+                    id: this.users.length + 1,
+                    username: username,
+                    password: this.security.hashPassword(password),
+                    minecraft: minecraft,
+                    telegram: telegram || '',
+                    role: 'user',
+                    rank: 'УЧАСТНИК',
+                    avatar: '👤',
+                    inEmpire: false,
+                    banned: false,
+                    banReason: '',
+                    registered: new Date().toISOString()
+                };
+
+                this.users.push(newUser);
+                this.saveUsers();
+                
+                return { success: true, message: 'Регистрация успешна' };
+            }
+
+            login(username, password) {
+                if (!this.security.checkBruteforce(username)) {
+                    return { success: false, message: 'Слишком много попыток. Подождите 15 минут.' };
+                }
+
+                const user = this.users.find(u => u.username === username);
+                const hashedPassword = this.security.hashPassword(password);
+
+                if (user && user.password === hashedPassword) {
+                    if (user.banned) {
+                        return { success: false, message: 'Вы забанены. Причина: ' + user.banReason };
+                    }
+                    
+                    this.security.resetAttempts(username);
+                    this.currentUser = user;
+                    
+                    sessionStorage.setItem('currentUser', JSON.stringify({
+                        id: user.id,
+                        username: user.username,
+                        role: user.role
+                    }));
+                    
+                    this.updateUI();
+                    return { success: true, user: user };
+                } else {
+                    this.security.registerFailedAttempt(username);
+                    return { success: false, message: 'Неверный логин или пароль' };
+                }
+            }
+
+            logout() {
+                this.currentUser = null;
+                sessionStorage.removeItem('currentUser');
+                this.updateUI();
+            }
+
+            checkSession() {
+                const saved = sessionStorage.getItem('currentUser');
+                if (saved) {
+                    const userData = JSON.parse(saved);
+                    this.currentUser = this.users.find(u => u.id === userData.id);
+                }
+                this.updateUI();
+                return this.currentUser;
+            }
+
+            updateUI() {
+                const userGreeting = document.getElementById('userGreeting');
+                const logoutBtn = document.getElementById('logoutBtn');
+                const authButtons = document.getElementById('authButtons');
+                const adminNavBtn = document.getElementById('adminNavBtn');
+                const adminPanel = document.getElementById('adminPanel');
+
+                if (this.currentUser) {
+                    userGreeting.textContent = `Привет, ${this.currentUser.username}!`;
+                    logoutBtn.style.display = 'block';
+                    authButtons.style.display = 'none';
+                    
+                    if (this.currentUser.role === 'admin') {
+                        adminNavBtn.style.display = 'block';
+                        adminPanel.classList.add('show');
+                        this.updateAdminTables();
+                    } else {
+                        adminNavBtn.style.display = 'none';
+                        adminPanel.classList.remove('show');
                     }
                 } else {
-                    audio.pause();
+                    userGreeting.textContent = 'Вы не авторизованы';
+                    logoutBtn.style.display = 'none';
+                    authButtons.style.display = 'flex';
+                    adminNavBtn.style.display = 'none';
+                    adminPanel.classList.remove('show');
                 }
-            });
+            }
 
-            prevBtn.addEventListener('click', prevTrack);
-            nextBtn.addEventListener('click', nextTrack);
+            updateAdminTables() {
+                this.updateUsersTable();
+                this.updateMembersTable();
+                this.updateBannedTable();
+                oldMembersManager.updateAdminTable();
+            }
 
-            repeatBtn.addEventListener('click', () => {
-                repeat = !repeat;
-                repeatBtn.style.opacity = repeat ? '1' : '0.5';
-                if (audio) {
-                    audio.loop = repeat;
+            updateUsersTable() {
+                const tbody = document.getElementById('usersTableBody');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                this.users.filter(u => !u.banned).forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.minecraft}</td>
+                        <td>${user.telegram || '-'}</td>
+                        <td>${user.inEmpire ? '👑 В империи' : '👤 Ожидает'}</td>
+                        <td>
+                            ${!user.inEmpire ? 
+                                `<button class="admin-btn" onclick="addToEmpire(${user.id})">➕ В состав</button>` : 
+                                `<button class="admin-btn edit" onclick="editUser(${user.id})">✏️ Ред.</button>
+                                 <button class="admin-btn ban" onclick="banUser(${user.id})">🔨 Бан</button>`}
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            updateMembersTable() {
+                const tbody = document.getElementById('membersTableBody');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                this.users.filter(u => u.inEmpire && !u.banned).forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.minecraft}</td>
+                        <td>${user.telegram || '-'}</td>
+                        <td>${user.rank}</td>
+                        <td>
+                            <button class="admin-btn edit" onclick="editUser(${user.id})">✏️ Ред.</button>
+                            <button class="admin-btn ban" onclick="banUser(${user.id})">🔨 Бан</button>
+                            <button class="admin-btn" onclick="removeFromEmpire(${user.id})">➖ Убрать</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            updateBannedTable() {
+                const tbody = document.getElementById('bannedTableBody');
+                if (!tbody) return;
+                
+                tbody.innerHTML = '';
+
+                this.users.filter(u => u.banned).forEach(user => {
+                    const row = document.createElement('tr');
+                    row.className = 'banned';
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.minecraft}</td>
+                        <td>${user.telegram || '-'}</td>
+                        <td>${user.banReason || 'Без причины'}</td>
+                        <td>
+                            <button class="admin-btn unban" onclick="unbanUser(${user.id})">✅ Разбанить</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            addToEmpire(userId) {
+                const user = this.users.find(u => u.id === userId);
+                if (user) {
+                    user.inEmpire = true;
+                    user.rank = 'УЧАСТНИК';
+                    user.avatar = '👤';
+                    this.saveUsers();
+                    this.updateAdminTables();
+                    updateMembersList();
                 }
-            });
+            }
 
-            volumeSlider.addEventListener('input', (e) => {
-                const vol = e.target.value;
-                if (audio) {
-                    audio.volume = vol;
+            removeFromEmpire(userId) {
+                const user = this.users.find(u => u.id === userId);
+                if (user) {
+                    user.inEmpire = false;
+                    this.saveUsers();
+                    this.updateAdminTables();
+                    updateMembersList();
                 }
-            });
+            }
 
-            toggleBtn.addEventListener('click', () => {
-                player.classList.remove('closed');
-            });
-
-            closeBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                player.classList.add('closed');
-                if (isPlaying) {
-                    isPlaying = false;
-                    playPauseBtn.textContent = '▶️';
-                    audio.pause();
+            banUser(userId) {
+                const reason = prompt('Введите причину бана:');
+                if (reason !== null) {
+                    const user = this.users.find(u => u.id === userId);
+                    if (user) {
+                        user.banned = true;
+                        user.banReason = reason;
+                        user.inEmpire = false;
+                        this.saveUsers();
+                        this.updateAdminTables();
+                        updateMembersList();
+                    }
                 }
+            }
+
+            unbanUser(userId) {
+                const user = this.users.find(u => u.id === userId);
+                if (user) {
+                    user.banned = false;
+                    user.banReason = '';
+                    this.saveUsers();
+                    this.updateAdminTables();
+                }
+            }
+
+            editUser(userId) {
+                const user = this.users.find(u => u.id === userId);
+                if (user) {
+                    this.currentEditId = userId;
+                    document.getElementById('editName').value = user.username;
+                    document.getElementById('editMinecraft').value = user.minecraft || '';
+                    document.getElementById('editTelegram').value = user.telegram || '';
+                    document.getElementById('editRank').value = user.rank || 'УЧАСТНИК';
+                    document.getElementById('editAvatar').value = user.avatar || '👤';
+                    document.getElementById('editType').value = 'normal';
+                    document.getElementById('editModal').classList.add('active');
+                }
+            }
+
+            saveEdit() {
+                if (this.currentEditId) {
+                    const user = this.users.find(u => u.id === this.currentEditId);
+                    if (user) {
+                        user.minecraft = document.getElementById('editMinecraft').value;
+                        user.telegram = document.getElementById('editTelegram').value;
+                        user.rank = document.getElementById('editRank').value;
+                        user.avatar = document.getElementById('editAvatar').value;
+                        this.saveUsers();
+                        this.updateAdminTables();
+                        updateMembersList();
+                        closeEditModal();
+                    }
+                }
+            }
+        }
+
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        const userManager = new UserManager();
+        const oldMembersManager = new OldMembersManager();
+
+        // ========== УПРАВЛЕНИЕ МОДАЛЬНЫМИ ОКНАМИ ==========
+        function openAuthModal(type) {
+            const modal = document.getElementById(type === 'login' ? 'loginModal' : 'registerModal');
+            modal.classList.add('active');
+            modal.style.left = (window.innerWidth - 400) + 'px';
+            modal.style.top = '100px';
+        }
+
+        function closeAuthModal(type) {
+            const modal = document.getElementById(type === 'login' ? 'loginModal' : 'registerModal');
+            modal.classList.remove('active');
+        }
+
+        function makeDraggable(modalId, headerId) {
+            const modal = document.getElementById(modalId);
+            const header = document.getElementById(headerId);
+            let isDragging = false;
+            let offsetX, offsetY;
+
+            header.addEventListener('mousedown', (e) => {
+                if (e.target.classList.contains('auth-modal-close')) return;
+                isDragging = true;
+                offsetX = e.clientX - modal.offsetLeft;
+                offsetY = e.clientY - modal.offsetTop;
+                modal.style.cursor = 'grabbing';
             });
 
-            // Перетаскивание плеера
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                let left = e.clientX - offsetX;
+                let top = e.clientY - offsetY;
+                
+                left = Math.max(0, Math.min(window.innerWidth - modal.offsetWidth, left));
+                top = Math.max(0, Math.min(window.innerHeight - modal.offsetHeight, top));
+                
+                modal.style.left = left + 'px';
+                modal.style.top = top + 'px';
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                modal.style.cursor = 'move';
+            });
+        }
+
+        makeDraggable('loginModal', 'loginModalHeader');
+        makeDraggable('registerModal', 'registerModalHeader');
+
+        // ========== АДМИН ФУНКЦИИ ==========
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+            
+            if (tab === 'users') {
+                document.querySelectorAll('.admin-tab')[0].classList.add('active');
+                document.getElementById('adminUsersTab').classList.add('active');
+            } else if (tab === 'members') {
+                document.querySelectorAll('.admin-tab')[1].classList.add('active');
+                document.getElementById('adminMembersTab').classList.add('active');
+            } else if (tab === 'oldMembers') {
+                document.querySelectorAll('.admin-tab')[2].classList.add('active');
+                document.getElementById('adminOldMembersTab').classList.add('active');
+            } else if (tab === 'banned') {
+                document.querySelectorAll('.admin-tab')[3].classList.add('active');
+                document.getElementById('adminBannedTab').classList.add('active');
+            }
+        }
+
+        function addToEmpire(userId) {
+            userManager.addToEmpire(userId);
+        }
+
+        function removeFromEmpire(userId) {
+            userManager.removeFromEmpire(userId);
+        }
+
+        function banUser(userId) {
+            userManager.banUser(userId);
+        }
+
+        function unbanUser(userId) {
+            userManager.unbanUser(userId);
+        }
+
+        function editUser(userId) {
+            userManager.editUser(userId);
+        }
+
+        function editOldMember(id) {
+            oldMembersManager.edit(id);
+        }
+
+        function saveOldMemberEdit() {
+            oldMembersManager.saveEdit();
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+            userManager.currentEditId = null;
+            oldMembersManager.currentEditId = null;
+        }
+
+        // ========== ФУНКЦИИ ОТОБРАЖЕНИЯ ==========
+        function updateMembersList() {
+            const eliteGrid = document.getElementById('eliteGrid');
+            const membersGrid = document.getElementById('membersGrid');
+            const membersCount = document.getElementById('membersCount');
+            
+            eliteGrid.innerHTML = '';
+            membersGrid.innerHTML = '';
+
+            // Отображаем старые элитные анкеты
+            oldMembersManager.eliteMembers.forEach(member => {
+                const card = createMemberCard(member);
+                eliteGrid.appendChild(card);
+            });
+
+            // Отображаем старые основные анкеты
+            oldMembersManager.regularMembers.forEach(member => {
+                const card = createMemberCard(member);
+                membersGrid.appendChild(card);
+            });
+
+            // Добавляем пользователей из империи
+            const empireUsers = userManager.users.filter(u => u.inEmpire && !u.banned);
+            empireUsers.forEach(user => {
+                const card = document.createElement('div');
+                card.className = 'member-card';
+                card.onclick = () => openUserProfile(user);
+                card.innerHTML = `
+                    <div class="member-avatar">${user.avatar || '👤'}</div>
+                    <div class="member-name">${user.username}</div>
+                    <div class="member-mc">⛏️ ${user.minecraft}</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> ${user.telegram || 'нет'}</div>
+                    <div class="member-rank">${user.rank || 'УЧАСТНИК'}</div>
+                `;
+                membersGrid.appendChild(card);
+            });
+
+            const totalMembers = 13 + empireUsers.length;
+            membersCount.innerHTML = `<i class="fas fa-paw"></i> Нас ${totalMembers}`;
+            document.querySelector('.footer-year').innerHTML = `<i class="fas fa-paw"></i> НАС ${totalMembers} <i class="fas fa-paw"></i>`;
+        }
+
+        function createMemberCard(member) {
+            const card = document.createElement('div');
+            card.className = `member-card ${member.type || ''}`;
+            card.onclick = () => openOldMemberProfile(member);
+            card.innerHTML = `
+                <div class="member-avatar">${member.avatar}</div>
+                <div class="member-name">${member.name}</div>
+                <div class="member-mc">⛏️ ${member.mc}</div>
+                <div class="member-tg"><i class="fab fa-telegram"></i> ${member.tg}</div>
+                <div class="member-rank">${member.rank}</div>
+            `;
+            return card;
+        }
+
+        // ========== ФУНКЦИИ АВТОРИЗАЦИИ ==========
+        function register() {
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirm').value;
+            const minecraft = document.getElementById('regMinecraft').value.trim();
+            const telegram = document.getElementById('regTelegram').value.trim();
+
+            if (!username || !password || !minecraft) {
+                showRegisterError('Заполните обязательные поля');
+                return;
+            }
+
+            if (password !== confirm) {
+                showRegisterError('Пароли не совпадают');
+                return;
+            }
+
+            const result = userManager.register(username, password, minecraft, telegram);
+            
+            if (result.success) {
+                showRegisterSuccess('Регистрация успешна! Теперь можно войти');
+                document.getElementById('regUsername').value = '';
+                document.getElementById('regPassword').value = '';
+                document.getElementById('regConfirm').value = '';
+                document.getElementById('regMinecraft').value = '';
+                document.getElementById('regTelegram').value = '';
+            } else {
+                showRegisterError(result.message);
+            }
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                showLoginError('Введите логин и пароль');
+                return;
+            }
+
+            const result = userManager.login(username, password);
+            
+            if (result.success) {
+                showLoginSuccess('Вход выполнен успешно!');
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+                closeAuthModal('login');
+                
+                userManager.updateUI();
+                updateMembersList();
+                
+                if (result.user.role === 'admin') {
+                    userManager.updateAdminTables();
+                }
+            } else {
+                showLoginError(result.message);
+            }
+        }
+
+        function logout() {
+            userManager.logout();
+            updateMembersList();
+        }
+
+        function showLoginError(message) {
+            const errorDiv = document.getElementById('loginErrorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 3000);
+        }
+
+        function showLoginSuccess(message) {
+            const errorDiv = document.getElementById('loginErrorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.background = '#4f9f4f';
+            errorDiv.classList.add('show');
+            setTimeout(() => {
+                errorDiv.classList.remove('show');
+                errorDiv.style.background = '#9f4f4f';
+            }, 3000);
+        }
+
+        function showRegisterError(message) {
+            const errorDiv = document.getElementById('registerErrorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.add('show');
+            setTimeout(() => errorDiv.classList.remove('show'), 3000);
+        }
+
+        function showRegisterSuccess(message) {
+            const successDiv = document.getElementById('registerSuccessMessage');
+            successDiv.textContent = message;
+            successDiv.classList.add('show');
+            setTimeout(() => successDiv.classList.remove('show'), 3000);
+        }
+
+        // ========== ПРОФИЛИ ==========
+        function openOldMemberProfile(member) {
+            document.getElementById('modalAvatar').textContent = member.avatar;
+            document.getElementById('modalName').textContent = member.name;
+            
+            const body = document.getElementById('modalBody');
+            body.innerHTML = `
+                <div class="modal-info-row">
+                    <span class="modal-info-label">Minecraft:</span>
+                    <span class="modal-info-value">${member.mc}</span>
+                </div>
+                <div class="modal-info-row">
+                    <span class="modal-info-label">Telegram:</span>
+                    <span class="modal-info-value">${member.tg}</span>
+                </div>
+                <div class="modal-info-row">
+                    <span class="modal-info-label">Ранг:</span>
+                    <span class="modal-info-value">${member.rank}</span>
+                </div>
+                <div class="modal-info-row">
+                    <span class="modal-info-label">В империи:</span>
+                    <span class="modal-info-value">С 2024</span>
+                </div>
+                <div class="modal-rank">${member.rank}</div>
+            `;
+            
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function openUserProfile(user) {
+            document.getElementById('modalAvatar').textContent = user.avatar || '👤';
+            document.getElementById('modalName').textContent = user.username;
+            
+            const body = document.getElementById('modalBody');
+            body.innerHTML = `
+                <div class="modal-info-row">
+                    <span class="modal-info-label">Minecraft:</span>
+                    <span class="modal-info-value">${user.minecraft}</span>
+                </div>
+                <div class="modal-info-row">
+                    <span class="modal-info-label">Telegram:</span>
+                    <span class="modal-info-value">${user.telegram || 'не указан'}</span>
+                </div>
+                <div class="modal-info-row">
+                    <span class="modal-info-label">Ранг:</span>
+                    <span class="modal-info-value">${user.rank || 'УЧАСТНИК'}</span>
+                </div>
+                <div class="modal-info-row">
+                    <span class="modal-info-label">Регистрация:</span>
+                    <span class="modal-info-value">${new Date(user.registered).toLocaleDateString()}</span>
+                </div>
+                <div class="modal-rank">${user.rank || 'УЧАСТНИК ИМПЕРИИ'}</div>
+            `;
+            
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function closeProfileModal() {
+            document.getElementById('profileModal').classList.remove('active');
+        }
+
+        // ========== ПРОВЕРКА СЕССИИ ==========
+        function checkSession() {
+            userManager.checkSession();
+            updateMembersList();
+        }
+
+        // ========== МУЗЫКАЛЬНЫЙ ПЛЕЕР ==========
+        const player = document.getElementById('musicPlayer');
+        const toggleBtn = document.getElementById('togglePlayerBtn');
+        const closeBtn = document.getElementById('closePlayerBtn');
+        const trackInfo = document.getElementById('trackInfo');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const repeatBtn = document.getElementById('repeatBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+
+        const tracks = [
+            { name: '🎵 ГИМН ЕНОТСКА', src: 'https://www.dropbox.com/scl/fi/95q19mjwtqhh40sq1kaus/a2b7b629-86df-4765-9c10-761c7f7bf9c1.mp3?rlkey=bblsiay54zqj40jyob1bsj5ey&st=tfh4rds1&dl=1' },
+            { name: 'The Witcher - Tavern', src: '' },
+            { name: 'Skyrim - Night', src: '' },
+            { name: 'Crawlers', src: '' },
+            { name: 'Home Resonance', src: '' }
+        ];
+
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        let repeat = false;
+        let audio = null;
+
+        function initAudio() {
+            if (audio) audio.pause();
+            audio = new Audio();
+            audio.volume = volumeSlider.value;
+            audio.addEventListener('ended', () => {
+                if (repeat) audio.play();
+                else nextTrack();
+            });
+        }
+        initAudio();
+
+        function updateTrackInfo() {
+            trackInfo.textContent = tracks[currentTrackIndex].name;
+            if (tracks[currentTrackIndex].src) {
+                audio.src = tracks[currentTrackIndex].src;
+                audio.load();
+                if (isPlaying) audio.play().catch(() => {});
+            }
+        }
+
+        function playTrack(index) {
+            currentTrackIndex = (index + tracks.length) % tracks.length;
+            updateTrackInfo();
+        }
+
+        function nextTrack() { playTrack(currentTrackIndex + 1); }
+        function prevTrack() { playTrack(currentTrackIndex - 1); }
+
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            playPauseBtn.textContent = isPlaying ? '⏸️' : '▶️';
+            if (isPlaying && audio.src) audio.play().catch(() => {});
+            else audio.pause();
+        });
+
+        prevBtn.addEventListener('click', prevTrack);
+        nextBtn.addEventListener('click', nextTrack);
+
+        repeatBtn.addEventListener('click', () => {
+            repeat = !repeat;
+            repeatBtn.style.opacity = repeat ? '1' : '0.5';
+            if (audio) audio.loop = repeat;
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            if (audio) audio.volume = e.target.value;
+        });
+
+        toggleBtn.addEventListener('click', () => player.classList.remove('closed'));
+        closeBtn.addEventListener('click', () => {
+            player.classList.add('closed');
+            if (isPlaying) {
+                isPlaying = false;
+                playPauseBtn.textContent = '▶️';
+                audio.pause();
+            }
+        });
+
+        if (window.innerWidth > 768) {
             let isDragging = false;
             let offsetX, offsetY;
             const header = document.getElementById('playerHeader');
@@ -1680,39 +2341,43 @@
                 isDragging = false;
                 player.style.cursor = 'move';
             });
-
-            updateTrackInfo();
-        })();
-
-        // Функции для модальных окон
-        function openModal(type) {
-            if (type === 'enot') {
-                document.getElementById('enotModal').classList.add('active');
-            } else if (type === 'cop') {
-                document.getElementById('copModal').classList.add('active');
-            }
-            document.body.style.overflow = 'hidden';
         }
 
-        function closeModal(type) {
-            if (type === 'enot') {
-                document.getElementById('enotModal').classList.remove('active');
-            } else if (type === 'cop') {
-                document.getElementById('copModal').classList.remove('active');
-            }
-            document.body.style.overflow = '';
-        }
-
-        window.addEventListener('click', function(event) {
-            const enotModal = document.getElementById('enotModal');
-            const copModal = document.getElementById('copModal');
-            if (event.target === enotModal) {
-                closeModal('enot');
-            }
-            if (event.target === copModal) {
-                closeModal('cop');
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
             }
         });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = btn.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('active');
+            }
+        });
+
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        checkSession();
+        updateTrackInfo();
     </script>
 </body>
 </html>

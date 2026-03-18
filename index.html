@@ -2,20 +2,19 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Империя Енотск | Natural Legacy</title>
     <!-- Шрифты и иконки -->
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Сброс и базовые стили */
+        /* Все стили остаются как в предыдущей версии */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
-            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -31,7 +30,6 @@
             color: #fff;
         }
 
-        /* Динамический фон с партиклами */
         body::before {
             content: '';
             position: fixed;
@@ -47,7 +45,6 @@
             z-index: 0;
         }
 
-        /* Анимированные партиклы */
         .particle {
             position: fixed;
             font-size: 24px;
@@ -67,7 +64,6 @@
             100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Основной контейнер */
         .minecraft-panel {
             max-width: 1400px;
             width: 100%;
@@ -82,20 +78,11 @@
             animation: panelGlow 4s infinite alternate;
         }
 
-        @media (max-width: 768px) {
-            .minecraft-panel {
-                padding: 15px;
-                border-width: 4px;
-                box-shadow: inset 0 0 0 2px #4f3f2a, 10px 10px 0 rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 0, 0.3);
-            }
-        }
-
         @keyframes panelGlow {
             0% { box-shadow: inset 0 0 0 2px #4f3f2a, 15px 15px 0 rgba(0, 0, 0, 0.6), 0 0 20px rgba(80, 200, 80, 0.3); }
             100% { box-shadow: inset 0 0 0 2px #6f5f4a, 15px 15px 0 rgba(0, 0, 0, 0.6), 0 0 60px rgba(100, 255, 100, 0.9); }
         }
 
-        /* Шапка */
         .header {
             background: #3a5c3a;
             border: 4px solid #1f3f1f;
@@ -137,7 +124,6 @@
             margin-top: 15px;
         }
 
-        /* Навигация */
         .nav-bar {
             display: flex;
             flex-wrap: wrap;
@@ -178,7 +164,6 @@
             background: rgba(255, 255, 255, 0.5);
             transform: translate(-50%, -50%);
             transition: width 0.3s, height 0.3s;
-            pointer-events: none;
         }
 
         .nav-btn:hover::before {
@@ -203,7 +188,6 @@
             box-shadow: inset -3px -3px 0 #7f7f2f, inset 3px 3px 0 #ffff9f;
         }
 
-        /* Секция участников */
         .members-section {
             margin: 40px 0;
             background: #4f6f3f;
@@ -239,7 +223,6 @@
             color: #ffffaf;
         }
 
-        /* Элитная секция */
         .elite-section {
             margin-bottom: 40px;
             background: #3a5f3a;
@@ -278,7 +261,6 @@
             }
         }
 
-        /* Основная сетка участников */
         .members-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -304,7 +286,6 @@
             }
         }
 
-        /* Карточка участника */
         .member-card {
             background: #3f5f3f;
             border: 3px solid #1f3f1f;
@@ -357,11 +338,6 @@
             box-shadow: 0 0 30px #ffd700;
         }
 
-        .member-card:active {
-            transform: translate(2px, 2px) scale(0.98);
-            box-shadow: 3px 3px 0 #0f2f0f;
-        }
-
         .member-avatar {
             width: 80px;
             height: 80px;
@@ -374,14 +350,6 @@
             margin-bottom: 15px;
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #afcf8f;
             transition: all 0.3s;
-        }
-
-        @media (max-width: 768px) {
-            .member-avatar {
-                width: 60px;
-                height: 60px;
-                font-size: 36px;
-            }
         }
 
         .member-name {
@@ -480,7 +448,23 @@
             box-shadow: 0 0 15px #ff9f4f;
         }
 
-        /* Особые карточки */
+        .member-card.empty {
+            background: #2f4f2f;
+            border: 3px dashed #7f9f6f;
+            opacity: 0.8;
+        }
+
+        .member-card.empty .member-avatar {
+            background: #1f3f1f;
+            border-color: #5f7f5f;
+            color: #8faf8f;
+        }
+
+        .member-card.empty .member-name {
+            color: #afcfaf;
+            text-shadow: 2px 2px 0 #1f3f1f;
+        }
+
         .member-card.imperator {
             background: #5f4f2f;
             border: 4px solid gold;
@@ -495,7 +479,6 @@
             background: #b8860b;
             border-color: gold;
             color: #ffffaa;
-            font-size: 10px;
         }
 
         .member-card.cop {
@@ -512,7 +495,6 @@
             background: #8f8f8f;
             border-color: #c0c0c0;
             color: #ffffaa;
-            font-size: 9px;
         }
 
         .member-card.kiwe {
@@ -531,7 +513,6 @@
             color: #ffffaa;
         }
 
-        /* Информация о Natural Legacy */
         .legacy-info {
             background: #2f4f6f;
             border: 4px solid #1f3f5f;
@@ -548,7 +529,6 @@
             transform: scale(1.01);
         }
 
-        /* Лидерборд */
         .leaderboard {
             background: #2f4f4f;
             border: 4px solid #ffd700;
@@ -612,16 +592,11 @@
             background: #2f4f2f;
             border: 2px solid #9fbf7f;
             font-size: clamp(10px, 3vw, 12px);
-            flex-wrap: wrap;
         }
 
         .tournament-list li:first-child {
             background: #5f4f2f;
             border-color: gold;
-        }
-
-        .tournament-list li:first-child .place {
-            color: gold;
         }
 
         .place {
@@ -682,7 +657,6 @@
             color: #cfefcf;
         }
 
-        /* Футер */
         .footer {
             background: #2f2f2f;
             border: 4px solid #1f1f1f;
@@ -696,22 +670,6 @@
             overflow: hidden;
         }
 
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(150,150,150,0.1) 0%, transparent 70%);
-            animation: footerPulse 5s infinite;
-        }
-
-        @keyframes footerPulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
         .footer-year {
             font-size: clamp(16px, 5vw, 18px);
             color: #ffff7f;
@@ -719,7 +677,6 @@
             margin: 10px 0;
         }
 
-        /* Эффект тыка */
         .click-effect {
             animation: clickPop 0.2s ease-out;
         }
@@ -730,7 +687,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Кнопка наверх */
         .scroll-top {
             position: fixed;
             bottom: 20px;
@@ -745,10 +701,10 @@
             font-size: 30px;
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #9fbf9f, 5px 5px 0 #1f1f1f;
-            transition: 0.2s;
             z-index: 100;
             opacity: 0;
             visibility: hidden;
+            transition: 0.2s;
         }
 
         .scroll-top.visible {
@@ -762,21 +718,6 @@
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
         }
 
-        .scroll-top:active {
-            transform: scale(0.95);
-        }
-
-        @media (max-width: 768px) {
-            .scroll-top {
-                width: 50px;
-                height: 50px;
-                font-size: 24px;
-                bottom: 15px;
-                right: 15px;
-            }
-        }
-
-        /* Разделитель */
         .section-divider {
             height: 4px;
             background: linear-gradient(90deg, transparent, #ffd700, #ff8c00, #ffd700, transparent);
@@ -784,7 +725,6 @@
             width: 100%;
         }
 
-        /* Модальное окно для профилей */
         .modal {
             display: none;
             position: fixed;
@@ -793,7 +733,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.9);
-            z-index: 2000;
+            z-index: 5000;
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(5px);
@@ -834,16 +774,6 @@
             font-size: 20px;
             cursor: pointer;
             box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
-            transition: 0.1s;
-        }
-
-        .modal-close:hover {
-            background: #bf6f6f;
-            transform: scale(1.1);
-        }
-
-        .modal-close:active {
-            transform: scale(0.95);
         }
 
         .modal-header {
@@ -864,7 +794,6 @@
             align-items: center;
             justify-content: center;
             font-size: 64px;
-            box-shadow: inset -4px -4px 0 #1f3f1f, inset 4px 4px 0 #afcf8f;
         }
 
         .modal-title {
@@ -908,7 +837,6 @@
             color: #ffffaa;
         }
 
-        /* Музыкальный плеер */
         .music-player {
             position: fixed;
             bottom: 30px;
@@ -929,10 +857,6 @@
 
         .music-player.closed {
             display: none;
-        }
-
-        .music-player:hover {
-            box-shadow: inset 0 0 0 3px #9fcf9f, 10px 10px 0 #1f3f1f, 0 0 30px #7fbf7f;
         }
 
         @media (max-width: 768px) {
@@ -959,11 +883,6 @@
             cursor: move;
         }
 
-        .player-header i {
-            color: #ffd700;
-            font-size: 16px;
-        }
-
         .close-player-btn {
             margin-left: auto;
             background: #9f4f4f;
@@ -978,15 +897,6 @@
             box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
         }
 
-        .close-player-btn:hover {
-            background: #bf6f6f;
-            transform: scale(1.1);
-        }
-
-        .close-player-btn:active {
-            transform: scale(0.95);
-        }
-
         .track-info {
             background: #1f3f1f;
             border: 2px solid #7f9f6f;
@@ -994,7 +904,6 @@
             margin-bottom: 15px;
             color: #cfefcf;
             font-size: 8px;
-            line-height: 1.5;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
@@ -1020,7 +929,6 @@
             justify-content: center;
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #4f4f4f, inset 3px 3px 0 #efefef, 3px 3px 0 #1f1f1f;
-            transition: all 0.1s;
             font-family: 'Press Start 2P', cursive;
         }
 
@@ -1030,20 +938,6 @@
             box-shadow: inset -2px -2px 0 #6f6f6f, inset 2px 2px 0 #ffffff, 2px 2px 0 #1f1f1f;
         }
 
-        .player-btn:active {
-            transform: translate(3px, 3px);
-            box-shadow: inset -1px -1px 0 #6f6f6f, inset 1px 1px 0 #ffffff, 1px 1px 0 #1f1f1f;
-        }
-
-        @media (max-width: 768px) {
-            .player-btn {
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
-                border-width: 3px;
-            }
-        }
-
         .volume-control {
             display: flex;
             align-items: center;
@@ -1051,11 +945,6 @@
             background: #2f4f2f;
             border: 2px solid #6f9f6f;
             padding: 8px;
-        }
-
-        .volume-control span {
-            color: #ffff9f;
-            font-size: 14px;
         }
 
         .volume-control input[type=range] {
@@ -1072,7 +961,6 @@
             height: 20px;
             background: #9fbf7f;
             border: 2px solid #3f6f3f;
-            box-shadow: inset -2px -2px 0 #1f3f1f, inset 2px 2px 0 #cfefcf;
             cursor: pointer;
         }
 
@@ -1090,7 +978,6 @@
             font-size: 24px;
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #9fbf9f, 5px 5px 0 #1f1f1f;
-            transition: 0.2s;
             z-index: 2500;
             color: #ffff9f;
         }
@@ -1099,20 +986,6 @@
             background: #7f9f7f;
             transform: scale(1.1) translateY(-2px);
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
-        }
-
-        .toggle-player-btn:active {
-            transform: scale(0.95);
-        }
-
-        @media (max-width: 768px) {
-            .toggle-player-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-                top: 10px;
-                left: 10px;
-            }
         }
     </style>
 </head>
@@ -1154,7 +1027,7 @@
                     <i class="fas fa-users"></i> УЧАСТНИКИ
                 </div>
                 <div class="members-count">
-                    <i class="fas fa-paw"></i> НАС 37
+                    <i class="fas fa-paw"></i> НАС 39
                 </div>
             </div>
             
@@ -1198,9 +1071,9 @@
                     <!-- Cop41k -->
                     <div class="member-card cop" onclick="openProfile('cop')">
                         <div class="member-avatar">🛡️</div>
-                        <div class="member-name">-</div>
-                        <div class="member-mc">⛏️ -</div>
-                        <div class="member-tg"><i class="fab fa-telegram"></i> Выборы</div>
+                        <div class="member-name">Cop41k</div>
+                        <div class="member-mc">⛏️ Cop41k</div>
+                        <div class="member-tg"><i class="fab fa-telegram"></i> @Svyat0sh1</div>
                         <div class="member-rank">ПРИБЛИЖЕННЫЙ</div>
                     </div>
                 </div>
@@ -1215,13 +1088,13 @@
             </h3>
 
             <div class="members-grid">
-                <!-- GenerusRu -->
+                <!-- Volkswagen -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
                     <div class="member-avatar">⚔️</div>
                     <div class="member-name">Volkswagen</div>
                     <div class="member-mc">⛏️ Volkswagen</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @generus1</div>
-                    <div class="member-rank">Главный водолаз</div>
+                    <div class="member-rank">PVE</div>
                 </div>
 
                 <!-- Zov_Egor -->
@@ -1358,8 +1231,8 @@
                 <div class="leaderboard-item">
                     <div class="leaderboard-icon">⛓️</div>
                     <div class="leaderboard-content">
-                        <h3>Самый лучший убийца новичков</h3>
-                        <p>Kiweeeeeeeee👑</p>
+                        <h3>Самый большой рабовладелец</h3>
+                        <p>Archi2012 👑</p>
                     </div>
                 </div>
             </div>
@@ -1433,7 +1306,7 @@
                 mc: 'Enotiiik',
                 tg: '@en0t_st',
                 rank: 'ИМПЕРАТОР',
-                year: '2025'
+                year: '2024'
             },
             zovchik: {
                 name: 'Zovchik',
@@ -1441,7 +1314,7 @@
                 mc: 'Zovchik',
                 tg: '@Astolfo_mp3',
                 rank: 'ГЛ. СТРОИТЕЛЬ',
-                year: '2025'
+                year: '2024'
             },
             kiwe: {
                 name: 'Kiweeeeeeeeee',
@@ -1452,11 +1325,11 @@
                 year: '2025'
             },
             cop: {
-                name: '-',
+                name: 'Cop41k',
                 avatar: '🛡️',
-                mc: '-',
-                tg: '-',
-                rank: 'Выборы',
+                mc: 'Cop41k',
+                tg: '@Svyat0sh1',
+                rank: 'ПРИБЛИЖЕННЫЙ К ИМПЕРАТОРУ',
                 year: '2026'
             }
         };

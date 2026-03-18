@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Все стили остаются такими же */
+        /* Сброс и базовые стили */
         * {
             margin: 0;
             padding: 0;
@@ -31,6 +31,7 @@
             color: #fff;
         }
 
+        /* Динамический фон с партиклами */
         body::before {
             content: '';
             position: fixed;
@@ -46,6 +47,7 @@
             z-index: 0;
         }
 
+        /* Анимированные партиклы */
         .particle {
             position: fixed;
             font-size: 24px;
@@ -65,6 +67,7 @@
             100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
 
+        /* Основной контейнер */
         .minecraft-panel {
             max-width: 1400px;
             width: 100%;
@@ -92,6 +95,7 @@
             100% { box-shadow: inset 0 0 0 2px #6f5f4a, 15px 15px 0 rgba(0, 0, 0, 0.6), 0 0 60px rgba(100, 255, 100, 0.9); }
         }
 
+        /* Шапка */
         .header {
             background: #3a5c3a;
             border: 4px solid #1f3f1f;
@@ -102,9 +106,6 @@
             position: relative;
             overflow: hidden;
             transition: 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         .header:hover {
@@ -122,79 +123,21 @@
             margin-bottom: 15px;
         }
 
-        .user-info {
-            background: #1f3f1f;
-            border: 3px solid #9fbf7f;
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
+        @keyframes textFlicker {
+            0%, 100% { opacity: 1; text-shadow: 5px 5px 0 #3f5f3f, -2px -2px 0 #1f3f1f; }
+            95% { opacity: 1; }
+            96% { opacity: 0.9; text-shadow: 5px 5px 0 #5f7f5f; }
+            97% { opacity: 1; text-shadow: 5px 5px 0 #2f4f2f; }
         }
 
-        .user-info span {
-            color: #ffff9f;
-            font-size: 12px;
+        .header p {
+            font-size: clamp(12px, 3vw, 16px);
+            color: #f0e0a0;
+            text-shadow: 4px 4px 0 #2f4f2f;
+            margin-top: 15px;
         }
 
-        .user-info button {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 10px;
-            background: #9f4f4f;
-            border: 3px solid #6f2f2f;
-            color: white;
-            padding: 8px 15px;
-            cursor: pointer;
-            box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
-        }
-
-        .user-info button:hover {
-            background: #bf6f6f;
-        }
-
-        .auth-buttons {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-            z-index: 3000;
-        }
-
-        .auth-button {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 12px;
-            background: #5f7f5f;
-            border: 4px solid #2f4f2f;
-            color: #ffff9f;
-            padding: 12px 20px;
-            cursor: pointer;
-            box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #9fbf9f, 5px 5px 0 #1f1f1f;
-            transition: 0.2s;
-            min-width: 120px;
-            text-align: center;
-        }
-
-        .auth-button:hover {
-            background: #7f9f7f;
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
-        }
-
-        @media (max-width: 768px) {
-            .auth-buttons {
-                top: 10px;
-                right: 10px;
-                flex-direction: column;
-            }
-            .auth-button {
-                padding: 8px 15px;
-                font-size: 10px;
-                min-width: 100px;
-            }
-        }
-
+        /* Навигация */
         .nav-bar {
             display: flex;
             flex-wrap: wrap;
@@ -224,10 +167,34 @@
             flex: 0 1 auto;
         }
 
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+            pointer-events: none;
+        }
+
+        .nav-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
         .nav-btn:hover {
             background: #bfbfbf;
             box-shadow: inset -3px -3px 0 #6f6f6f, inset 3px 3px 0 #ffffff, 2px 2px 0 #1f1f1f, 0 0 30px #ffff7f;
             transform: translate(2px, 2px) scale(1.02);
+        }
+
+        .nav-btn:active {
+            transform: translate(4px, 4px);
+            box-shadow: inset -1px -1px 0 #6f6f6f, inset 1px 1px 0 #ffffff, 1px 1px 0 #1f1f1f;
         }
 
         .nav-btn.active {
@@ -236,145 +203,7 @@
             box-shadow: inset -3px -3px 0 #7f7f2f, inset 3px 3px 0 #ffff9f;
         }
 
-        .auth-modal {
-            display: none;
-            position: fixed;
-            z-index: 4000;
-            background: #4f6f3f;
-            border: 6px solid #2f4f2f;
-            box-shadow: inset 0 0 0 3px #7faf7f, 15px 15px 0 #1f3f1f, 0 0 50px #ffd700;
-            padding: 25px;
-            width: 350px;
-            cursor: move;
-            user-select: none;
-            backdrop-filter: blur(5px);
-        }
-
-        .auth-modal.active {
-            display: block;
-        }
-
-        .auth-modal-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 4px dashed #ffd700;
-            color: #ffff9f;
-            font-size: 16px;
-            text-shadow: 2px 2px 0 #3f6f3f;
-            cursor: move;
-        }
-
-        .auth-modal-header i {
-            color: #ffd700;
-            font-size: 20px;
-        }
-
-        .auth-modal-close {
-            margin-left: auto;
-            background: #9f4f4f;
-            border: 3px solid #6f2f2f;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            cursor: pointer;
-            box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
-        }
-
-        .auth-modal-close:hover {
-            background: #bf6f6f;
-            transform: scale(1.1);
-        }
-
-        .auth-modal-content {
-            cursor: default;
-        }
-
-        .error-message {
-            background: #9f4f4f;
-            border: 3px solid #6f2f2f;
-            color: white;
-            padding: 10px;
-            margin-bottom: 15px;
-            font-size: 10px;
-            display: none;
-        }
-
-        .error-message.show {
-            display: block;
-        }
-
-        .success-message {
-            background: #4f9f4f;
-            border: 3px solid #2f6f2f;
-            color: white;
-            padding: 10px;
-            margin-bottom: 15px;
-            font-size: 10px;
-            display: none;
-        }
-
-        .success-message.show {
-            display: block;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            color: #cfefcf;
-            font-size: 10px;
-            margin-bottom: 5px;
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            background: #1f3f1f;
-            border: 3px solid #7f9f6f;
-            color: white;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 10px;
-            box-shadow: inset -2px -2px 0 #0f2f0f, inset 2px 2px 0 #9fbf9f;
-        }
-
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            outline: none;
-            border-color: #ffd700;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 60px;
-        }
-
-        .auth-btn {
-            width: 100%;
-            padding: 15px;
-            background: #9f9f9f;
-            border: 4px solid #6f6f6f;
-            color: #1f1f1f;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 12px;
-            cursor: pointer;
-            box-shadow: inset -3px -3px 0 #4f4f4f, inset 3px 3px 0 #efefef, 4px 4px 0 #1f1f1f;
-            transition: 0.1s;
-            margin-top: 10px;
-        }
-
-        .auth-btn:hover {
-            background: #bfbfbf;
-            transform: translate(2px, 2px);
-            box-shadow: inset -2px -2px 0 #6f6f6f, inset 2px 2px 0 #ffffff, 2px 2px 0 #1f1f1f;
-        }
-
+        /* Секция участников */
         .members-section {
             margin: 40px 0;
             background: #4f6f3f;
@@ -410,6 +239,7 @@
             color: #ffffaf;
         }
 
+        /* Элитная секция */
         .elite-section {
             margin-bottom: 40px;
             background: #3a5f3a;
@@ -448,6 +278,7 @@
             }
         }
 
+        /* Основная сетка участников */
         .members-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -473,6 +304,7 @@
             }
         }
 
+        /* Карточка участника */
         .member-card {
             background: #3f5f3f;
             border: 3px solid #1f3f1f;
@@ -525,6 +357,11 @@
             box-shadow: 0 0 30px #ffd700;
         }
 
+        .member-card:active {
+            transform: translate(2px, 2px) scale(0.98);
+            box-shadow: 3px 3px 0 #0f2f0f;
+        }
+
         .member-avatar {
             width: 80px;
             height: 80px;
@@ -539,18 +376,20 @@
             transition: all 0.3s;
         }
 
+        @media (max-width: 768px) {
+            .member-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 36px;
+            }
+        }
+
         .member-name {
             font-size: clamp(12px, 3vw, 14px);
             color: #ffff9f;
             text-shadow: 2px 2px 0 #2f4f2f;
             margin-bottom: 5px;
             word-break: break-word;
-        }
-
-        .member-username {
-            font-size: 10px;
-            color: #cfefcf;
-            margin-bottom: 10px;
         }
 
         .member-mc {
@@ -561,6 +400,28 @@
             color: #cfefcf;
             width: 100%;
             margin: 5px 0;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-mc::before {
+            content: '⛏️';
+            position: absolute;
+            left: -20px;
+            opacity: 0;
+            transition: 0.2s;
+        }
+
+        .member-card:hover .member-mc::before {
+            left: 5px;
+            opacity: 1;
+        }
+
+        .member-card:hover .member-mc {
+            padding-left: 30px;
+            background: #2f4f2f;
+            border-color: #cfef9f;
         }
 
         .member-tg {
@@ -574,6 +435,32 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-tg::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            opacity: 0;
+        }
+
+        .member-card:hover .member-tg::after {
+            opacity: 1;
+            animation: tgShine 1.5s infinite;
+        }
+
+        @keyframes tgShine {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
         }
 
         .member-rank {
@@ -582,9 +469,18 @@
             background: #c77d2f;
             border: 2px solid #9f5f1f;
             margin-top: 10px;
+            transition: 0.2s;
+            position: relative;
             width: 100%;
         }
 
+        .member-card:hover .member-rank {
+            background: #e99f4f;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #ff9f4f;
+        }
+
+        /* Особые карточки */
         .member-card.imperator {
             background: #5f4f2f;
             border: 4px solid gold;
@@ -599,6 +495,7 @@
             background: #b8860b;
             border-color: gold;
             color: #ffffaa;
+            font-size: 10px;
         }
 
         .member-card.cop {
@@ -615,6 +512,7 @@
             background: #8f8f8f;
             border-color: #c0c0c0;
             color: #ffffaa;
+            font-size: 9px;
         }
 
         .member-card.kiwe {
@@ -633,133 +531,7 @@
             color: #ffffaa;
         }
 
-        .admin-panel {
-            background: #2f4f4f;
-            border: 4px solid #ffd700;
-            padding: 25px;
-            margin: 30px 0;
-            box-shadow: inset 0 0 0 3px #ffec9f, 10px 10px 0 #1f3f1f;
-            display: none;
-        }
-
-        .admin-panel.show {
-            display: block;
-        }
-
-        .admin-title {
-            font-size: 20px;
-            color: #ffd700;
-            text-shadow: 4px 4px 0 #5f4f1f;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 4px dashed #ffd700;
-            padding-bottom: 10px;
-        }
-
-        .admin-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .admin-tab {
-            background: #1f3f3f;
-            border: 3px solid #ffd700;
-            color: #ffff9f;
-            padding: 10px 20px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .admin-tab:hover {
-            background: #2f5f5f;
-            transform: scale(1.05);
-        }
-
-        .admin-tab.active {
-            background: #5f4f2f;
-            border-color: gold;
-            color: gold;
-        }
-
-        .admin-tab-content {
-            display: none;
-        }
-
-        .admin-tab-content.active {
-            display: block;
-        }
-
-        .users-table {
-            width: 100%;
-            background: #1f3f3f;
-            border: 3px solid #ffd700;
-            border-collapse: collapse;
-        }
-
-        .users-table th,
-        .users-table td {
-            padding: 15px;
-            text-align: left;
-            border: 2px solid #7f9f6f;
-            color: #cfefcf;
-            font-size: 12px;
-        }
-
-        .users-table th {
-            background: #2f5f5f;
-            color: #ffff9f;
-            font-size: 14px;
-        }
-
-        .users-table tr:hover {
-            background: #2f4f4f;
-        }
-
-        .users-table .banned {
-            background: #5f2f2f;
-            opacity: 0.7;
-        }
-
-        .users-table .banned td {
-            color: #ff9f9f;
-        }
-
-        .admin-btn {
-            background: #9f9f9f;
-            border: 3px solid #6f6f6f;
-            color: #1f1f1f;
-            padding: 5px 10px;
-            font-family: 'Press Start 2P', cursive;
-            font-size: 8px;
-            cursor: pointer;
-            margin: 2px;
-            box-shadow: inset -2px -2px 0 #4f4f4f, inset 2px 2px 0 #efefef;
-        }
-
-        .admin-btn:hover {
-            background: #bfbfbf;
-        }
-
-        .admin-btn.ban {
-            background: #9f4f4f;
-            border-color: #6f2f2f;
-        }
-
-        .admin-btn.unban {
-            background: #4f9f4f;
-            border-color: #2f6f2f;
-        }
-
-        .admin-btn.edit {
-            background: #4f9f9f;
-            border-color: #2f6f6f;
-        }
-
+        /* Информация о Natural Legacy */
         .legacy-info {
             background: #2f4f6f;
             border: 4px solid #1f3f5f;
@@ -776,6 +548,141 @@
             transform: scale(1.01);
         }
 
+        /* Лидерборд */
+        .leaderboard {
+            background: #2f4f4f;
+            border: 4px solid #ffd700;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: inset 0 0 0 3px #ffec9f, 10px 10px 0 #1f3f1f;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .leaderboard::before {
+            content: '🏆';
+            position: absolute;
+            font-size: 80px;
+            right: 10px;
+            bottom: -10px;
+            opacity: 0.2;
+            transform: rotate(15deg);
+        }
+
+        .leaderboard-title {
+            font-size: clamp(18px, 5vw, 20px);
+            color: #ffd700;
+            text-shadow: 4px 4px 0 #5f4f1f;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 4px dashed #ffd700;
+            padding-bottom: 10px;
+        }
+
+        .tournament-results {
+            background: #4f3f2f;
+            border: 4px solid #ffd700;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: inset 0 0 0 3px #ffec9f, 8px 8px 0 #1f3f1f;
+        }
+
+        .tournament-title {
+            font-size: clamp(14px, 4vw, 16px);
+            color: #ffd700;
+            text-shadow: 3px 3px 0 #5f4f1f;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tournament-list {
+            list-style: none;
+        }
+
+        .tournament-list li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            margin: 5px 0;
+            background: #2f4f2f;
+            border: 2px solid #9fbf7f;
+            font-size: clamp(10px, 3vw, 12px);
+            flex-wrap: wrap;
+        }
+
+        .tournament-list li:first-child {
+            background: #5f4f2f;
+            border-color: gold;
+        }
+
+        .tournament-list li:first-child .place {
+            color: gold;
+        }
+
+        .place {
+            font-size: clamp(14px, 4vw, 16px);
+            min-width: 40px;
+            color: #ffff9f;
+        }
+
+        .leaderboard-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .leaderboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .leaderboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .leaderboard-item {
+            background: #1f3f3f;
+            border: 3px solid #ffd700;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+
+        .leaderboard-item:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 0 30px #ffd700;
+            background: #2f5f5f;
+        }
+
+        .leaderboard-icon {
+            font-size: 40px;
+            background: #0f2f2f;
+            padding: 10px;
+            border: 3px solid #ffd700;
+        }
+
+        .leaderboard-content h3 {
+            font-size: 12px;
+            color: #ffff9f;
+            margin-bottom: 5px;
+        }
+
+        .leaderboard-content p {
+            font-size: 10px;
+            color: #cfefcf;
+        }
+
+        /* Футер */
         .footer {
             background: #2f2f2f;
             border: 4px solid #1f1f1f;
@@ -800,6 +707,11 @@
             animation: footerPulse 5s infinite;
         }
 
+        @keyframes footerPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
         .footer-year {
             font-size: clamp(16px, 5vw, 18px);
             color: #ffff7f;
@@ -807,6 +719,18 @@
             margin: 10px 0;
         }
 
+        /* Эффект тыка */
+        .click-effect {
+            animation: clickPop 0.2s ease-out;
+        }
+
+        @keyframes clickPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); box-shadow: 0 0 50px red; }
+            100% { transform: scale(1); }
+        }
+
+        /* Кнопка наверх */
         .scroll-top {
             position: fixed;
             bottom: 20px;
@@ -821,10 +745,10 @@
             font-size: 30px;
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #9fbf9f, 5px 5px 0 #1f1f1f;
+            transition: 0.2s;
             z-index: 100;
             opacity: 0;
             visibility: hidden;
-            transition: 0.2s;
         }
 
         .scroll-top.visible {
@@ -838,6 +762,21 @@
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
         }
 
+        .scroll-top:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 768px) {
+            .scroll-top {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+
+        /* Разделитель */
         .section-divider {
             height: 4px;
             background: linear-gradient(90deg, transparent, #ffd700, #ff8c00, #ffd700, transparent);
@@ -845,6 +784,7 @@
             width: 100%;
         }
 
+        /* Модальное окно для профилей */
         .modal {
             display: none;
             position: fixed;
@@ -853,7 +793,7 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.9);
-            z-index: 5000;
+            z-index: 2000;
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(5px);
@@ -875,6 +815,11 @@
             animation: modalAppear 0.3s;
         }
 
+        @keyframes modalAppear {
+            0% { transform: scale(0.5) translateY(-50px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+
         .modal-close {
             position: absolute;
             top: 15px;
@@ -889,6 +834,16 @@
             font-size: 20px;
             cursor: pointer;
             box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
+            transition: 0.1s;
+        }
+
+        .modal-close:hover {
+            background: #bf6f6f;
+            transform: scale(1.1);
+        }
+
+        .modal-close:active {
+            transform: scale(0.95);
         }
 
         .modal-header {
@@ -901,14 +856,15 @@
         }
 
         .modal-avatar {
-            width: 80px;
-            height: 80px;
+            width: 100px;
+            height: 100px;
             background: #2f4f2f;
             border: 4px solid #ffd700;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
+            font-size: 64px;
+            box-shadow: inset -4px -4px 0 #1f3f1f, inset 4px 4px 0 #afcf8f;
         }
 
         .modal-title {
@@ -952,6 +908,7 @@
             color: #ffffaa;
         }
 
+        /* Музыкальный плеер */
         .music-player {
             position: fixed;
             bottom: 30px;
@@ -1004,6 +961,7 @@
 
         .player-header i {
             color: #ffd700;
+            font-size: 16px;
         }
 
         .close-player-btn {
@@ -1020,6 +978,15 @@
             box-shadow: inset -2px -2px 0 #4f2f2f, inset 2px 2px 0 #cf6f6f;
         }
 
+        .close-player-btn:hover {
+            background: #bf6f6f;
+            transform: scale(1.1);
+        }
+
+        .close-player-btn:active {
+            transform: scale(0.95);
+        }
+
         .track-info {
             background: #1f3f1f;
             border: 2px solid #7f9f6f;
@@ -1027,6 +994,7 @@
             margin-bottom: 15px;
             color: #cfefcf;
             font-size: 8px;
+            line-height: 1.5;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
@@ -1052,6 +1020,7 @@
             justify-content: center;
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #4f4f4f, inset 3px 3px 0 #efefef, 3px 3px 0 #1f1f1f;
+            transition: all 0.1s;
             font-family: 'Press Start 2P', cursive;
         }
 
@@ -1059,6 +1028,20 @@
             background: #bfbfbf;
             transform: translate(1px, 1px);
             box-shadow: inset -2px -2px 0 #6f6f6f, inset 2px 2px 0 #ffffff, 2px 2px 0 #1f1f1f;
+        }
+
+        .player-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: inset -1px -1px 0 #6f6f6f, inset 1px 1px 0 #ffffff, 1px 1px 0 #1f1f1f;
+        }
+
+        @media (max-width: 768px) {
+            .player-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+                border-width: 3px;
+            }
         }
 
         .volume-control {
@@ -1085,8 +1068,8 @@
 
         .volume-control input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             background: #9fbf7f;
             border: 2px solid #3f6f3f;
             box-shadow: inset -2px -2px 0 #1f3f1f, inset 2px 2px 0 #cfefcf;
@@ -1107,6 +1090,7 @@
             font-size: 24px;
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #9fbf9f, 5px 5px 0 #1f1f1f;
+            transition: 0.2s;
             z-index: 2500;
             color: #ffff9f;
         }
@@ -1115,6 +1099,10 @@
             background: #7f9f7f;
             transform: scale(1.1) translateY(-2px);
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
+        }
+
+        .toggle-player-btn:active {
+            transform: scale(0.95);
         }
 
         @media (max-width: 768px) {
@@ -1144,172 +1132,19 @@
     <!-- Кнопка включения плеера -->
     <div class="toggle-player-btn" id="togglePlayerBtn" title="Включить радио">🎵</div>
 
-    <!-- Кнопки авторизации -->
-    <div class="auth-buttons" id="authButtons">
-        <button class="auth-button" onclick="openAuthModal('login')">ВХОД</button>
-        <button class="auth-button" onclick="openAuthModal('register')">РЕГИСТРАЦИЯ</button>
-    </div>
-
-    <!-- Модальное окно входа -->
-    <div class="auth-modal" id="loginModal">
-        <div class="auth-modal-header" id="loginModalHeader">
-            <i class="fas fa-key"></i> ВХОД
-            <div class="auth-modal-close" onclick="closeAuthModal('login')">✖</div>
-        </div>
-        <div class="auth-modal-content">
-            <div class="error-message" id="loginErrorMessage"></div>
-            <div class="form-group">
-                <label>Логин</label>
-                <input type="text" id="loginUsername" placeholder="Введите логин">
-            </div>
-            <div class="form-group">
-                <label>Пароль</label>
-                <input type="password" id="loginPassword" placeholder="Введите пароль">
-            </div>
-            <button class="auth-btn" onclick="login()">ВОЙТИ</button>
-        </div>
-    </div>
-
-    <!-- Модальное окно регистрации -->
-    <div class="auth-modal" id="registerModal">
-        <div class="auth-modal-header" id="registerModalHeader">
-            <i class="fas fa-user-plus"></i> РЕГИСТРАЦИЯ
-            <div class="auth-modal-close" onclick="closeAuthModal('register')">✖</div>
-        </div>
-        <div class="auth-modal-content">
-            <div class="error-message" id="registerErrorMessage"></div>
-            <div class="success-message" id="registerSuccessMessage"></div>
-            <div class="form-group">
-                <label>Логин</label>
-                <input type="text" id="regUsername" placeholder="Придумайте логин">
-            </div>
-            <div class="form-group">
-                <label>Пароль (мин. 6 символов)</label>
-                <input type="password" id="regPassword" placeholder="Придумайте пароль">
-            </div>
-            <div class="form-group">
-                <label>Подтверждение</label>
-                <input type="password" id="regConfirm" placeholder="Повторите пароль">
-            </div>
-            <div class="form-group">
-                <label>Minecraft ник</label>
-                <input type="text" id="regMinecraft" placeholder="Ваш ник в Minecraft">
-            </div>
-            <div class="form-group">
-                <label>Telegram (опционально)</label>
-                <input type="text" id="regTelegram" placeholder="@username">
-            </div>
-            <button class="auth-btn" onclick="register()">ЗАРЕГИСТРИРОВАТЬСЯ</button>
-        </div>
-    </div>
-
     <div class="minecraft-panel">
         <!-- Шапка -->
         <div class="header">
             <h1>✦ ИМПЕРИЯ ЕНОТСК ✦</h1>
-            <div class="user-info" id="userInfo">
-                <span id="userGreeting">Вы не авторизованы</span>
-                <button onclick="logout()" id="logoutBtn" style="display: none;">Выйти</button>
-            </div>
+            <p>⚡ НА СЕРВЕРЕ NATURAL LEGACY ⚡</p>
         </div>
 
         <!-- Навигация -->
         <div class="nav-bar">
             <a href="#main" class="nav-btn">Главная</a>
             <a href="#members" class="nav-btn active">Участники</a>
-            <a href="#admin" class="nav-btn" id="adminNavBtn" style="display: none;">Админ</a>
+            <a href="#leaderboard" class="nav-btn">Лидерборд</a>
             <a href="#about" class="nav-btn">О нас</a>
-        </div>
-
-        <!-- Админ панель -->
-        <div class="admin-panel" id="adminPanel">
-            <div class="admin-title">
-                <i class="fas fa-crown" style="color: gold;"></i> АДМИН ПАНЕЛЬ
-            </div>
-            
-            <div class="admin-tabs">
-                <div class="admin-tab active" onclick="switchAdminTab('users')">Пользователи</div>
-                <div class="admin-tab" onclick="switchAdminTab('members')">Участники империи</div>
-                <div class="admin-tab" onclick="switchAdminTab('oldMembers')">Старые анкеты</div>
-                <div class="admin-tab" onclick="switchAdminTab('banned')">Забаненные</div>
-            </div>
-
-            <!-- Вкладка с пользователями -->
-            <div class="admin-tab-content active" id="adminUsersTab">
-                <table class="users-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Логин</th>
-                            <th>Minecraft ник</th>
-                            <th>Telegram</th>
-                            <th>Статус</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usersTableBody">
-                        <!-- Данные будут вставляться через JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Вкладка с участниками империи -->
-            <div class="admin-tab-content" id="adminMembersTab">
-                <table class="users-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Логин</th>
-                            <th>Minecraft ник</th>
-                            <th>Telegram</th>
-                            <th>Ранг</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody id="membersTableBody">
-                        <!-- Данные будут вставляться через JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Вкладка со старыми анкетами -->
-            <div class="admin-tab-content" id="adminOldMembersTab">
-                <table class="users-table">
-                    <thead>
-                        <tr>
-                            <th>Имя</th>
-                            <th>Minecraft ник</th>
-                            <th>Telegram</th>
-                            <th>Ранг</th>
-                            <th>Аватар</th>
-                            <th>Тип</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody id="oldMembersTableBody">
-                        <!-- Данные будут вставляться через JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Вкладка с забаненными -->
-            <div class="admin-tab-content" id="adminBannedTab">
-                <table class="users-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Логин</th>
-                            <th>Minecraft ник</th>
-                            <th>Telegram</th>
-                            <th>Причина</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bannedTableBody">
-                        <!-- Данные будут вставляться через JavaScript -->
-                    </tbody>
-                </table>
-            </div>
         </div>
 
         <!-- Секция УЧАСТНИКИ -->
@@ -1318,18 +1153,56 @@
                 <div class="members-title">
                     <i class="fas fa-users"></i> УЧАСТНИКИ
                 </div>
-                <div class="members-count" id="membersCount">
-                    <i class="fas fa-paw"></i> Нас 13
+                <div class="members-count">
+                    <i class="fas fa-paw"></i> НАС 37
                 </div>
             </div>
+            
+            <p style="text-align: center; font-size: 10px; margin: 10px 0 20px; color: #cfefcf;">
+                Telegram и Minecraft ники • Полный состав
+            </p>
 
             <!-- Элитная секция -->
             <div class="elite-section">
                 <div class="elite-title">
                     <i class="fas fa-crown" style="color: gold;"></i> ОСНОВАТЕЛИ И ГЛАВЫ
                 </div>
-                <div class="elite-grid" id="eliteGrid">
-                    <!-- Данные будут вставляться через JavaScript -->
+                <div class="elite-grid">
+                    <!-- Enotiiik -->
+                    <div class="member-card imperator" onclick="openProfile('enot')">
+                        <div class="member-avatar">👑</div>
+                        <div class="member-name">Enotiiik</div>
+                        <div class="member-mc">⛏️ Enotiiik</div>
+                        <div class="member-tg"><i class="fab fa-telegram"></i> @en0t_st</div>
+                        <div class="member-rank">ИМПЕРАТОР</div>
+                    </div>
+
+                    <!-- Zovchik -->
+                    <div class="member-card" onclick="openProfile('zovchik')">
+                        <div class="member-avatar">🏗️</div>
+                        <div class="member-name">Zovchik</div>
+                        <div class="member-mc">⛏️ Zovchik</div>
+                        <div class="member-tg"><i class="fab fa-telegram"></i> @Astolfo_mp3</div>
+                        <div class="member-rank">ГЛ. СТРОИТЕЛЬ</div>
+                    </div>
+
+                    <!-- Kiweeeeeeeeee -->
+                    <div class="member-card kiwe" onclick="openProfile('kiwe')">
+                        <div class="member-avatar">🌟</div>
+                        <div class="member-name">Kiweeeeeeeeee</div>
+                        <div class="member-mc">⛏️ Kiweeeeeeeeee</div>
+                        <div class="member-tg"><i class="fab fa-telegram"></i> @Kiweeeeeeeeee</div>
+                        <div class="member-rank">ВОИН ИМПЕРИИ</div>
+                    </div>
+
+                    <!-- Cop41k -->
+                    <div class="member-card cop" onclick="openProfile('cop')">
+                        <div class="member-avatar">🛡️</div>
+                        <div class="member-name">-</div>
+                        <div class="member-mc">⛏️ -</div>
+                        <div class="member-tg"><i class="fab fa-telegram"></i> Выборы</div>
+                        <div class="member-rank">ПРИБЛИЖЕННЫЙ</div>
+                    </div>
                 </div>
             </div>
 
@@ -1341,8 +1214,154 @@
                 ОСНОВНОЙ СОСТАВ
             </h3>
 
-            <div class="members-grid" id="membersGrid">
-                <!-- Данные будут вставляться через JavaScript -->
+            <div class="members-grid">
+                <!-- GenerusRu -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">⚔️</div>
+                    <div class="member-name">Volkswagen</div>
+                    <div class="member-mc">⛏️ Volkswagen</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @generus1</div>
+                    <div class="member-rank">Главный водолаз</div>
+                </div>
+
+                <!-- Zov_Egor -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">⚔️</div>
+                    <div class="member-name">Zov_Egor</div>
+                    <div class="member-mc">⛏️ Zov_Egor</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @egori1410</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
+                <!-- Pizzaxxs -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">🍕</div>
+                    <div class="member-name">444bad</div>
+                    <div class="member-mc">⛏️ 444bad</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @Pizzaxxs</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
+                <!-- DimasikPovelitel -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">👑</div>
+                    <div class="member-name">DimasikPovelitel</div>
+                    <div class="member-mc">⛏️ DimasikPovelitel</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @Davvun</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
+                <!-- antohakiller -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">🔪</div>
+                    <div class="member-name">antohakiller</div>
+                    <div class="member-mc">⛏️ antohakiller</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @wxtat</div>
+                    <div class="member-rank">PVP</div>
+                </div>
+
+                <!-- Miss_grase -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">🌾</div>
+                    <div class="member-name">Miss_grase</div>
+                    <div class="member-mc">⛏️ Miss_grase</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @Miss_graseXD</div>
+                    <div class="member-rank">ФЕРМЕРША</div>
+                </div>
+
+                <!-- gghorter_end -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">⚔️</div>
+                    <div class="member-name">gghorter_end</div>
+                    <div class="member-mc">⛏️ gghorter_end</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @gghorter_end</div>
+                    <div class="member-rank">ИВАН МЕГАНАЙТ</div>
+                </div>
+
+                <!-- prods -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">⚙️</div>
+                    <div class="member-name">prods</div>
+                    <div class="member-mc">⛏️ prods</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @prods52</div>
+                    <div class="member-rank">PVE</div>
+                </div>
+
+                <!-- Egor656565 -->
+                <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">🎉</div>
+                    <div class="member-name">Egor656565</div>
+                    <div class="member-mc">⛏️ Egor656565</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @Egor4ik12656</div>
+                    <div class="member-rank">ВЕСЁЛЫЙ ЕГОР</div>
+                </div>
+
+                <!-- Пустые анкеты -->
+                <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">❓</div>
+                    <div class="member-name">???</div>
+                    <div class="member-mc">⛏️ ???</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
+                    <div class="member-rank">— свободно —</div>
+                </div>
+
+                <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
+                    <div class="member-avatar">❓</div>
+                    <div class="member-name">???</div>
+                    <div class="member-mc">⛏️ ???</div>
+                    <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
+                    <div class="member-rank">— свободно —</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Лидерборд -->
+        <div class="leaderboard" id="leaderboard">
+            <div class="leaderboard-title">
+                <i class="fas fa-trophy"></i> ЛИДЕРБОРД
+            </div>
+            
+            <!-- Результаты турнира -->
+            <div class="tournament-results">
+                <div class="tournament-title">
+                    <i class="fas fa-sword"></i> ПОСЛЕДНИЙ ТУРНИР
+                </div>
+                <ul class="tournament-list">
+                    <li><span class="place">🥇</span> Zovchik</li>
+                    <li><span class="place">🥈</span> Kiweeeeeeeeee</li>
+                    <li><span class="place">🥉</span> Arcecite</li>
+                </ul>
+            </div>
+
+            <div class="leaderboard-grid">
+                <div class="leaderboard-item">
+                    <div class="leaderboard-icon">⚔️</div>
+                    <div class="leaderboard-content">
+                        <h3>Лучший PVP-шер</h3>
+                        <p>Zovchik 🏆</p>
+                    </div>
+                </div>
+                <div class="leaderboard-item">
+                    <div class="leaderboard-icon">🌾</div>
+                    <div class="leaderboard-content">
+                        <h3>Самый лучший фармила</h3>
+                        <p>Arcecite 🌟</p>
+                    </div>
+                </div>
+                <div class="leaderboard-item">
+                    <div class="leaderboard-icon">🏗️</div>
+                    <div class="leaderboard-content">
+                        <h3>Лучший строитель</h3>
+                        <p>Zovchik 🏆</p>
+                    </div>
+                </div>
+                <div class="leaderboard-item">
+                    <div class="leaderboard-icon">⛓️</div>
+                    <div class="leaderboard-content">
+                        <h3>Самый лучший убийца новичков</h3>
+                        <p>Kiweeeeeeeee👑</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1363,7 +1382,7 @@
         <div class="footer">
             <p>© 2026 Империя Енотск</p>
             <div class="footer-year">
-                <i class="fas fa-paw"></i> НАС 13 <i class="fas fa-paw"></i>
+                <i class="fas fa-paw"></i> НАС 37 <i class="fas fa-paw"></i>
             </div>
             <p style="margin-top: 15px;">🦝 Все права у енотов 🦝</p>
         </div>
@@ -1391,7 +1410,7 @@
     <!-- Модальное окно для профилей -->
     <div class="modal" id="profileModal">
         <div class="modal-content">
-            <div class="modal-close" onclick="closeProfileModal()">✖</div>
+            <div class="modal-close" onclick="closeModal()">✖</div>
             <div class="modal-header">
                 <div class="modal-avatar" id="modalAvatar">👤</div>
                 <div class="modal-title" id="modalName">Имя</div>
@@ -1402,834 +1421,119 @@
         </div>
     </div>
 
-    <!-- Модальное окно редактирования -->
-    <div class="modal" id="editModal">
-        <div class="modal-content">
-            <div class="modal-close" onclick="closeEditModal()">✖</div>
-            <div class="modal-header">
-                <div class="modal-avatar">✏️</div>
-                <div class="modal-title">Редактирование</div>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Имя</label>
-                    <input type="text" id="editName" placeholder="Имя">
-                </div>
-                <div class="form-group">
-                    <label>Minecraft ник</label>
-                    <input type="text" id="editMinecraft" placeholder="Minecraft ник">
-                </div>
-                <div class="form-group">
-                    <label>Telegram</label>
-                    <input type="text" id="editTelegram" placeholder="@username">
-                </div>
-                <div class="form-group">
-                    <label>Ранг</label>
-                    <input type="text" id="editRank" placeholder="Ранг">
-                </div>
-                <div class="form-group">
-                    <label>Аватар</label>
-                    <input type="text" id="editAvatar" placeholder="Эмодзи аватара">
-                </div>
-                <div class="form-group">
-                    <label>Тип (imperator/cop/kiwe/normal)</label>
-                    <input type="text" id="editType" placeholder="Тип карточки">
-                </div>
-                <button class="auth-btn" onclick="saveOldMemberEdit()">СОХРАНИТЬ</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Кнопка наверх -->
     <div class="scroll-top" id="scrollTop">⬆️</div>
 
     <script>
-        // ========== СИСТЕМА ЗАЩИТЫ ==========
-        class SecuritySystem {
-            constructor() {
-                this.loginAttempts = new Map();
-                this.blockedIPs = new Set();
-                this.MAX_ATTEMPTS = 5;
-                this.BLOCK_TIME = 15 * 60 * 1000;
+        // Данные для профилей
+        const profiles = {
+            enot: {
+                name: 'Enotiiik',
+                avatar: '👑',
+                mc: 'Enotiiik',
+                tg: '@en0t_st',
+                rank: 'ИМПЕРАТОР',
+                year: '2025'
+            },
+            zovchik: {
+                name: 'Zovchik',
+                avatar: '🏗️',
+                mc: 'Zovchik',
+                tg: '@Astolfo_mp3',
+                rank: 'ГЛ. СТРОИТЕЛЬ',
+                year: '2025'
+            },
+            kiwe: {
+                name: 'Kiweeeeeeeeee',
+                avatar: '🌟',
+                mc: 'Kiweeeeeeeeee',
+                tg: '@Kiweeeeeeeeee',
+                rank: 'ВОИН ИМПЕРИИ',
+                year: '2025'
+            },
+            cop: {
+                name: '-',
+                avatar: '🛡️',
+                mc: '-',
+                tg: '-',
+                rank: 'Выборы',
+                year: '2026'
             }
+        };
 
-            checkBruteforce(username) {
-                const attempts = this.loginAttempts.get(username) || { count: 0, timestamp: Date.now() };
-                
-                if (this.blockedIPs.has(username)) {
-                    return false;
-                }
+        function openProfile(id) {
+            const profile = profiles[id];
+            if (!profile) return;
 
-                if (attempts.count >= this.MAX_ATTEMPTS) {
-                    if (Date.now() - attempts.timestamp < this.BLOCK_TIME) {
-                        this.blockedIPs.add(username);
-                        return false;
-                    } else {
-                        this.loginAttempts.delete(username);
-                        this.blockedIPs.delete(username);
-                    }
-                }
-                return true;
-            }
-
-            registerFailedAttempt(username) {
-                const attempts = this.loginAttempts.get(username) || { count: 0, timestamp: Date.now() };
-                attempts.count++;
-                attempts.timestamp = Date.now();
-                this.loginAttempts.set(username, attempts);
-            }
-
-            resetAttempts(username) {
-                this.loginAttempts.delete(username);
-                this.blockedIPs.delete(username);
-            }
-
-            hashPassword(password) {
-                let hash = 0;
-                for (let i = 0; i < password.length; i++) {
-                    const char = password.charCodeAt(i);
-                    hash = ((hash << 5) - hash) + char;
-                    hash = hash & hash;
-                }
-                return Math.abs(hash).toString(16);
-            }
-        }
-
-        // ========== СТАРЫЕ АНКЕТЫ ==========
-        class OldMembersManager {
-            constructor() {
-                this.eliteMembers = [
-                    { id: 'e1', name: 'Enotiiik', mc: 'Enotiiik', tg: '@en0t_st', rank: 'ИМПЕРАТОР', avatar: '👑', type: 'imperator' },
-                    { id: 'e2', name: 'Zovchik', mc: 'Zovchik', tg: '@Astolfo_mp3', rank: 'ГЛ. СТРОИТЕЛЬ', avatar: '🏗️', type: 'normal' },
-                    { id: 'e3', name: 'Kiweeeeeeeeee', mc: 'Kiweeeeeeeeee', tg: '@Kiweeeeeeeeee', rank: 'ВОИН ИМПЕРИИ', avatar: '🌟', type: 'kiwe' },
-                    { id: 'e4', name: 'Cop41k', mc: 'Cop41k', tg: '@Svyat0sh1', rank: 'ПРИБЛИЖЕННЫЙ', avatar: '🛡️', type: 'cop' }
-                ];
-
-                this.regularMembers = [
-                    { id: 'r1', name: 'GenerusRu', mc: 'GenerusRu', tg: '@generus1', rank: 'PVE', avatar: '⚔️', type: 'normal' },
-                    { id: 'r2', name: 'Zov_Egor', mc: 'Zov_Egor', tg: '@egori1410', rank: 'PVE', avatar: '⚔️', type: 'normal' },
-                    { id: 'r3', name: 'Pizzaxxs', mc: '444bad', tg: '@Pizzaxxs', rank: 'PVE', avatar: '🍕', type: 'normal' },
-                    { id: 'r4', name: 'DimasikPovelitel', mc: 'DimasikPovelitel', tg: '@Davvun', rank: 'PVE', avatar: '👑', type: 'normal' },
-                    { id: 'r5', name: 'antohakiller', mc: 'antohakiller', tg: '@wxtat', rank: 'PVE', avatar: '🔪', type: 'normal' },
-                    { id: 'r6', name: 'Miss_grase', mc: 'Miss_grase', tg: '@Miss_graseXD', rank: 'ФЕРМЕРША', avatar: '🌾', type: 'normal' },
-                    { id: 'r7', name: 'gghorter_end', mc: 'gghorter_end', tg: '@gghorter_end', rank: 'ИВАН МЕГАНАЙТ', avatar: '⚔️', type: 'normal' },
-                    { id: 'r8', name: 'prods', mc: 'prods', tg: '@prods52', rank: 'PVE', avatar: '⚙️', type: 'normal' },
-                    { id: 'r9', name: 'Egor656565', mc: 'Egor656565', tg: '@Egor4ik12656', rank: 'ВЕСЁЛЫЙ ЕГОР', avatar: '🎉', type: 'normal' }
-                ];
-
-                this.currentEditId = null;
-            }
-
-            getAll() {
-                return [...this.eliteMembers, ...this.regularMembers];
-            }
-
-            getById(id) {
-                return this.getAll().find(m => m.id === id);
-            }
-
-            update(id, data) {
-                const member = this.getById(id);
-                if (member) {
-                    if (this.eliteMembers.includes(member)) {
-                        const index = this.eliteMembers.findIndex(m => m.id === id);
-                        this.eliteMembers[index] = { ...this.eliteMembers[index], ...data };
-                    } else {
-                        const index = this.regularMembers.findIndex(m => m.id === id);
-                        this.regularMembers[index] = { ...this.regularMembers[index], ...data };
-                    }
-                    return true;
-                }
-                return false;
-            }
-
-            updateAdminTable() {
-                const tbody = document.getElementById('oldMembersTableBody');
-                if (!tbody) return;
-
-                tbody.innerHTML = '';
-
-                this.getAll().forEach(member => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${member.name}</td>
-                        <td>${member.mc}</td>
-                        <td>${member.tg}</td>
-                        <td>${member.rank}</td>
-                        <td>${member.avatar}</td>
-                        <td>${member.type || 'normal'}</td>
-                        <td>
-                            <button class="admin-btn edit" onclick="editOldMember('${member.id}')">✏️ Ред.</button>
-                        </td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            }
-
-            edit(id) {
-                const member = this.getById(id);
-                if (member) {
-                    this.currentEditId = id;
-                    document.getElementById('editName').value = member.name || '';
-                    document.getElementById('editMinecraft').value = member.mc || '';
-                    document.getElementById('editTelegram').value = member.tg || '';
-                    document.getElementById('editRank').value = member.rank || '';
-                    document.getElementById('editAvatar').value = member.avatar || '';
-                    document.getElementById('editType').value = member.type || 'normal';
-                    document.getElementById('editModal').classList.add('active');
-                }
-            }
-
-            saveEdit() {
-                if (this.currentEditId) {
-                    const data = {
-                        name: document.getElementById('editName').value,
-                        mc: document.getElementById('editMinecraft').value,
-                        tg: document.getElementById('editTelegram').value,
-                        rank: document.getElementById('editRank').value,
-                        avatar: document.getElementById('editAvatar').value,
-                        type: document.getElementById('editType').value
-                    };
-                    
-                    if (this.update(this.currentEditId, data)) {
-                        this.updateAdminTable();
-                        updateMembersList();
-                        closeEditModal();
-                    }
-                }
-            }
-        }
-
-        // ========== УПРАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯМИ ==========
-        class UserManager {
-            constructor() {
-                this.security = new SecuritySystem();
-                this.users = this.loadUsers();
-                this.currentUser = null;
-                this.currentEditId = null;
-                this.updateUI();
-            }
-
-            loadUsers() {
-                const saved = localStorage.getItem('enotsk_users');
-                if (saved) {
-                    return JSON.parse(saved);
-                }
-                
-                const defaultUsers = [
-                    {
-                        id: 1,
-                        username: 'Zovchik',
-                        password: this.security.hashPassword('Admin'),
-                        minecraft: 'Zovchik',
-                        telegram: '@Astolfo_mp3',
-                        role: 'admin',
-                        rank: 'ГЛ. СТРОИТЕЛЬ',
-                        avatar: '🏗️',
-                        inEmpire: true,
-                        banned: false,
-                        banReason: '',
-                        registered: new Date().toISOString()
-                    }
-                ];
-                localStorage.setItem('enotsk_users', JSON.stringify(defaultUsers));
-                return defaultUsers;
-            }
-
-            saveUsers() {
-                localStorage.setItem('enotsk_users', JSON.stringify(this.users));
-            }
-
-            register(username, password, minecraft, telegram) {
-                if (this.users.find(u => u.username === username)) {
-                    return { success: false, message: 'Пользователь уже существует' };
-                }
-
-                if (password.length < 6) {
-                    return { success: false, message: 'Пароль должен быть минимум 6 символов' };
-                }
-
-                const newUser = {
-                    id: this.users.length + 1,
-                    username: username,
-                    password: this.security.hashPassword(password),
-                    minecraft: minecraft,
-                    telegram: telegram || '',
-                    role: 'user',
-                    rank: 'УЧАСТНИК',
-                    avatar: '👤',
-                    inEmpire: false,
-                    banned: false,
-                    banReason: '',
-                    registered: new Date().toISOString()
-                };
-
-                this.users.push(newUser);
-                this.saveUsers();
-                
-                return { success: true, message: 'Регистрация успешна' };
-            }
-
-            login(username, password) {
-                if (!this.security.checkBruteforce(username)) {
-                    return { success: false, message: 'Слишком много попыток. Подождите 15 минут.' };
-                }
-
-                const user = this.users.find(u => u.username === username);
-                const hashedPassword = this.security.hashPassword(password);
-
-                if (user && user.password === hashedPassword) {
-                    if (user.banned) {
-                        return { success: false, message: 'Вы забанены. Причина: ' + user.banReason };
-                    }
-                    
-                    this.security.resetAttempts(username);
-                    this.currentUser = user;
-                    
-                    sessionStorage.setItem('currentUser', JSON.stringify({
-                        id: user.id,
-                        username: user.username,
-                        role: user.role
-                    }));
-                    
-                    this.updateUI();
-                    return { success: true, user: user };
-                } else {
-                    this.security.registerFailedAttempt(username);
-                    return { success: false, message: 'Неверный логин или пароль' };
-                }
-            }
-
-            logout() {
-                this.currentUser = null;
-                sessionStorage.removeItem('currentUser');
-                this.updateUI();
-            }
-
-            checkSession() {
-                const saved = sessionStorage.getItem('currentUser');
-                if (saved) {
-                    const userData = JSON.parse(saved);
-                    this.currentUser = this.users.find(u => u.id === userData.id);
-                }
-                this.updateUI();
-                return this.currentUser;
-            }
-
-            updateUI() {
-                const userGreeting = document.getElementById('userGreeting');
-                const logoutBtn = document.getElementById('logoutBtn');
-                const authButtons = document.getElementById('authButtons');
-                const adminNavBtn = document.getElementById('adminNavBtn');
-                const adminPanel = document.getElementById('adminPanel');
-
-                if (this.currentUser) {
-                    userGreeting.textContent = `Привет, ${this.currentUser.username}!`;
-                    logoutBtn.style.display = 'block';
-                    authButtons.style.display = 'none';
-                    
-                    if (this.currentUser.role === 'admin') {
-                        adminNavBtn.style.display = 'block';
-                        adminPanel.classList.add('show');
-                        this.updateAdminTables();
-                    } else {
-                        adminNavBtn.style.display = 'none';
-                        adminPanel.classList.remove('show');
-                    }
-                } else {
-                    userGreeting.textContent = 'Вы не авторизованы';
-                    logoutBtn.style.display = 'none';
-                    authButtons.style.display = 'flex';
-                    adminNavBtn.style.display = 'none';
-                    adminPanel.classList.remove('show');
-                }
-            }
-
-            updateAdminTables() {
-                this.updateUsersTable();
-                this.updateMembersTable();
-                this.updateBannedTable();
-                oldMembersManager.updateAdminTable();
-            }
-
-            updateUsersTable() {
-                const tbody = document.getElementById('usersTableBody');
-                if (!tbody) return;
-                
-                tbody.innerHTML = '';
-
-                this.users.filter(u => !u.banned).forEach(user => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${user.id}</td>
-                        <td>${user.username}</td>
-                        <td>${user.minecraft}</td>
-                        <td>${user.telegram || '-'}</td>
-                        <td>${user.inEmpire ? '👑 В империи' : '👤 Ожидает'}</td>
-                        <td>
-                            ${!user.inEmpire ? 
-                                `<button class="admin-btn" onclick="addToEmpire(${user.id})">➕ В состав</button>` : 
-                                `<button class="admin-btn edit" onclick="editUser(${user.id})">✏️ Ред.</button>
-                                 <button class="admin-btn ban" onclick="banUser(${user.id})">🔨 Бан</button>`}
-                        </td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            }
-
-            updateMembersTable() {
-                const tbody = document.getElementById('membersTableBody');
-                if (!tbody) return;
-                
-                tbody.innerHTML = '';
-
-                this.users.filter(u => u.inEmpire && !u.banned).forEach(user => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${user.id}</td>
-                        <td>${user.username}</td>
-                        <td>${user.minecraft}</td>
-                        <td>${user.telegram || '-'}</td>
-                        <td>${user.rank}</td>
-                        <td>
-                            <button class="admin-btn edit" onclick="editUser(${user.id})">✏️ Ред.</button>
-                            <button class="admin-btn ban" onclick="banUser(${user.id})">🔨 Бан</button>
-                            <button class="admin-btn" onclick="removeFromEmpire(${user.id})">➖ Убрать</button>
-                        </td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            }
-
-            updateBannedTable() {
-                const tbody = document.getElementById('bannedTableBody');
-                if (!tbody) return;
-                
-                tbody.innerHTML = '';
-
-                this.users.filter(u => u.banned).forEach(user => {
-                    const row = document.createElement('tr');
-                    row.className = 'banned';
-                    row.innerHTML = `
-                        <td>${user.id}</td>
-                        <td>${user.username}</td>
-                        <td>${user.minecraft}</td>
-                        <td>${user.telegram || '-'}</td>
-                        <td>${user.banReason || 'Без причины'}</td>
-                        <td>
-                            <button class="admin-btn unban" onclick="unbanUser(${user.id})">✅ Разбанить</button>
-                        </td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            }
-
-            addToEmpire(userId) {
-                const user = this.users.find(u => u.id === userId);
-                if (user) {
-                    user.inEmpire = true;
-                    user.rank = 'УЧАСТНИК';
-                    user.avatar = '👤';
-                    this.saveUsers();
-                    this.updateAdminTables();
-                    updateMembersList();
-                }
-            }
-
-            removeFromEmpire(userId) {
-                const user = this.users.find(u => u.id === userId);
-                if (user) {
-                    user.inEmpire = false;
-                    this.saveUsers();
-                    this.updateAdminTables();
-                    updateMembersList();
-                }
-            }
-
-            banUser(userId) {
-                const reason = prompt('Введите причину бана:');
-                if (reason !== null) {
-                    const user = this.users.find(u => u.id === userId);
-                    if (user) {
-                        user.banned = true;
-                        user.banReason = reason;
-                        user.inEmpire = false;
-                        this.saveUsers();
-                        this.updateAdminTables();
-                        updateMembersList();
-                    }
-                }
-            }
-
-            unbanUser(userId) {
-                const user = this.users.find(u => u.id === userId);
-                if (user) {
-                    user.banned = false;
-                    user.banReason = '';
-                    this.saveUsers();
-                    this.updateAdminTables();
-                }
-            }
-
-            editUser(userId) {
-                const user = this.users.find(u => u.id === userId);
-                if (user) {
-                    this.currentEditId = userId;
-                    document.getElementById('editName').value = user.username;
-                    document.getElementById('editMinecraft').value = user.minecraft || '';
-                    document.getElementById('editTelegram').value = user.telegram || '';
-                    document.getElementById('editRank').value = user.rank || 'УЧАСТНИК';
-                    document.getElementById('editAvatar').value = user.avatar || '👤';
-                    document.getElementById('editType').value = 'normal';
-                    document.getElementById('editModal').classList.add('active');
-                }
-            }
-
-            saveEdit() {
-                if (this.currentEditId) {
-                    const user = this.users.find(u => u.id === this.currentEditId);
-                    if (user) {
-                        user.minecraft = document.getElementById('editMinecraft').value;
-                        user.telegram = document.getElementById('editTelegram').value;
-                        user.rank = document.getElementById('editRank').value;
-                        user.avatar = document.getElementById('editAvatar').value;
-                        this.saveUsers();
-                        this.updateAdminTables();
-                        updateMembersList();
-                        closeEditModal();
-                    }
-                }
-            }
-        }
-
-        // ========== ИНИЦИАЛИЗАЦИЯ ==========
-        const userManager = new UserManager();
-        const oldMembersManager = new OldMembersManager();
-
-        // ========== УПРАВЛЕНИЕ МОДАЛЬНЫМИ ОКНАМИ ==========
-        function openAuthModal(type) {
-            const modal = document.getElementById(type === 'login' ? 'loginModal' : 'registerModal');
-            modal.classList.add('active');
-            modal.style.left = (window.innerWidth - 400) + 'px';
-            modal.style.top = '100px';
-        }
-
-        function closeAuthModal(type) {
-            const modal = document.getElementById(type === 'login' ? 'loginModal' : 'registerModal');
-            modal.classList.remove('active');
-        }
-
-        function makeDraggable(modalId, headerId) {
-            const modal = document.getElementById(modalId);
-            const header = document.getElementById(headerId);
-            let isDragging = false;
-            let offsetX, offsetY;
-
-            header.addEventListener('mousedown', (e) => {
-                if (e.target.classList.contains('auth-modal-close')) return;
-                isDragging = true;
-                offsetX = e.clientX - modal.offsetLeft;
-                offsetY = e.clientY - modal.offsetTop;
-                modal.style.cursor = 'grabbing';
-            });
-
-            document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                e.preventDefault();
-                let left = e.clientX - offsetX;
-                let top = e.clientY - offsetY;
-                
-                left = Math.max(0, Math.min(window.innerWidth - modal.offsetWidth, left));
-                top = Math.max(0, Math.min(window.innerHeight - modal.offsetHeight, top));
-                
-                modal.style.left = left + 'px';
-                modal.style.top = top + 'px';
-            });
-
-            document.addEventListener('mouseup', () => {
-                isDragging = false;
-                modal.style.cursor = 'move';
-            });
-        }
-
-        makeDraggable('loginModal', 'loginModalHeader');
-        makeDraggable('registerModal', 'registerModalHeader');
-
-        // ========== АДМИН ФУНКЦИИ ==========
-        function switchAdminTab(tab) {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
-            
-            if (tab === 'users') {
-                document.querySelectorAll('.admin-tab')[0].classList.add('active');
-                document.getElementById('adminUsersTab').classList.add('active');
-            } else if (tab === 'members') {
-                document.querySelectorAll('.admin-tab')[1].classList.add('active');
-                document.getElementById('adminMembersTab').classList.add('active');
-            } else if (tab === 'oldMembers') {
-                document.querySelectorAll('.admin-tab')[2].classList.add('active');
-                document.getElementById('adminOldMembersTab').classList.add('active');
-            } else if (tab === 'banned') {
-                document.querySelectorAll('.admin-tab')[3].classList.add('active');
-                document.getElementById('adminBannedTab').classList.add('active');
-            }
-        }
-
-        function addToEmpire(userId) {
-            userManager.addToEmpire(userId);
-        }
-
-        function removeFromEmpire(userId) {
-            userManager.removeFromEmpire(userId);
-        }
-
-        function banUser(userId) {
-            userManager.banUser(userId);
-        }
-
-        function unbanUser(userId) {
-            userManager.unbanUser(userId);
-        }
-
-        function editUser(userId) {
-            userManager.editUser(userId);
-        }
-
-        function editOldMember(id) {
-            oldMembersManager.edit(id);
-        }
-
-        function saveOldMemberEdit() {
-            oldMembersManager.saveEdit();
-        }
-
-        function closeEditModal() {
-            document.getElementById('editModal').classList.remove('active');
-            userManager.currentEditId = null;
-            oldMembersManager.currentEditId = null;
-        }
-
-        // ========== ФУНКЦИИ ОТОБРАЖЕНИЯ ==========
-        function updateMembersList() {
-            const eliteGrid = document.getElementById('eliteGrid');
-            const membersGrid = document.getElementById('membersGrid');
-            const membersCount = document.getElementById('membersCount');
-            
-            eliteGrid.innerHTML = '';
-            membersGrid.innerHTML = '';
-
-            // Отображаем старые элитные анкеты
-            oldMembersManager.eliteMembers.forEach(member => {
-                const card = createMemberCard(member);
-                eliteGrid.appendChild(card);
-            });
-
-            // Отображаем старые основные анкеты
-            oldMembersManager.regularMembers.forEach(member => {
-                const card = createMemberCard(member);
-                membersGrid.appendChild(card);
-            });
-
-            // Добавляем пользователей из империи
-            const empireUsers = userManager.users.filter(u => u.inEmpire && !u.banned);
-            empireUsers.forEach(user => {
-                const card = document.createElement('div');
-                card.className = 'member-card';
-                card.onclick = () => openUserProfile(user);
-                card.innerHTML = `
-                    <div class="member-avatar">${user.avatar || '👤'}</div>
-                    <div class="member-name">${user.username}</div>
-                    <div class="member-mc">⛏️ ${user.minecraft}</div>
-                    <div class="member-tg"><i class="fab fa-telegram"></i> ${user.telegram || 'нет'}</div>
-                    <div class="member-rank">${user.rank || 'УЧАСТНИК'}</div>
-                `;
-                membersGrid.appendChild(card);
-            });
-
-            const totalMembers = 13 + empireUsers.length;
-            membersCount.innerHTML = `<i class="fas fa-paw"></i> Нас ${totalMembers}`;
-            document.querySelector('.footer-year').innerHTML = `<i class="fas fa-paw"></i> НАС ${totalMembers} <i class="fas fa-paw"></i>`;
-        }
-
-        function createMemberCard(member) {
-            const card = document.createElement('div');
-            card.className = `member-card ${member.type || ''}`;
-            card.onclick = () => openOldMemberProfile(member);
-            card.innerHTML = `
-                <div class="member-avatar">${member.avatar}</div>
-                <div class="member-name">${member.name}</div>
-                <div class="member-mc">⛏️ ${member.mc}</div>
-                <div class="member-tg"><i class="fab fa-telegram"></i> ${member.tg}</div>
-                <div class="member-rank">${member.rank}</div>
-            `;
-            return card;
-        }
-
-        // ========== ФУНКЦИИ АВТОРИЗАЦИИ ==========
-        function register() {
-            const username = document.getElementById('regUsername').value.trim();
-            const password = document.getElementById('regPassword').value;
-            const confirm = document.getElementById('regConfirm').value;
-            const minecraft = document.getElementById('regMinecraft').value.trim();
-            const telegram = document.getElementById('regTelegram').value.trim();
-
-            if (!username || !password || !minecraft) {
-                showRegisterError('Заполните обязательные поля');
-                return;
-            }
-
-            if (password !== confirm) {
-                showRegisterError('Пароли не совпадают');
-                return;
-            }
-
-            const result = userManager.register(username, password, minecraft, telegram);
-            
-            if (result.success) {
-                showRegisterSuccess('Регистрация успешна! Теперь можно войти');
-                document.getElementById('regUsername').value = '';
-                document.getElementById('regPassword').value = '';
-                document.getElementById('regConfirm').value = '';
-                document.getElementById('regMinecraft').value = '';
-                document.getElementById('regTelegram').value = '';
-            } else {
-                showRegisterError(result.message);
-            }
-        }
-
-        function login() {
-            const username = document.getElementById('loginUsername').value.trim();
-            const password = document.getElementById('loginPassword').value;
-
-            if (!username || !password) {
-                showLoginError('Введите логин и пароль');
-                return;
-            }
-
-            const result = userManager.login(username, password);
-            
-            if (result.success) {
-                showLoginSuccess('Вход выполнен успешно!');
-                document.getElementById('loginUsername').value = '';
-                document.getElementById('loginPassword').value = '';
-                closeAuthModal('login');
-                
-                userManager.updateUI();
-                updateMembersList();
-                
-                if (result.user.role === 'admin') {
-                    userManager.updateAdminTables();
-                }
-            } else {
-                showLoginError(result.message);
-            }
-        }
-
-        function logout() {
-            userManager.logout();
-            updateMembersList();
-        }
-
-        function showLoginError(message) {
-            const errorDiv = document.getElementById('loginErrorMessage');
-            errorDiv.textContent = message;
-            errorDiv.classList.add('show');
-            setTimeout(() => errorDiv.classList.remove('show'), 3000);
-        }
-
-        function showLoginSuccess(message) {
-            const errorDiv = document.getElementById('loginErrorMessage');
-            errorDiv.textContent = message;
-            errorDiv.style.background = '#4f9f4f';
-            errorDiv.classList.add('show');
-            setTimeout(() => {
-                errorDiv.classList.remove('show');
-                errorDiv.style.background = '#9f4f4f';
-            }, 3000);
-        }
-
-        function showRegisterError(message) {
-            const errorDiv = document.getElementById('registerErrorMessage');
-            errorDiv.textContent = message;
-            errorDiv.classList.add('show');
-            setTimeout(() => errorDiv.classList.remove('show'), 3000);
-        }
-
-        function showRegisterSuccess(message) {
-            const successDiv = document.getElementById('registerSuccessMessage');
-            successDiv.textContent = message;
-            successDiv.classList.add('show');
-            setTimeout(() => successDiv.classList.remove('show'), 3000);
-        }
-
-        // ========== ПРОФИЛИ ==========
-        function openOldMemberProfile(member) {
-            document.getElementById('modalAvatar').textContent = member.avatar;
-            document.getElementById('modalName').textContent = member.name;
+            document.getElementById('modalAvatar').textContent = profile.avatar;
+            document.getElementById('modalName').textContent = profile.name;
             
             const body = document.getElementById('modalBody');
             body.innerHTML = `
                 <div class="modal-info-row">
                     <span class="modal-info-label">Minecraft:</span>
-                    <span class="modal-info-value">${member.mc}</span>
+                    <span class="modal-info-value">${profile.mc}</span>
                 </div>
                 <div class="modal-info-row">
                     <span class="modal-info-label">Telegram:</span>
-                    <span class="modal-info-value">${member.tg}</span>
+                    <span class="modal-info-value">${profile.tg}</span>
                 </div>
                 <div class="modal-info-row">
                     <span class="modal-info-label">Ранг:</span>
-                    <span class="modal-info-value">${member.rank}</span>
+                    <span class="modal-info-value">${profile.rank}</span>
                 </div>
                 <div class="modal-info-row">
                     <span class="modal-info-label">В империи:</span>
-                    <span class="modal-info-value">С 2024</span>
+                    <span class="modal-info-value">С ${profile.year}</span>
                 </div>
-                <div class="modal-rank">${member.rank}</div>
+                <div class="modal-rank">${profile.rank}</div>
             `;
             
             document.getElementById('profileModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        function openUserProfile(user) {
-            document.getElementById('modalAvatar').textContent = user.avatar || '👤';
-            document.getElementById('modalName').textContent = user.username;
-            
-            const body = document.getElementById('modalBody');
-            body.innerHTML = `
-                <div class="modal-info-row">
-                    <span class="modal-info-label">Minecraft:</span>
-                    <span class="modal-info-value">${user.minecraft}</span>
-                </div>
-                <div class="modal-info-row">
-                    <span class="modal-info-label">Telegram:</span>
-                    <span class="modal-info-value">${user.telegram || 'не указан'}</span>
-                </div>
-                <div class="modal-info-row">
-                    <span class="modal-info-label">Ранг:</span>
-                    <span class="modal-info-value">${user.rank || 'УЧАСТНИК'}</span>
-                </div>
-                <div class="modal-info-row">
-                    <span class="modal-info-label">Регистрация:</span>
-                    <span class="modal-info-value">${new Date(user.registered).toLocaleDateString()}</span>
-                </div>
-                <div class="modal-rank">${user.rank || 'УЧАСТНИК ИМПЕРИИ'}</div>
-            `;
-            
-            document.getElementById('profileModal').classList.add('active');
-        }
-
-        function closeProfileModal() {
+        function closeModal() {
             document.getElementById('profileModal').classList.remove('active');
+            document.body.style.overflow = '';
         }
 
-        // ========== ПРОВЕРКА СЕССИИ ==========
-        function checkSession() {
-            userManager.checkSession();
-            updateMembersList();
-        }
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('profileModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
 
-        // ========== МУЗЫКАЛЬНЫЙ ПЛЕЕР ==========
+        // Навигация
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const href = btn.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // Кнопка наверх
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Музыкальный плеер
         const player = document.getElementById('musicPlayer');
         const toggleBtn = document.getElementById('togglePlayerBtn');
         const closeBtn = document.getElementById('closePlayerBtn');
@@ -2311,6 +1615,7 @@
             }
         });
 
+        // Перетаскивание плеера
         if (window.innerWidth > 768) {
             let isDragging = false;
             let offsetX, offsetY;
@@ -2343,40 +1648,14 @@
             });
         }
 
-        const scrollTopBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        });
-
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const href = btn.getAttribute('href');
-                if (href && href.startsWith('#')) {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
+        // Эффект тыка для обычных карточек
+        document.querySelectorAll('.member-card:not(.imperator):not(.kiwe):not(.cop)').forEach(card => {
+            card.addEventListener('click', function(e) {
+                this.classList.add('click-effect');
+                setTimeout(() => this.classList.remove('click-effect'), 200);
             });
         });
 
-        window.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) {
-                e.target.classList.remove('active');
-            }
-        });
-
-        // ========== ИНИЦИАЛИЗАЦИЯ ==========
-        checkSession();
         updateTrackInfo();
     </script>
 </body>

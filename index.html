@@ -8,13 +8,15 @@
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Все стили остаются точно такими же */
+        /* Сброс и базовые стили */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
+            -webkit-tap-highlight-color: transparent;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         body {
@@ -30,6 +32,7 @@
             color: #fff;
         }
 
+        /* ФОН С КАРТИНКОЙ ZOVCHIK (темные тона) */
         body::before {
             content: '';
             position: fixed;
@@ -37,14 +40,30 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(70, 130, 70, 0.15) 0%, transparent 20%),
-                radial-gradient(circle at 80% 70%, rgba(100, 70, 30, 0.15) 0%, transparent 25%),
-                repeating-linear-gradient(45deg, rgba(50, 100, 50, 0.1) 0px, rgba(50, 100, 50, 0.1) 4px, transparent 4px, transparent 8px);
+            background-image: url('my life.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.3;
+            filter: blur(3px);
             pointer-events: none;
             z-index: 0;
         }
 
+        /* Дополнительный слой затемнения для читаемости текста */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Анимированные партиклы */
         .particle {
             position: fixed;
             font-size: 24px;
@@ -52,7 +71,7 @@
             pointer-events: none;
             opacity: 0.2;
             animation: floatParticle 15s infinite linear;
-            z-index: 0;
+            z-index: 1;
             color: #8b9a6b;
             text-shadow: 0 0 5px #2f4f2f;
         }
@@ -64,16 +83,18 @@
             100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
 
+        /* Основной контейнер */
         .minecraft-panel {
             max-width: 1400px;
             width: 100%;
-            background: #6b4f3a;
+            background: linear-gradient(145deg, rgba(107, 79, 58, 0.85), rgba(90, 63, 42, 0.85));
             border: 6px solid #2f1f0f;
+            border-radius: 10px;
             box-shadow: inset 0 0 0 2px #4f3f2a, 15px 15px 0 rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 255, 0, 0.3);
             padding: 30px;
             position: relative;
             z-index: 10;
-            backdrop-filter: blur(2px);
+            backdrop-filter: blur(6px);
             transition: box-shadow 0.3s;
             animation: panelGlow 4s infinite alternate;
         }
@@ -83,6 +104,15 @@
             100% { box-shadow: inset 0 0 0 2px #6f5f4a, 15px 15px 0 rgba(0, 0, 0, 0.6), 0 0 60px rgba(100, 255, 100, 0.9); }
         }
 
+        @media (max-width: 768px) {
+            .minecraft-panel {
+                padding: 15px;
+                border-width: 4px;
+                box-shadow: inset 0 0 0 2px #4f3f2a, 10px 10px 0 rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 255, 0, 0.3);
+            }
+        }
+
+        /* Хедер */
         .header {
             background: #3a5c3a;
             border: 4px solid #1f3f1f;
@@ -93,6 +123,21 @@
             position: relative;
             overflow: hidden;
             transition: 0.2s;
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .header:hover::after {
+            opacity: 1;
         }
 
         .header:hover {
@@ -124,6 +169,7 @@
             margin-top: 15px;
         }
 
+        /* Навигация */
         .nav-bar {
             display: flex;
             flex-wrap: wrap;
@@ -151,30 +197,29 @@
             position: relative;
             overflow: hidden;
             flex: 0 1 auto;
+            border-radius: 6px;
         }
 
         .nav-btn::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            transition: 0.5s;
         }
 
         .nav-btn:hover::before {
-            width: 300px;
-            height: 300px;
+            left: 150%;
         }
 
         .nav-btn:hover {
             background: #bfbfbf;
             box-shadow: inset -3px -3px 0 #6f6f6f, inset 3px 3px 0 #ffffff, 2px 2px 0 #1f1f1f, 0 0 30px #ffff7f;
-            transform: translate(2px, 2px) scale(1.02);
+            transform: translateY(-3px) scale(1.05);
         }
 
         .nav-btn:active {
@@ -286,6 +331,7 @@
             }
         }
 
+        /* Карточка участника с головой */
         .member-card {
             background: #3f5f3f;
             border: 3px solid #1f3f1f;
@@ -299,9 +345,29 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            border-radius: 8px;
+            transform: perspective(800px) rotateX(0deg) rotateY(0deg);
         }
 
         .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .member-card:hover::before {
+            left: 150%;
+        }
+
+        .member-card::after {
             content: '';
             position: absolute;
             top: -2px;
@@ -316,7 +382,7 @@
             filter: blur(5px);
         }
 
-        .member-card:hover::before {
+        .member-card:hover::after {
             opacity: 1;
             animation: borderGlow 2s infinite;
         }
@@ -328,7 +394,7 @@
         }
 
         .member-card:hover {
-            transform: translate(-3px, -3px) scale(1.02);
+            transform: perspective(800px) rotateX(5deg) rotateY(-5deg) scale(1.05);
             box-shadow: 8px 8px 0 #0f2f0f, 0 0 30px rgba(255, 215, 0, 0.5);
             background: #4f7f4f;
         }
@@ -338,6 +404,7 @@
             box-shadow: 0 0 30px #ffd700;
         }
 
+        /* Голова игрока - БЕЗ АНИМАЦИИ ДВИЖЕНИЯ */
         .member-avatar {
             width: 80px;
             height: 80px;
@@ -346,10 +413,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 48px;
             margin-bottom: 15px;
-            box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #afcf8f;
             transition: all 0.3s;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
         }
 
         .member-name {
@@ -426,6 +501,10 @@
             animation: tgShine 1.5s infinite;
         }
 
+        .member-tg:hover {
+            box-shadow: 0 0 20px #4fa3ff;
+        }
+
         @keyframes tgShine {
             0% { transform: rotate(45deg) translateX(-100%); }
             100% { transform: rotate(45deg) translateX(100%); }
@@ -457,6 +536,14 @@
         .member-card.empty .member-avatar {
             background: #1f3f1f;
             border-color: #5f7f5f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .member-card.empty .member-avatar::before {
+            content: '❓';
+            font-size: 40px;
             color: #8faf8f;
         }
 
@@ -529,6 +616,7 @@
             transform: scale(1.01);
         }
 
+        /* ЛИДЕРБОРД */
         .leaderboard {
             background: #2f4f4f;
             border: 4px solid #ffd700;
@@ -597,6 +685,51 @@
         .tournament-list li:first-child {
             background: #5f4f2f;
             border-color: gold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(238, 187, 68, 0.7); }
+            70% { box-shadow: 0 0 15px 5px rgba(238, 187, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(238, 187, 68, 0); }
+        }
+
+        .winner-name {
+            font-weight: bold;
+            color: #f1c40f;
+            background: linear-gradient(90deg, #f1c40f, #fff, #f1c40f);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        .player-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px;
+            background: #2f4f2f;
+            border: 2px solid #eebb44;
+            border-radius: 6px;
+        }
+
+        .player-head img {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+        }
+
+        .player-head span {
+            font-size: 12px;
+            color: #ffff9f;
         }
 
         .place {
@@ -623,6 +756,7 @@
             }
         }
 
+        /* КАРТОЧКИ ЛИДЕРБОРДА - ПОВОРОТ ВПРАВО */
         .leaderboard-item {
             background: #1f3f3f;
             border: 3px solid #ffd700;
@@ -630,12 +764,34 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transform: rotate(0deg);
         }
 
+        .leaderboard-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
+
+        .leaderboard-item:hover::before {
+            left: 150%;
+        }
+
+        /* ПОВОРОТ ВПРАВО ПРИ НАВЕДЕНИИ */
         .leaderboard-item:hover {
-            transform: scale(1.05) translateY(-5px);
-            box-shadow: 0 0 30px #ffd700;
+            transform: rotate(3deg) translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3), 0 0 20px #ffd700;
             background: #2f5f5f;
         }
 
@@ -644,6 +800,11 @@
             background: #0f2f2f;
             padding: 10px;
             border: 3px solid #ffd700;
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:hover .leaderboard-icon {
+            transform: scale(1.1) rotate(3deg);
         }
 
         .leaderboard-content h3 {
@@ -677,14 +838,15 @@
             margin: 10px 0;
         }
 
-        .click-effect {
-            animation: clickPop 0.2s ease-out;
-        }
-
         @keyframes clickPop {
             0% { transform: scale(1); }
-            50% { transform: scale(0.95); box-shadow: 0 0 50px red; }
+            40% { transform: scale(0.9); }
+            70% { transform: scale(1.1); }
             100% { transform: scale(1); }
+        }
+
+        .click-effect {
+            animation: clickPop 0.2s ease-out;
         }
 
         .scroll-top {
@@ -705,6 +867,7 @@
             opacity: 0;
             visibility: hidden;
             transition: 0.2s;
+            border-radius: 10px;
         }
 
         .scroll-top.visible {
@@ -752,7 +915,7 @@
             width: 90%;
             box-shadow: inset 0 0 0 3px #9fbf9f, 15px 15px 0 #1f3f1f, 0 0 50px #ffd700;
             position: relative;
-            animation: modalAppear 0.3s;
+            animation: modalAppear 0.4s cubic-bezier(.17,.67,.83,.67);
         }
 
         @keyframes modalAppear {
@@ -793,7 +956,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 64px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .modal-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
         }
 
         .modal-title {
@@ -815,6 +986,7 @@
             border: 2px solid #7f9f6f;
             padding: 10px;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .modal-info-label {
@@ -842,8 +1014,9 @@
             bottom: 30px;
             right: 30px;
             width: 340px;
-            background: #4f6f3f;
+            background: linear-gradient(145deg, #4f6f3f, #3a5c2f);
             border: 4px solid #2f4f2f;
+            border-radius: 12px;
             box-shadow: inset 0 0 0 3px #7faf7f, 10px 10px 0 #1f3f1f;
             padding: 15px;
             z-index: 2000;
@@ -853,10 +1026,15 @@
             transition: box-shadow 0.2s;
             resize: both;
             overflow: auto;
+            backdrop-filter: blur(10px);
         }
 
         .music-player.closed {
             display: none;
+        }
+
+        .music-player:hover {
+            box-shadow: inset 0 0 0 3px #9fcf9f, 10px 10px 0 #1f3f1f, 0 0 30px #7fbf7f;
         }
 
         @media (max-width: 768px) {
@@ -930,12 +1108,13 @@
             cursor: pointer;
             box-shadow: inset -3px -3px 0 #4f4f4f, inset 3px 3px 0 #efefef, 3px 3px 0 #1f1f1f;
             font-family: 'Press Start 2P', cursive;
+            transition: all 0.2s;
         }
 
         .player-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 20px #ffff7f;
             background: #bfbfbf;
-            transform: translate(1px, 1px);
-            box-shadow: inset -2px -2px 0 #6f6f6f, inset 2px 2px 0 #ffffff, 2px 2px 0 #1f1f1f;
         }
 
         .volume-control {
@@ -987,6 +1166,48 @@
             transform: scale(1.1) translateY(-2px);
             box-shadow: inset -3px -3px 0 #1f3f1f, inset 3px 3px 0 #bfdfbf, 5px 5px 0 #1f1f1f, 0 0 30px #7fff7f;
         }
+
+        .mc-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #212121;
+            border: 4px solid #000;
+            box-shadow: inset -4px -4px #424242, inset 4px 4px #8b8b8b;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: slideIn 0.5s ease-out;
+            z-index: 10000;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .mc-toast img {
+            image-rendering: pixelated;
+            width: 40px;
+            height: 40px;
+        }
+
+        .mc-toast .title { 
+            color: #ffff55; 
+            font-size: 14px; 
+            margin-bottom: 5px;
+        }
+        .mc-toast .desc { 
+            color: #ffffff; 
+            font-size: 10px; 
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -1006,8 +1227,8 @@
     <div class="toggle-player-btn" id="togglePlayerBtn" title="Включить радио">🎵</div>
 
     <div class="minecraft-panel">
-        <!-- Шапка -->
-        <div class="header">
+        <!-- Шапка с пасхалкой -->
+        <div class="header" onclick="summonRaccoon()">
             <h1>✦ ИМПЕРИЯ ЕНОТСК ✦</h1>
             <p>⚡ НА СЕРВЕРЕ NATURAL LEGACY ⚡</p>
         </div>
@@ -1027,12 +1248,12 @@
                     <i class="fas fa-users"></i> УЧАСТНИКИ
                 </div>
                 <div class="members-count">
-                    <i class="fas fa-paw"></i> НАС 37
+                    <i class="fas fa-paw"></i> НАС 39
                 </div>
             </div>
             
             <p style="text-align: center; font-size: 10px; margin: 10px 0 20px; color: #cfefcf;">
-                Telegram и Minecraft ники • Полный состав
+                Minecraft ники • Полный состав
             </p>
 
             <!-- Элитная секция -->
@@ -1040,10 +1261,10 @@
                 <div class="elite-title">
                     <i class="fas fa-crown" style="color: gold;"></i> ОСНОВАТЕЛИ И ГЛАВЫ
                 </div>
-                <div class="elite-grid">
+                <div class="elite-grid" id="eliteGrid">
                     <!-- Enotiiik -->
                     <div class="member-card imperator" onclick="openProfile('enot')">
-                        <div class="member-avatar">👑</div>
+                        <div class="member-avatar"><img src="https://mc-heads.net/avatar/Enotiiik/80" alt="Enotiiik"></div>
                         <div class="member-name">Enotiiik</div>
                         <div class="member-mc">⛏️ Enotiiik</div>
                         <div class="member-tg"><i class="fab fa-telegram"></i> @en0t_st</div>
@@ -1052,7 +1273,7 @@
 
                     <!-- Zovchik -->
                     <div class="member-card" onclick="openProfile('zovchik')">
-                        <div class="member-avatar">🏗️</div>
+                        <div class="member-avatar"><img src="https://mc-heads.net/avatar/Zovchik/80" alt="Zovchik"></div>
                         <div class="member-name">Zovchik</div>
                         <div class="member-mc">⛏️ Zovchik</div>
                         <div class="member-tg"><i class="fab fa-telegram"></i> @Astolfo_mp3</div>
@@ -1061,7 +1282,7 @@
 
                     <!-- Kiweeeeeeeeee -->
                     <div class="member-card kiwe" onclick="openProfile('kiwe')">
-                        <div class="member-avatar">🌟</div>
+                        <div class="member-avatar"><img src="https://mc-heads.net/avatar/Kiweeeeeeeeee/80" alt="Kiweeeeeeeeee"></div>
                         <div class="member-name">Kiweeeeeeeeee</div>
                         <div class="member-mc">⛏️ Kiweeeeeeeeee</div>
                         <div class="member-tg"><i class="fab fa-telegram"></i> @Kiweeeeeeeeee</div>
@@ -1070,7 +1291,7 @@
 
                     <!-- Cop41k -->
                     <div class="member-card cop" onclick="openProfile('cop')">
-                        <div class="member-avatar">🛡️</div>
+                        <div class="member-avatar"><img src="https://mc-heads.net/avatar/Cop41k/80" alt="Cop41k"></div>
                         <div class="member-name">Cop41k</div>
                         <div class="member-mc">⛏️ Cop41k</div>
                         <div class="member-tg"><i class="fab fa-telegram"></i> @Svyat0sh1</div>
@@ -1079,18 +1300,16 @@
                 </div>
             </div>
 
-            <!-- Разделитель -->
             <div class="section-divider"></div>
 
-            <!-- Основной состав -->
             <h3 style="color: #ffff9f; margin: 20px 0; font-size: 16px; text-align: center;">
                 ОСНОВНОЙ СОСТАВ
             </h3>
 
-            <div class="members-grid">
-                <!-- Volkswagen (бывший GenerusRu) -->
+            <div class="members-grid" id="membersGrid">
+                <!-- Volkswagen -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">🚗</div>
+                    <div class="member-avatar"><img src="https://mc-heads.net/avatar/Volkswagen/80" alt="Volkswagen"></div>
                     <div class="member-name">Volkswagen</div>
                     <div class="member-mc">⛏️ Volkswagen</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @generus1</div>
@@ -1099,7 +1318,7 @@
 
                 <!-- Zov_Egor -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">⚔️</div>
+                    <div class="member-avatar"><img src="https://mc-heads.net/avatar/Zov_Egor/80" alt="Zov_Egor"></div>
                     <div class="member-name">Zov_Egor</div>
                     <div class="member-mc">⛏️ Zov_Egor</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @egori1410</div>
@@ -1108,8 +1327,8 @@
 
                 <!-- Pizzaxxs (444bad) -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">🍕</div>
-                    <div class="member-name">Pizzaxxs</div>
+                    <div class="member-avatar"><img src="https://mc-heads.net/avatar/444bad/80" alt="444bad"></div>
+                    <div class="member-name">444bad</div>
                     <div class="member-mc">⛏️ 444bad</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @Pizzaxxs</div>
                     <div class="member-rank">PVE</div>
@@ -1117,16 +1336,16 @@
 
                 <!-- DimasikPovelitel -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">👑</div>
+                    <div class="member-avatar"><img src="https://mc-heads.net/avatar/DimasikPovelitel/80" alt="DimasikPovelitel"></div>
                     <div class="member-name">DimasikPovelitel</div>
                     <div class="member-mc">⛏️ DimasikPovelitel</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @Davvun</div>
                     <div class="member-rank">PVE</div>
                 </div>
 
-                <!-- antohakiller (PVP-шер) -->
+                <!-- antohakiller -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">⚔️</div>
+                    <div class="member-avatar"><img src="https://mc-heads.net/avatar/antohakiller/80" alt="antohakiller"></div>
                     <div class="member-name">antohakiller</div>
                     <div class="member-mc">⛏️ antohakiller</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @wxtat</div>
@@ -1135,7 +1354,7 @@
 
                 <!-- Miss_grase -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">🌾</div>
+                    <div class="member-avatar"><img src="https://mc-heads.net/avatar/Miss_grase/80" alt="Miss_grase"></div>
                     <div class="member-name">Miss_grase</div>
                     <div class="member-mc">⛏️ Miss_grase</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @Miss_graseXD</div>
@@ -1144,7 +1363,7 @@
 
                 <!-- gghorter_end -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">⚔️</div>
+                    <div class="member-avatar"><img src="https://mc-heads.net/avatar/gghorter_end/80" alt="gghorter_end"></div>
                     <div class="member-name">gghorter_end</div>
                     <div class="member-mc">⛏️ gghorter_end</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @gghorter_end</div>
@@ -1153,7 +1372,7 @@
 
                 <!-- prods -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">⚙️</div>
+                    <div class="member-avatar"><img src="https://mc-heads.net/avatar/prods/80" alt="prods"></div>
                     <div class="member-name">prods</div>
                     <div class="member-mc">⛏️ prods</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @prods52</div>
@@ -1162,7 +1381,7 @@
 
                 <!-- Egor656565 -->
                 <div class="member-card" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">🎉</div>
+                    <div class="member-avatar"><img src="https://mc-heads.net/avatar/Egor656565/80" alt="Egor656565"></div>
                     <div class="member-name">Egor656565</div>
                     <div class="member-mc">⛏️ Egor656565</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @Egor4ik12656</div>
@@ -1171,7 +1390,7 @@
 
                 <!-- Пустые анкеты -->
                 <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">❓</div>
+                    <div class="member-avatar"></div>
                     <div class="member-name">???</div>
                     <div class="member-mc">⛏️ ???</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
@@ -1179,7 +1398,7 @@
                 </div>
 
                 <div class="member-card empty" onclick="this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200);">
-                    <div class="member-avatar">❓</div>
+                    <div class="member-avatar"></div>
                     <div class="member-name">???</div>
                     <div class="member-mc">⛏️ ???</div>
                     <div class="member-tg"><i class="fab fa-telegram"></i> @???</div>
@@ -1194,15 +1413,32 @@
                 <i class="fas fa-trophy"></i> ЛИДЕРБОРД
             </div>
             
-            <!-- Результаты турнира -->
             <div class="tournament-results">
                 <div class="tournament-title">
                     <i class="fas fa-sword"></i> ПОСЛЕДНИЙ ТУРНИР
                 </div>
                 <ul class="tournament-list">
-                    <li><span class="place">🥇</span> Zovchik</li>
-                    <li><span class="place">🥈</span> Kiweeeeeeeeee</li>
-                    <li><span class="place">🥉</span> Arcecite</li>
+                    <li>
+                        <span class="place">🥇</span>
+                        <div class="player-head">
+                            <img src="https://mc-heads.net/avatar/Zovchik/32" alt="Zovchik">
+                            <span class="winner-name">Zovchik</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="place">🥈</span>
+                        <div class="player-head">
+                            <img src="https://mc-heads.net/avatar/Kiweeeeeeeeee/32" alt="Kiweeeeeeeeee">
+                            <span>Kiweeeeeeeeee</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="place">🥉</span>
+                        <div class="player-head">
+                            <img src="https://mc-heads.net/avatar/Arcecite/32" alt="Arcecite">
+                            <span>Arcecite</span>
+                        </div>
+                    </li>
                 </ul>
             </div>
 
@@ -1238,24 +1474,22 @@
             </div>
         </div>
 
-        <!-- Информация о Natural Legacy -->
         <div class="legacy-info" id="about">
             <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
                 <div style="font-size: 48px;">🌍</div>
                 <div>
                     <h2 style="font-size: 18px; color: #cfefcf;">Natural Legacy</h2>
                     <p style="font-size: 10px; margin-top: 10px;">
-                        Империя Енотск на Natural Legacy (1.20+)
+                        Империя Енотск на Natural Legacy (1.21.10)
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- Футер -->
         <div class="footer">
             <p>© 2026 Империя Енотск</p>
             <div class="footer-year">
-                <i class="fas fa-paw"></i> НАС 37 <i class="fas fa-paw"></i>
+                <i class="fas fa-paw"></i> НАС 39 <i class="fas fa-paw"></i>
             </div>
             <p style="margin-top: 15px;">🦝 Все права у енотов 🦝</p>
         </div>
@@ -1280,88 +1514,40 @@
         </div>
     </div>
 
-    <!-- Модальное окно для профилей -->
+    <!-- Модальное окно -->
     <div class="modal" id="profileModal">
         <div class="modal-content">
             <div class="modal-close" onclick="closeModal()">✖</div>
             <div class="modal-header">
-                <div class="modal-avatar" id="modalAvatar">👤</div>
+                <div class="modal-avatar" id="modalAvatar"></div>
                 <div class="modal-title" id="modalName">Имя</div>
             </div>
-            <div class="modal-body" id="modalBody">
-                <!-- Данные будут вставляться через JavaScript -->
-            </div>
+            <div class="modal-body" id="modalBody"></div>
         </div>
     </div>
 
-    <!-- Кнопка наверх -->
     <div class="scroll-top" id="scrollTop">⬆️</div>
 
     <script>
-        // Данные для профилей
         const profiles = {
-            enot: {
-                name: 'Enotiiik',
-                avatar: '👑',
-                mc: 'Enotiiik',
-                tg: '@en0t_st',
-                rank: 'ИМПЕРАТОР',
-                year: '2024'
-            },
-            zovchik: {
-                name: 'Zovchik',
-                avatar: '🏗️',
-                mc: 'Zovchik',
-                tg: '@Astolfo_mp3',
-                rank: 'ГЛ. СТРОИТЕЛЬ',
-                year: '2024'
-            },
-            kiwe: {
-                name: 'Kiweeeeeeeeee',
-                avatar: '🌟',
-                mc: 'Kiweeeeeeeeee',
-                tg: '@Kiweeeeeeeeee',
-                rank: 'ВОИН ИМПЕРИИ',
-                year: '2025'
-            },
-            cop: {
-                name: 'Cop41k',
-                avatar: '🛡️',
-                mc: 'Cop41k',
-                tg: '@Svyat0sh1',
-                rank: 'ПРИБЛИЖЕННЫЙ К ИМПЕРАТОРУ',
-                year: '2026'
-            }
+            enot: { name: 'Enotiiik', mc: 'Enotiiik', tg: '@en0t_st', rank: 'ИМПЕРАТОР', year: '2024', avatar: 'Enotiiik' },
+            zovchik: { name: 'Zovchik', mc: 'Zovchik', tg: '@Astolfo_mp3', rank: 'ГЛ. СТРОИТЕЛЬ', year: '2024', avatar: 'Zovchik' },
+            kiwe: { name: 'Kiweeeeeeeeee', mc: 'Kiweeeeeeeeee', tg: '@Kiweeeeeeeeee', rank: 'ВОИН ИМПЕРИИ', year: '2025', avatar: 'Kiweeeeeeeeee' },
+            cop: { name: 'Cop41k', mc: 'Cop41k', tg: '@Svyat0sh1', rank: 'ПРИБЛИЖЕННЫЙ К ИМПЕРАТОРУ', year: '2026', avatar: 'Cop41k' }
         };
 
         function openProfile(id) {
-            const profile = profiles[id];
-            if (!profile) return;
-
-            document.getElementById('modalAvatar').textContent = profile.avatar;
-            document.getElementById('modalName').textContent = profile.name;
-            
-            const body = document.getElementById('modalBody');
-            body.innerHTML = `
-                <div class="modal-info-row">
-                    <span class="modal-info-label">Minecraft:</span>
-                    <span class="modal-info-value">${profile.mc}</span>
-                </div>
-                <div class="modal-info-row">
-                    <span class="modal-info-label">Telegram:</span>
-                    <span class="modal-info-value">${profile.tg}</span>
-                </div>
-                <div class="modal-info-row">
-                    <span class="modal-info-label">Ранг:</span>
-                    <span class="modal-info-value">${profile.rank}</span>
-                </div>
-                <div class="modal-info-row">
-                    <span class="modal-info-label">В империи:</span>
-                    <span class="modal-info-value">С ${profile.year}</span>
-                </div>
-                <div class="modal-rank">${profile.rank}</div>
+            const p = profiles[id];
+            if (!p) return;
+            document.getElementById('modalAvatar').innerHTML = `<img src="https://mc-heads.net/avatar/${p.avatar}/100" alt="${p.name}">`;
+            document.getElementById('modalName').textContent = p.name;
+            document.getElementById('modalBody').innerHTML = `
+                <div class="modal-info-row"><span class="modal-info-label">Minecraft:</span><span class="modal-info-value">${p.mc}</span></div>
+                <div class="modal-info-row"><span class="modal-info-label">Telegram:</span><span class="modal-info-value">${p.tg}</span></div>
+                <div class="modal-info-row"><span class="modal-info-label">Ранг:</span><span class="modal-info-value">${p.rank}</span></div>
+                <div class="modal-info-row"><span class="modal-info-label">В империи:</span><span class="modal-info-value">С ${p.year}</span></div>
+                <div class="modal-rank">${p.rank}</div>
             `;
-            
             document.getElementById('profileModal').classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -1371,40 +1557,65 @@
             document.body.style.overflow = '';
         }
 
-        window.addEventListener('click', (e) => {
-            const modal = document.getElementById('profileModal');
-            if (e.target === modal) {
-                closeModal();
-            }
+        window.addEventListener('click', e => {
+            if (e.target.classList.contains('modal')) closeModal();
         });
 
-        // Навигация
         document.querySelectorAll('.nav-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
+            btn.addEventListener('click', e => {
                 e.preventDefault();
                 const href = btn.getAttribute('href');
                 if (href && href.startsWith('#')) {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth' });
-                    }
+                    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
 
-        // Кнопка наверх
-        const scrollTopBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        });
+        const scrollTop = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => scrollTop.classList.toggle('visible', window.scrollY > 300));
+        scrollTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        function showToast(title, message, icon = '🦝') {
+            const toast = document.createElement('div');
+            toast.className = 'mc-toast';
+            toast.innerHTML = `<img src="https://mc-heads.net/avatar/${icon}/32" onerror="this.src='https://via.placeholder.com/32?text=🦝'"><div><div class="title">${title}</div><div class="desc">${message}</div></div>`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.animation = 'slideOut 0.5s ease-out'; setTimeout(() => toast.remove(), 500); }, 4000);
+        }
+
+        function summonRaccoon() {
+            if (document.querySelector('.raccoon-popup')) return;
+            const raccoon = document.createElement('div');
+            raccoon.className = 'raccoon-popup';
+            raccoon.innerHTML = '🦝';
+            raccoon.style.cssText = 'position:fixed;bottom:-50px;right:20px;font-size:64px;transition:transform 0.5s cubic-bezier(0.34,1.2,0.64,1);z-index:1000;filter:drop-shadow(0 0 10px rgba(0,0,0,0.5));cursor:pointer;user-select:none;';
+            document.body.appendChild(raccoon);
+            setTimeout(() => raccoon.style.transform = 'translateY(-80px)', 50);
+            setTimeout(() => { raccoon.style.transform = 'translateY(100px)'; setTimeout(() => raccoon.remove(), 500); }, 2500);
+        }
+
+        // Canvas падающие пиксели
+        const canvas = document.createElement('canvas');
+        canvas.style.cssText = 'position:fixed;top:0;left:0;pointer-events:none;z-index:1';
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function createPixel() {
+            return { x: Math.random() * canvas.width, y: -10, size: Math.random() * 3 + 1, speed: Math.random() * 1.5 + 0.5, color: Math.random() > 0.8 ? '#ffcc00' : '#ffffff22' };
+        }
+
+        function animatePixels() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (particles.length < 40) particles.push(createPixel());
+            particles.forEach((p, i) => { p.y += p.speed; ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, p.size, p.size); if (p.y > canvas.height) particles.splice(i, 1); });
+            requestAnimationFrame(animatePixels);
+        }
+        animatePixels();
 
         // Музыкальный плеер
         const player = document.getElementById('musicPlayer');
@@ -1425,110 +1636,43 @@
             { name: 'Home Resonance', src: '' }
         ];
 
-        let currentTrackIndex = 0;
-        let isPlaying = false;
-        let repeat = false;
-        let audio = null;
+        let currentTrackIndex = 0, isPlaying = false, repeat = false, audio = null;
 
-        function initAudio() {
-            if (audio) audio.pause();
-            audio = new Audio();
-            audio.volume = volumeSlider.value;
-            audio.addEventListener('ended', () => {
-                if (repeat) audio.play();
-                else nextTrack();
-            });
-        }
+        function initAudio() { if (audio) audio.pause(); audio = new Audio(); audio.volume = volumeSlider.value; audio.addEventListener('ended', () => { if (repeat) audio.play(); else nextTrack(); }); }
         initAudio();
 
         function updateTrackInfo() {
             trackInfo.textContent = tracks[currentTrackIndex].name;
-            if (tracks[currentTrackIndex].src) {
-                audio.src = tracks[currentTrackIndex].src;
-                audio.load();
-                if (isPlaying) audio.play().catch(() => {});
-            }
+            if (tracks[currentTrackIndex].src) { audio.src = tracks[currentTrackIndex].src; audio.load(); if (isPlaying) audio.play().catch(() => {}); }
         }
 
-        function playTrack(index) {
-            currentTrackIndex = (index + tracks.length) % tracks.length;
-            updateTrackInfo();
-        }
-
+        function playTrack(index) { currentTrackIndex = (index + tracks.length) % tracks.length; updateTrackInfo(); }
         function nextTrack() { playTrack(currentTrackIndex + 1); }
         function prevTrack() { playTrack(currentTrackIndex - 1); }
 
-        playPauseBtn.addEventListener('click', () => {
-            isPlaying = !isPlaying;
-            playPauseBtn.textContent = isPlaying ? '⏸️' : '▶️';
-            if (isPlaying && audio.src) audio.play().catch(() => {});
-            else audio.pause();
-        });
-
+        playPauseBtn.addEventListener('click', () => { isPlaying = !isPlaying; playPauseBtn.textContent = isPlaying ? '⏸️' : '▶️'; if (isPlaying && audio.src) audio.play().catch(() => {}); else audio.pause(); });
         prevBtn.addEventListener('click', prevTrack);
         nextBtn.addEventListener('click', nextTrack);
-
-        repeatBtn.addEventListener('click', () => {
-            repeat = !repeat;
-            repeatBtn.style.opacity = repeat ? '1' : '0.5';
-            if (audio) audio.loop = repeat;
-        });
-
-        volumeSlider.addEventListener('input', (e) => {
-            if (audio) audio.volume = e.target.value;
-        });
-
+        repeatBtn.addEventListener('click', () => { repeat = !repeat; repeatBtn.style.opacity = repeat ? '1' : '0.5'; if (audio) audio.loop = repeat; });
+        volumeSlider.addEventListener('input', e => { if (audio) audio.volume = e.target.value; });
         toggleBtn.addEventListener('click', () => player.classList.remove('closed'));
-        closeBtn.addEventListener('click', () => {
-            player.classList.add('closed');
-            if (isPlaying) {
-                isPlaying = false;
-                playPauseBtn.textContent = '▶️';
-                audio.pause();
-            }
-        });
+        closeBtn.addEventListener('click', () => { player.classList.add('closed'); if (isPlaying) { isPlaying = false; playPauseBtn.textContent = '▶️'; audio.pause(); } });
 
-        // Перетаскивание плеера
         if (window.innerWidth > 768) {
-            let isDragging = false;
-            let offsetX, offsetY;
-            const header = document.getElementById('playerHeader');
-
-            header.addEventListener('mousedown', (e) => {
+            let isDragging = false, offsetX, offsetY;
+            document.getElementById('playerHeader').addEventListener('mousedown', e => {
                 if (e.target.classList.contains('close-player-btn')) return;
-                isDragging = true;
-                offsetX = e.clientX - player.offsetLeft;
-                offsetY = e.clientY - player.offsetTop;
-                player.style.cursor = 'grabbing';
+                isDragging = true; offsetX = e.clientX - player.offsetLeft; offsetY = e.clientY - player.offsetTop; player.style.cursor = 'grabbing';
             });
-
-            document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                e.preventDefault();
-                let left = e.clientX - offsetX;
-                let top = e.clientY - offsetY;
-                left = Math.max(0, Math.min(window.innerWidth - player.offsetWidth, left));
-                top = Math.max(0, Math.min(window.innerHeight - player.offsetHeight, top));
-                player.style.left = left + 'px';
-                player.style.right = 'auto';
-                player.style.bottom = 'auto';
-                player.style.top = top + 'px';
-            });
-
-            document.addEventListener('mouseup', () => {
-                isDragging = false;
-                player.style.cursor = 'move';
-            });
+            document.addEventListener('mousemove', e => { if (!isDragging) return; e.preventDefault(); let left = e.clientX - offsetX, top = e.clientY - offsetY; left = Math.max(0, Math.min(window.innerWidth - player.offsetWidth, left)); top = Math.max(0, Math.min(window.innerHeight - player.offsetHeight, top)); player.style.left = left + 'px'; player.style.right = 'auto'; player.style.bottom = 'auto'; player.style.top = top + 'px'; });
+            document.addEventListener('mouseup', () => { isDragging = false; player.style.cursor = 'move'; });
         }
 
-        // Эффект тыка для обычных карточек
         document.querySelectorAll('.member-card:not(.imperator):not(.kiwe):not(.cop)').forEach(card => {
-            card.addEventListener('click', function(e) {
-                this.classList.add('click-effect');
-                setTimeout(() => this.classList.remove('click-effect'), 200);
-            });
+            card.addEventListener('click', function() { this.classList.add('click-effect'); setTimeout(() => this.classList.remove('click-effect'), 200); });
         });
 
+        setTimeout(() => showToast('ДОБРО ПОЖАЛОВАТЬ!', 'Империя Енотск приветствует тебя', '🦝'), 1000);
         updateTrackInfo();
     </script>
 </body>
